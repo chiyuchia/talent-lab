@@ -144,6 +144,7 @@ vite.config.ts.timestamp-*
 # Project docs
 .claude/
 .codex/
+.agents/
 
 # Python
 __pycache__/
@@ -175,4 +176,3 @@ uploads/
 
 # Deploy environment files with secrets
 deploy/.env.production
-
