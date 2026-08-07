@@ -1,6 +1,8 @@
 import { ClipboardEvent, KeyboardEvent, useState } from "react";
 import { X } from "lucide-react";
 
+import { cn } from "../lib/utils";
+
 type TagInputProps = {
   value: string[];
   onChange: (value: string[]) => void;
@@ -16,7 +18,7 @@ function splitTags(value: string): string[] {
     .filter(Boolean);
 }
 
-export function TagInput({ value, onChange, placeholder, inputLabel, className = "" }: TagInputProps) {
+export function TagInput({ value, onChange, placeholder, inputLabel, className }: TagInputProps) {
   const [draft, setDraft] = useState("");
 
   function addTags(rawValue: string) {
@@ -78,7 +80,10 @@ export function TagInput({ value, onChange, placeholder, inputLabel, className =
 
   return (
     <div
-      className={`flex min-h-10 w-full flex-wrap items-center gap-1.5 rounded-md border border-border bg-background px-2 py-1.5 transition focus-within:ring-2 focus-within:ring-primary ${className}`}
+      className={cn(
+        "flex min-h-10 w-full flex-wrap items-center gap-1.5 rounded-md border border-border bg-background px-2 py-1.5 transition focus-within:ring-2 focus-within:ring-ring",
+        className,
+      )}
     >
       {value.map((tag, index) => (
         <span key={`${tag}-${index}`} className="inline-flex max-w-full items-center gap-1 rounded-md bg-accent px-2 py-1 text-sm text-accent-foreground">
@@ -86,7 +91,7 @@ export function TagInput({ value, onChange, placeholder, inputLabel, className =
           <button
             type="button"
             onClick={() => removeTag(index)}
-            className="grid h-4 w-4 shrink-0 place-items-center rounded-sm text-muted-foreground transition hover:bg-background hover:text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            className="grid h-4 w-4 shrink-0 place-items-center rounded-sm text-muted-foreground transition hover:bg-background hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             aria-label={`删除 ${tag}`}
           >
             <X className="h-3 w-3" />

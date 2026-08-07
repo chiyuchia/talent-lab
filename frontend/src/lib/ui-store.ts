@@ -21,7 +21,10 @@ type UiState = {
   startLoading: () => () => void;
 };
 
-const initialTheme = (localStorage.getItem("talentlens-theme") as Theme | null) ?? "light";
+const storedTheme = localStorage.getItem("talent-lab-theme") as Theme | null;
+const initialTheme: Theme =
+  storedTheme ??
+  (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
 
 function createErrorId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -32,7 +35,7 @@ export const useUiStore = create<UiState>((set, get) => ({
   errors: [],
   loadingCount: 0,
   setTheme: (theme) => {
-    localStorage.setItem("talentlens-theme", theme);
+    localStorage.setItem("talent-lab-theme", theme);
     document.documentElement.classList.toggle("dark", theme === "dark");
     set({ theme });
   },

@@ -5,6 +5,8 @@
 :root {
   --background: 0 0% 100%;
   --foreground: 222 47% 11%;
+  --card: 210 40% 98%;
+  --card-foreground: 222 47% 11%;
   --muted: 210 40% 96%;
   --muted-foreground: 215 16% 47%;
   --border: 214 32% 91%;
@@ -12,11 +14,18 @@
   --primary-foreground: 0 0% 100%;
   --accent: 210 40% 96%;
   --accent-foreground: 222 47% 11%;
+  --destructive: 0 72% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 160 84% 30%;
+  --warning: 32 95% 36%;
+  --ring: 168 76% 32%;
 }
 
 .dark {
   --background: 222 47% 11%;
   --foreground: 210 40% 98%;
+  --card: 222 44% 13%;
+  --card-foreground: 210 40% 98%;
   --muted: 217 33% 17%;
   --muted-foreground: 215 20% 65%;
   --border: 217 33% 24%;
@@ -24,6 +33,11 @@
   --primary-foreground: 222 47% 11%;
   --accent: 217 33% 18%;
   --accent-foreground: 210 40% 98%;
+  --destructive: 0 72% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 160 84% 45%;
+  --warning: 38 92% 55%;
+  --ring: 168 76% 42%;
 }
 
 * {
@@ -35,7 +49,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   background: hsl(var(--background));
 }
 
@@ -125,11 +140,6 @@ textarea {
 }
 .nav-indicator.active::before {
   height: 60%;
-}
-
-/* Button press micro-animation */
-button:active:not(:disabled) {
-  transform: scale(0.97);
 }
 
 /* Focus ring animation */

@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 
+import { Button } from "./ui/button";
+
 interface ResizableDrawerProps {
   open: boolean;
   onClose: () => void;
@@ -108,14 +110,14 @@ export function ResizableDrawer({
         <div className="flex-1 flex flex-col bg-background border-l border-border shadow-xl">
           <div className="flex items-center justify-between px-4 py-3 border-b border-border">
             <h3 className="text-lg font-semibold">{title}</h3>
-            <button
-              type="button"
+            <Button
+              variant="outline"
+              size="icon"
               onClick={onClose}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border hover:bg-accent transition-colors"
               aria-label="关闭"
             >
               <X className="h-4 w-4" />
-            </button>
+            </Button>
           </div>
           <div className="flex-1 overflow-y-auto p-4">{children}</div>
         </div>

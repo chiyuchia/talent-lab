@@ -24,8 +24,11 @@ import {
 } from "../components/StatusBadge";
 import { Tag, TagList } from "../components/Tag";
 import { TagInput } from "../components/TagInput";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
 import { candidateApi } from "../lib/api";
 import { useCompareStore } from "../lib/compare-store";
+import { cn } from "../lib/utils";
 import type { CandidateStatus } from "../types/api";
 
 const statusOptions: Array<{ value: "" | CandidateStatus; label: string }> = [
@@ -222,29 +225,30 @@ export function CandidatesPage() {
           </div>
           <div className="relative w-full sm:w-80">
             <Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <input
+            <Input
               value={q}
               onChange={(event) => {
                 setQ(event.target.value);
                 resetToFirstPage();
               }}
-              className={`h-10 w-full rounded-md border border-border bg-background pl-9 text-sm outline-none focus:ring-2 focus:ring-primary ${q ? "pr-9" : "pr-3"}`}
+              className={cn("pl-9", q ? "pr-9" : "pr-3")}
               placeholder="搜索姓名、技能、学校等"
               aria-label="关键字搜索"
             />
             {q ? (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={clearKeyword}
-                className="absolute right-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded text-muted-foreground transition hover:bg-accent hover:text-foreground"
+                className="absolute right-2 top-2 h-6 w-6 rounded text-muted-foreground"
                 aria-label="清空关键字搜索"
               >
                 <X className="h-3.5 w-3.5" />
-              </button>
+              </Button>
             ) : null}
           </div>
         </div>
-        <div className="rounded-lg border border-border bg-muted/20 p-4 animate-fade-in-up-1">
+        <div className="rounded-lg border border-border bg-card p-4 animate-fade-in-up animation-delay-50">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="grid flex-1 gap-4 md:grid-cols-2 xl:grid-cols-[minmax(14rem,18rem)_minmax(18rem,1fr)]">
               <label className="block text-sm">
@@ -257,7 +261,7 @@ export function CandidatesPage() {
                     setStatus(event.target.value as "" | CandidateStatus);
                     resetToFirstPage();
                   }}
-                  className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm outline-none transition focus:ring-2 focus:ring-primary"
+                  className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm outline-none transition focus:ring-2 focus:ring-ring"
                 >
                   {statusOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -279,15 +283,16 @@ export function CandidatesPage() {
                     inputLabel="技能标签筛选"
                     className="min-w-0 flex-1"
                   />
-                  <button
-                    type="button"
+                  <Button
+                    variant="outline"
+                    size="icon"
                     onClick={clearSkills}
-                    className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-background text-muted-foreground transition hover:bg-accent hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+                    className="h-10 w-10 shrink-0 text-muted-foreground"
                     disabled={!selectedSkills.length}
                     aria-label="清空技能筛选"
                   >
                     <X className="h-4 w-4" />
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -306,11 +311,12 @@ export function CandidatesPage() {
                         setSortField(option.value);
                         resetToFirstPage();
                       }}
-                      className={`h-10 px-3 text-sm font-medium transition-colors ${
+                      className={cn(
+                        "h-10 px-3 text-sm font-medium transition-colors",
                         sortField === option.value
                           ? "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:bg-accent hover:text-foreground"
-                      }`}
+                          : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                      )}
                     >
                       {option.label}
                     </button>
@@ -333,11 +339,12 @@ export function CandidatesPage() {
                           setSortDirection(option.value);
                           resetToFirstPage();
                         }}
-                        className={`inline-flex h-10 items-center gap-1.5 px-3 text-sm font-medium transition-colors ${
+                        className={cn(
+                          "inline-flex h-10 items-center gap-1.5 px-3 text-sm font-medium transition-colors",
                           sortDirection === option.value
                             ? "bg-primary text-primary-foreground"
-                            : "text-muted-foreground hover:bg-accent hover:text-foreground"
-                        }`}
+                            : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                        )}
                       >
                         <Icon className="h-4 w-4" />
                         {option.label}
@@ -355,7 +362,12 @@ export function CandidatesPage() {
                   <button
                     type="button"
                     onClick={() => handleViewChange("table")}
-                    className={`h-10 px-3 transition-colors duration-200 ${view === "table" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent hover:text-foreground"}`}
+                    className={cn(
+                      "h-10 px-3 transition-colors duration-200",
+                      view === "table"
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                    )}
                     aria-label="表格视图"
                   >
                     <List className="h-4 w-4" />
@@ -363,7 +375,12 @@ export function CandidatesPage() {
                   <button
                     type="button"
                     onClick={() => handleViewChange("card")}
-                    className={`h-10 px-3 transition-colors duration-200 ${view === "card" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent hover:text-foreground"}`}
+                    className={cn(
+                      "h-10 px-3 transition-colors duration-200",
+                      view === "card"
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                    )}
                     aria-label="卡片视图"
                   >
                     <LayoutGrid className="h-4 w-4" />
@@ -437,9 +454,9 @@ export function CandidatesPage() {
           </div>
         ) : null}
         {view === "table" && candidates.length > 0 ? (
-          <div className="overflow-hidden rounded-lg border border-border animate-fade-in-up-2">
+          <div className="overflow-hidden rounded-lg border border-border bg-card animate-fade-in-up animation-delay-100">
             <table className="w-full border-collapse text-sm">
-              <thead className="bg-muted/40 text-left text-muted-foreground">
+              <thead className="bg-muted/50 text-left text-muted-foreground">
                 <tr>
                   <th className="w-10 px-2 py-3">
                     <input
@@ -482,9 +499,10 @@ export function CandidatesPage() {
                   return (
                     <tr
                       key={candidate.id}
-                      className={`table-row-hover hover:bg-muted/30 ${
-                        isSelected ? "bg-primary/5" : ""
-                      }`}
+                      className={cn(
+                        "table-row-hover hover:bg-muted/30",
+                        isSelected && "bg-primary/5",
+                      )}
                       style={{
                         animation: `fade-in-up 0.4s ease-out ${0.04 * Math.min(index, 12)}s both`,
                       }}
@@ -527,19 +545,20 @@ export function CandidatesPage() {
                         <CandidateStatusBadge status={candidate.status} />
                       </td>
                       <td className="px-4 py-4 text-right">
-                        <button
-                          type="button"
+                        <Button
+                          variant="destructive"
+                          size="icon"
                           onClick={() => {
                             if (window.confirm(`确定要删除候选人「${candidate.name || candidate.original_filename}」吗？`)) {
                               deleteMutation.mutate(candidate.id);
                             }
                           }}
                           disabled={deleteMutation.isPending}
-                          className="rounded-md p-2 text-red-600 hover:bg-red-50 transition-colors disabled:opacity-40"
+                          className="h-8 w-8"
                           aria-label="删除候选人"
                         >
                           <Trash2 className="h-4 w-4" />
-                        </button>
+                        </Button>
                       </td>
                     </tr>
                   );
@@ -556,11 +575,12 @@ export function CandidatesPage() {
               return (
                 <div
                   key={candidate.id}
-                  className={`card-hover relative rounded-lg border p-4 transition-colors ${
+                  className={cn(
+                    "card-hover relative rounded-lg border p-4 transition-colors",
                     isSelected
                       ? "border-primary/50 bg-primary/5"
-                      : "border-border bg-muted/20 hover:bg-muted/40"
-                  }`}
+                      : "border-border bg-card hover:bg-muted/50",
+                  )}
                 >
                   <div className="absolute right-3 top-3">
                     <input
@@ -594,19 +614,20 @@ export function CandidatesPage() {
                   </Link>
                   <div className="mt-3 flex items-center justify-between">
                     <CandidateStatusBadge status={candidate.status} />
-                    <button
-                      type="button"
+                    <Button
+                      variant="destructive"
+                      size="icon"
                       onClick={() => {
                         if (window.confirm(`确定要删除候选人「${candidate.name || candidate.original_filename}」吗？`)) {
                           deleteMutation.mutate(candidate.id);
                         }
                       }}
                       disabled={deleteMutation.isPending}
-                      className="rounded-md p-1.5 text-red-600 hover:bg-red-50 transition-colors disabled:opacity-40"
+                      className="h-8 w-8"
                       aria-label="删除候选人"
                     >
                       <Trash2 className="h-4 w-4" />
-                    </button>
+                    </Button>
                   </div>
                 </div>
               );
@@ -614,7 +635,7 @@ export function CandidatesPage() {
           </div>
         ) : null}
         {total > 0 ? (
-          <div className="flex flex-col gap-3 rounded-lg border border-border bg-muted/20 p-3 text-sm sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-3 rounded-lg border border-border bg-card p-3 text-sm sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap items-center gap-2 text-muted-foreground">
               <span>
                 第 {page} / {totalPages} 页
@@ -637,7 +658,7 @@ export function CandidatesPage() {
                     }));
                     resetToFirstPage();
                   }}
-                  className="h-9 rounded-md border border-border bg-background px-2 text-sm text-foreground outline-none transition focus:ring-2 focus:ring-primary"
+                  className="h-9 rounded-md border border-border bg-background px-2 text-sm text-foreground outline-none transition focus:ring-2 focus:ring-ring"
                 >
                   {pageSizeOptions.map((option) => (
                     <option key={option} value={option}>
@@ -672,11 +693,12 @@ export function CandidatesPage() {
                     type="button"
                     onClick={() => setPage(item)}
                     disabled={candidatesQuery.isFetching}
-                    className={`h-9 min-w-9 border-l border-border px-3 text-sm font-medium transition ${
+                    className={cn(
+                      "h-9 min-w-9 border-l border-border px-3 text-sm font-medium transition",
                       page === item
                         ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:bg-accent hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
-                    }`}
+                        : "text-muted-foreground hover:bg-accent hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40",
+                    )}
                     aria-label={`第 ${item} 页`}
                     aria-current={page === item ? "page" : undefined}
                   >
@@ -722,15 +744,13 @@ export function CandidatesPage() {
                 清空
               </button>
             </div>
-            <button
-              type="button"
+            <Button
               onClick={() => runCompare()}
               disabled={selectedIds.length < 2 || isComparing}
-              className="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground disabled:opacity-60 hover:opacity-90 transition-opacity"
             >
               <GitCompare className="h-4 w-4" />
               {isComparing ? "对比中..." : "开始对比"}
-            </button>
+            </Button>
           </div>
         ) : null}
       </section>

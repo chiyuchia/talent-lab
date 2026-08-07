@@ -248,7 +248,7 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
     if (d.includes("本科") || d.includes("学士") || d.toLowerCase().includes("bachelor")) {
       return "bg-indigo-50 text-indigo-700 border-indigo-100 dark:bg-indigo-950/20 dark:text-indigo-400 dark:border-indigo-950/40";
     }
-    return "bg-slate-50 text-slate-600 border-slate-100 dark:bg-slate-900 dark:text-slate-400 dark:border-slate-850";
+    return "bg-slate-50 text-slate-600 border-slate-100 dark:bg-slate-900 dark:text-slate-400 dark:border-slate-800";
   };
 
   // Resilient worker summary lists generator
@@ -283,7 +283,7 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
       {/* Header Bar */}
       <div 
         onClick={() => setExpanded(!expanded)}
-        className="flex cursor-pointer items-center justify-between bg-slate-100/90 px-4 py-3 text-xs font-semibold text-slate-700 hover:bg-slate-200/50 dark:bg-slate-850 dark:text-slate-200 transition-colors select-none"
+        className="flex cursor-pointer items-center justify-between bg-slate-100/90 px-4 py-3 text-xs font-semibold text-slate-700 hover:bg-slate-200/50 dark:bg-slate-900 dark:text-slate-200 transition-colors select-none"
       >
         <span className="flex items-center gap-2">
           <Cpu className="h-4 w-4 text-primary animate-pulse" />
@@ -461,7 +461,7 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
                                 <GraduationCap className="h-4 w-4 text-indigo-500 shrink-0 mt-0.5" />
                                 <h5 className="font-bold text-slate-800 dark:text-slate-200 text-xs sm:text-sm">{edu.school || "学校名称"}</h5>
                               </div>
-                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide bg-slate-100 dark:bg-slate-850 px-2 py-0.5 rounded shrink-0">{edu.graduation_time || "毕业时间"}</span>
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded shrink-0">{edu.graduation_time || "毕业时间"}</span>
                             </div>
                             <div className="flex gap-2 text-xs text-muted-foreground mt-2 font-semibold flex-wrap">
                               <span className="px-2 py-0.5 rounded border border-slate-100 bg-white/70 dark:bg-slate-950/40 dark:border-slate-900">专业: <strong className="text-slate-700 dark:text-slate-300 font-bold">{edu.major || "未设定"}</strong></span>
@@ -497,7 +497,7 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
                                 <Briefcase className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
                                 <h5 className="font-bold text-slate-800 dark:text-slate-200 text-xs sm:text-sm">{work.company || "公司名称"}</h5>
                               </div>
-                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide bg-slate-100 dark:bg-slate-850 px-2 py-0.5 rounded shrink-0">{work.period || "在职时间"}</span>
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded shrink-0">{work.period || "在职时间"}</span>
                             </div>
                             <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-1.5 bg-emerald-500/5 inline-block px-2 py-0.5 rounded border border-emerald-500/10">{work.title || "岗位职称"}</p>
                             {renderWorkSummary(work.summary)}

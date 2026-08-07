@@ -6,16 +6,16 @@ services:
     env_file:
       - ./.env.production
     environment:
-      DATABASE_URL: sqlite:////data/talentlens.sqlite3
+      DATABASE_URL: sqlite:////data/talent-lab.sqlite3
       UPLOAD_DIR: /uploads
     volumes:
-      - talentlens_data:/data
-      - talentlens_uploads:/uploads
+      - talent-lab-data:/data
+      - talent-lab-uploads:/uploads
     ports:
       - "127.0.0.1:8000:8000"
     restart: unless-stopped
 
 volumes:
-  talentlens_data:
-  talentlens_uploads:
+  talent-lab-data:
+  talent-lab-uploads:
 

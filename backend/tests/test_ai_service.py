@@ -11,7 +11,7 @@ zhangsan@example.com
 字节跳动 后端工程师 2022.07 - 至今
 负责 Flask API 开发与 SQL 性能优化
 项目经历
-TalentLens 智能简历分析平台
+talent-lab 智能简历分析平台
 技术栈：React, TypeScript, Flask, SQL
 负责上传解析和候选人评分模块
 """
@@ -24,7 +24,7 @@ TalentLens 智能简历分析平台
     assert profile["work_experience"][0]["company"] == "字节跳动"
     assert "后端工程师" in profile["work_experience"][0]["title"]
     assert "Flask API" in profile["work_experience"][0]["summary"]
-    assert profile["projects"][0]["name"] == "TalentLens 智能简历分析平台"
+    assert profile["projects"][0]["name"] == "talent-lab 智能简历分析平台"
     assert "React" in profile["projects"][0]["tech_stack"]
     assert "本地模拟提取" not in str(profile)
 

@@ -18,6 +18,15 @@ import { Link } from "react-router-dom";
 import { AnimatedPage } from "../components/AnimatedPage";
 import { candidateApi, jobsApi } from "../lib/api";
 import { statusLabels } from "../lib/format";
+import type { CandidateStatus } from "../types/api";
+
+const statusChartColors: Record<CandidateStatus, string> = {
+  pending: "hsl(var(--muted-foreground))",
+  screen_passed: "hsl(var(--primary))",
+  interviewing: "hsl(var(--warning))",
+  hired: "hsl(var(--success))",
+  rejected: "hsl(var(--destructive))",
+};
 
 export function DashboardPage() {
   const candidatesQuery = useQuery({
@@ -69,7 +78,7 @@ export function DashboardPage() {
   ];
   const statusData = useMemo(
     () =>
-      Object.entries(statusLabels)
+      (Object.entries(statusLabels) as Array<[CandidateStatus, string]>)
         .map(([status, label]) => ({
           status,
           label,
@@ -100,7 +109,7 @@ export function DashboardPage() {
           {metrics.map((metric, index) => (
             <div
               key={metric.label}
-              className="card-hover rounded-lg border border-border bg-muted/30 p-5"
+              className="card-hover rounded-lg border border-border bg-card p-5"
               style={{
                 animation: `fade-in-up 0.45s ease-out ${0.05 + index * 0.07}s both`,
               }}
@@ -109,14 +118,14 @@ export function DashboardPage() {
                 <p className="text-sm text-muted-foreground">{metric.label}</p>
                 <metric.icon className="h-4 w-4 text-muted-foreground" />
               </div>
-              <p className="mt-4 text-3xl font-semibold">{metric.value}</p>
+              <p className="mt-4 text-3xl font-semibold tabular-nums">{metric.value}</p>
             </div>
           ))}
         </div>
-        <div className="rounded-lg border border-border bg-muted/20 p-6 animate-fade-in-up-3">
+        <div className="rounded-lg border border-border bg-card p-6 animate-fade-in-up animation-delay-150">
           <h3 className="text-lg font-medium">数据分布</h3>
           <div className="mt-6 grid gap-4 xl:grid-cols-2">
-            <div className="h-80 rounded-md border border-border bg-background p-4 animate-fade-in-up-4">
+            <div className="h-80 rounded-md border border-border bg-background p-4 animate-fade-in-up animation-delay-200">
               <h4 className="text-sm font-medium text-muted-foreground mb-2">
                 候选人状态分布
               </h4>
@@ -131,19 +140,8 @@ export function DashboardPage() {
                       `${label}: ${value} (${(percent * 100).toFixed(0)}%)`
                     }
                   >
-                    {statusData.map((item, index) => (
-                      <Cell
-                        key={item.status}
-                        fill={
-                          [
-                            "#0f766e",
-                            "#2563eb",
-                            "#d97706",
-                            "#16a34a",
-                            "#dc2626",
-                          ][index]
-                        }
-                      />
+                    {statusData.map((item) => (
+                      <Cell key={item.status} fill={statusChartColors[item.status]} />
                     ))}
                   </Pie>
                   <Legend />
@@ -156,7 +154,7 @@ export function DashboardPage() {
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="h-80 rounded-md border border-border bg-background p-4 animate-fade-in-up-5">
+            <div className="h-80 rounded-md border border-border bg-background p-4 animate-fade-in-up animation-delay-250">
               <h4 className="text-sm font-medium text-muted-foreground mb-2">
                 候选人评分
               </h4>
@@ -174,7 +172,7 @@ export function DashboardPage() {
             </div>
           </div>
         </div>
-        <div className="rounded-lg border border-border bg-muted/20 p-6 animate-fade-in-up-5">
+        <div className="rounded-lg border border-border bg-card p-6 animate-fade-in-up animation-delay-250">
           <h3 className="text-lg font-medium">最近上传</h3>
           <div className="mt-4 divide-y divide-border rounded-md border border-border bg-background">
             {candidates.slice(0, 6).map((candidate, index) => (

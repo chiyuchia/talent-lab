@@ -1,4 +1,4 @@
-# TalentLens
+# talent-lab
 
 <p align="center">
   <b>AI 赋能的智能简历分析平台</b>
@@ -38,7 +38,7 @@
 ## 项目结构
 
 ```text
-TalentLens/
+talent-lab/
 ├── backend/              # Flask REST API
 │   ├── app/
 │   │   ├── blueprints/   # API 路由 (auth, uploads, candidates, jobs, scores)
@@ -119,7 +119,7 @@ npm run dev
 |------|------|--------|
 | `FLASK_SECRET_KEY` | Cookie 签名密钥（生产环境必填） | `dev-secret-change-me` |
 | `APP_ACCESS_KEY` | 访问密钥（生产环境必填） | — |
-| `DATABASE_URL` | 数据库地址 | `sqlite:///talentlens.sqlite3` |
+| `DATABASE_URL` | 数据库地址 | `sqlite:///talent-lab.sqlite3` |
 | `UPLOAD_DIR` | PDF 上传目录 | `instance/uploads` |
 | `AI_MODE` | AI 模式：`mock` 或 `real` | `mock` |
 | `AI_PROVIDER` | AI 提供商：`openai` / `moonshot` / `deepseek` | `openai` |

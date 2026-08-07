@@ -1,4 +1,4 @@
-# VPS host-level Nginx configuration for TalentLens backend
+# VPS host-level Nginx configuration for talent-lab backend
 # Place this in your VPS Nginx sites-enabled directory (e.g. /etc/nginx/sites-enabled/)
 # Update server_name to your actual API domain
 

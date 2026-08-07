@@ -3,6 +3,7 @@ import { AlertTriangle, RotateCcw } from "lucide-react";
 
 import { getErrorMessage } from "../lib/errors";
 import { useUiStore } from "../lib/ui-store";
+import { Button } from "./ui/button";
 
 type ErrorBoundaryProps = {
   children: ReactNode;
@@ -40,22 +41,18 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
     return (
       <main className="grid min-h-screen place-items-center bg-background px-4 text-foreground">
-        <section className="w-full max-w-lg rounded-lg border border-border bg-muted/30 p-6 text-center shadow-sm animate-scale-in">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-md bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-300">
+        <section className="w-full max-w-lg rounded-lg border border-border bg-card p-6 text-center shadow-sm animate-scale-in">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-md bg-destructive/10 text-destructive">
             <AlertTriangle className="h-5 w-5" />
           </div>
           <h1 className="mt-5 text-xl font-semibold">页面遇到问题</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             {getErrorMessage(this.state.error, "页面渲染失败，请刷新后重试。")}
           </p>
-          <button
-            type="button"
-            onClick={this.reset}
-            className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-          >
+          <Button onClick={this.reset} className="mt-6">
             <RotateCcw className="h-4 w-4" />
             重试
-          </button>
+          </Button>
         </section>
       </main>
     );

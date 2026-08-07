@@ -1,2 +1,2 @@
-"""Application services for TalentLens."""
+"""Application services for talent-lab."""
 

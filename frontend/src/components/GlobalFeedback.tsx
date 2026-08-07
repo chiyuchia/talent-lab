@@ -5,6 +5,7 @@ import { AlertCircle, Loader2, X } from "lucide-react";
 import type { GlobalErrorNotice } from "../lib/ui-store";
 import { useUiStore } from "../lib/ui-store";
 import { getErrorMessage, getErrorTitle } from "../lib/errors";
+import { Button } from "./ui/button";
 
 function useDelayedVisibility(active: boolean, delayMs = 250) {
   const [visible, setVisible] = useState(false);
@@ -33,21 +34,22 @@ function GlobalErrorToast({ error }: { error: GlobalErrorNotice }) {
   return (
     <div
       role="alert"
-      className="pointer-events-auto flex w-full max-w-md items-start gap-3 rounded-lg border border-red-200 bg-white p-4 text-sm text-slate-900 shadow-lg dark:border-red-900/70 dark:bg-slate-950 dark:text-slate-100"
+      className="pointer-events-auto flex w-full max-w-md items-start gap-3 rounded-lg border border-destructive/30 bg-card p-4 text-sm text-card-foreground shadow-lg"
     >
-      <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600 dark:text-red-300" />
+      <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
       <div className="min-w-0 flex-1">
         <p className="font-medium">{error.title}</p>
-        <p className="mt-1 break-words text-slate-600 dark:text-slate-300">{error.message}</p>
+        <p className="mt-1 break-words text-muted-foreground">{error.message}</p>
       </div>
-      <button
-        type="button"
+      <Button
+        variant="ghost"
+        size="icon"
         onClick={() => dismissError(error.id)}
-        className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+        className="h-7 w-7 shrink-0 text-muted-foreground"
         aria-label="关闭错误提示"
       >
         <X className="h-4 w-4" />
-      </button>
+      </Button>
     </div>
   );
 }

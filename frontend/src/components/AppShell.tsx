@@ -18,8 +18,10 @@ import { NavLink, Outlet, useMatches, useNavigate } from "react-router-dom";
 import { authApi } from "../lib/api";
 import { useCompareStore } from "../lib/compare-store";
 import { useUiStore } from "../lib/ui-store";
+import { cn } from "../lib/utils";
 import { CompareResultPanel } from "./CompareResultPanel";
 import { ResizableDrawer } from "./ResizableDrawer";
+import { Button } from "./ui/button";
 
 const navItems = [
   { to: "/", label: "总览", icon: BarChart3 },
@@ -50,7 +52,6 @@ export function AppShell() {
     isComparing,
     closeDrawer,
     clearSelected,
-    runCompare,
   } = useCompareStore();
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
@@ -94,21 +95,23 @@ export function AppShell() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Desktop sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 hidden border-r border-border bg-muted/40 p-4 transition-all duration-300 ease-in-out lg:block ${
-          sidebarCollapsed ? "w-16" : "w-56"
-        }`}
+        className={cn(
+          "fixed inset-y-0 left-0 hidden border-r border-border bg-card p-4 transition-all duration-300 ease-in-out lg:block",
+          sidebarCollapsed ? "w-16" : "w-56",
+        )}
       >
-        <div className={`mb-8 flex items-center ${sidebarCollapsed ? "justify-center" : "justify-between"}`}>
+        <div className={cn("mb-8 flex items-center", sidebarCollapsed ? "justify-center" : "justify-between")}>
           {!sidebarCollapsed && (
             <div>
-              <p className="text-xl font-semibold">TalentLens</p>
+              <p className="text-xl font-semibold">talent-lab</p>
               <p className="mt-1 text-sm text-muted-foreground">智能简历分析平台</p>
             </div>
           )}
-          <button
-            type="button"
+          <Button
+            variant="outline"
+            size="icon"
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border hover:bg-accent transition-transform hover:scale-105 shrink-0"
+            className="h-8 w-8 shrink-0"
             aria-label={sidebarCollapsed ? "展开侧边栏" : "收起侧边栏"}
           >
             {sidebarCollapsed ? (
@@ -116,7 +119,7 @@ export function AppShell() {
             ) : (
               <ChevronsLeft className="h-4 w-4" />
             )}
-          </button>
+          </Button>
         </div>
         <nav className="space-y-1">
           {navItems.map((item, index) => (
@@ -125,13 +128,13 @@ export function AppShell() {
               to={item.to}
               end={item.to === "/"}
               className={({ isActive }) =>
-                [
+                cn(
                   "nav-indicator flex items-center rounded-md py-2 text-sm transition-all duration-200",
                   sidebarCollapsed ? "justify-center px-2" : "gap-3 px-3",
                   isActive
                     ? "active bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:translate-x-0.5",
-                ].join(" ")
+                )
               }
               style={{
                 animation: `fade-in-up 0.35s ease-out ${0.05 + index * 0.04}s both`,
@@ -155,36 +158,36 @@ export function AppShell() {
           <aside className="fixed inset-y-0 left-0 z-50 w-56 border-r border-border bg-background p-4 lg:hidden animate-fade-in-left">
             <div className="mb-6 flex items-center justify-between">
               <div>
-                <p className="text-xl font-semibold">TalentLens</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  智能简历分析平台
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={closeSidebar}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border hover:bg-accent"
-                aria-label="关闭导航"
-              >
-                <X className="h-4 w-4" />
-              </button>
+                <p className="text-xl font-semibold">talent-lab</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                智能简历分析平台
+              </p>
             </div>
-            <nav className="space-y-1">
-              {navItems.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.to === "/"}
-                  onClick={closeSidebar}
-                  className={({ isActive }) =>
-                    [
-                      "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm transition-colors",
-                      isActive
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
-                    ].join(" ")
-                  }
-                >
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={closeSidebar}
+              aria-label="关闭导航"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+          <nav className="space-y-1">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === "/"}
+                onClick={closeSidebar}
+                className={({ isActive }) =>
+                  cn(
+                    "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm transition-colors",
+                    isActive
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                  )
+                }
+              >
                   <item.icon aria-hidden className="h-4 w-4" />
                   {item.label}
                 </NavLink>
@@ -197,24 +200,25 @@ export function AppShell() {
       <div className={`transition-all duration-300 ease-in-out ${sidebarCollapsed ? "lg:pl-16" : "lg:pl-56"}`}>
         <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-border bg-background/95 px-4 backdrop-blur lg:px-8 animate-fade-in-down">
           <div className="flex items-center gap-3">
-            <button
-              type="button"
+            <Button
+              variant="outline"
+              size="icon"
               onClick={() => setSidebarOpen(true)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border hover:bg-accent transition-transform hover:scale-105 lg:hidden"
+              className="lg:hidden"
               aria-label="展开导航"
             >
               <Menu className="h-4 w-4" />
-            </button>
+            </Button>
             <div>
               <p className="text-sm text-muted-foreground">招聘工作台</p>
-              <h1 className="text-lg font-semibold">TalentLens</h1>
+              <h1 className="text-lg font-semibold">talent-lab</h1>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button
-              type="button"
+            <Button
+              variant="outline"
+              size="icon"
               onClick={toggleTheme}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border hover:bg-accent transition-transform hover:scale-105"
               aria-label="切换主题"
             >
               {theme === "dark" ? (
@@ -222,19 +226,19 @@ export function AppShell() {
               ) : (
                 <Moon className="h-4 w-4" />
               )}
-            </button>
-            <button
-              type="button"
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
               onClick={() => logoutMutation.mutate()}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border hover:bg-accent transition-transform hover:scale-105"
               aria-label="退出登录"
             >
               <LogOut className="h-4 w-4" />
-            </button>
+            </Button>
           </div>
         </header>
         <main
-          className={`w-full px-4 py-6 lg:px-8 ${isFullWidth ? "" : "mx-auto max-w-7xl"}`}
+          className={cn("w-full px-4 py-6 lg:px-8", !isFullWidth && "mx-auto max-w-7xl")}
         >
           <Outlet />
         </main>

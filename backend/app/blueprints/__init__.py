@@ -1,2 +1,2 @@
-"""Flask blueprints for TalentLens."""
+"""Flask blueprints for talent-lab."""
 

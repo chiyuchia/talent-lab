@@ -16,8 +16,10 @@ import {
   ParseStatusBadge,
 } from "../components/StatusBadge";
 import { candidateApi } from "../lib/api";
-import { statusLabels } from "../lib/format";
+import { scoreTierBarClass, scoreTierTextClass } from "../lib/format";
 import { normalizeProfile } from "../lib/candidate-profile";
+import { cn } from "../lib/utils";
+import { Button } from "../components/ui/button";
 import type { ScoreResult } from "../types/api";
 
 function ScoreBar({
@@ -30,16 +32,12 @@ function ScoreBar({
   max?: number;
 }) {
   const pct = Math.max(0, Math.min(100, (score / max) * 100));
-  let color = "bg-red-500";
-  if (pct >= 80) color = "bg-emerald-500";
-  else if (pct >= 60) color = "bg-amber-500";
-  else if (pct >= 40) color = "bg-orange-500";
   return (
     <div className="flex items-center gap-2 text-xs">
       <span className="w-12 shrink-0 text-muted-foreground">{label}</span>
       <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
         <div
-          className={`h-full rounded-full ${color} transition-all`}
+          className={cn("h-full rounded-full transition-all", scoreTierBarClass(score))}
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -53,7 +51,7 @@ function ScoreBar({
 function ScoreCard({ score }: { score: ScoreResult }) {
   const [expanded, setExpanded] = useState(false);
   return (
-    <div className="rounded-lg border border-border bg-muted/40 p-3">
+    <div className="rounded-lg border border-border bg-muted/50 p-3">
       <div className="flex items-center justify-between gap-2">
         <p className="text-sm font-medium truncate">{score.job_title}</p>
         <span className="shrink-0 text-lg font-bold tabular-nums text-primary">
@@ -123,7 +121,7 @@ export function ComparePage() {
           </p>
         </div>
         <div className="grid gap-4 lg:grid-cols-[18rem_1fr] xl:grid-cols-[20rem_1fr]">
-          <div className="rounded-lg border border-border bg-muted/20 p-5 animate-fade-in-up-1">
+          <div className="rounded-lg border border-border bg-card p-5 animate-fade-in-up animation-delay-50">
             <div className="flex items-center justify-between">
               <h3 className="font-medium">选择候选人</h3>
               <span className="text-xs text-muted-foreground">
@@ -134,12 +132,6 @@ export function ComparePage() {
               {(candidatesQuery.data?.items ?? []).map((candidate) => {
                 const isSelected = selectedIds.includes(candidate.id);
                 const isMaxReached = selectedIds.length >= 3 && !isSelected;
-                const scoreColor =
-                  (candidate.total_score ?? 0) >= 80
-                    ? "text-emerald-600"
-                    : (candidate.total_score ?? 0) >= 60
-                      ? "text-amber-600"
-                      : "text-red-600";
                 const initials = (candidate.name || candidate.original_filename)
                   .slice(0, 2)
                   .toUpperCase();
@@ -147,15 +139,14 @@ export function ComparePage() {
                 return (
                   <label
                     key={candidate.id}
-                    className={[
+                    className={cn(
                       "flex items-center gap-3 rounded-lg border bg-background p-3 text-sm cursor-pointer transition-all",
                       isSelected
                         ? "border-primary/50 bg-primary/5 shadow-sm"
                         : "border-border hover:bg-muted/30",
-                      isMaxReached
-                        ? "opacity-50 cursor-not-allowed hover:bg-background"
-                        : "",
-                    ].join(" ")}
+                      isMaxReached &&
+                        "opacity-50 cursor-not-allowed hover:bg-background",
+                    )}
                   >
                     <input
                       type="checkbox"
@@ -179,7 +170,7 @@ export function ComparePage() {
                       </div>
                     </div>
                     <span
-                      className={`shrink-0 text-base font-bold tabular-nums ${scoreColor}`}
+                      className={cn("shrink-0 text-base font-bold tabular-nums", scoreTierTextClass(candidate.total_score ?? 0))}
                     >
                       {candidate.total_score ?? "--"}
                     </span>
@@ -187,27 +178,26 @@ export function ComparePage() {
                 );
               })}
             </div>
-            <button
-              type="button"
+            <Button
               onClick={() => compareMutation.mutate(selectedIds)}
               disabled={selectedIds.length < 2 || compareMutation.isPending}
-              className="mt-4 w-full rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground disabled:opacity-60 hover:opacity-90 transition-opacity"
+              className="mt-4 w-full"
             >
               生成对比
               {selectedIds.length >= 2 ? ` (${selectedIds.length} 人)` : ""}
-            </button>
+            </Button>
             {selectedIds.length >= 3 ? (
               <p className="mt-2 text-xs text-center text-muted-foreground">
                 最多选择 3 名候选人
               </p>
             ) : null}
             {compareMutation.isError ? (
-              <p className="mt-3 text-sm text-red-600 animate-fade-in">
+              <p className="mt-3 text-sm text-destructive animate-fade-in">
                 {compareMutation.error.message}
               </p>
             ) : null}
           </div>
-          <div className="rounded-lg border border-border bg-muted/20 p-5 animate-fade-in-up-2">
+          <div className="rounded-lg border border-border bg-card p-5 animate-fade-in-up animation-delay-100">
             <h3 className="font-medium">对比结果</h3>
             {compareMutation.data?.candidates.length ? (
               <div className="mt-4 grid gap-4 grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] stagger-children">
@@ -227,7 +217,7 @@ export function ComparePage() {
                   return (
                     <div
                       key={candidate.id}
-                      className="card-hover flex flex-col rounded-xl border border-border bg-background overflow-hidden"
+                      className="card-hover flex flex-col rounded-lg border border-border bg-background overflow-hidden"
                     >
                       {/* Header */}
                       <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 px-4 pt-5 pb-4">
@@ -257,13 +247,7 @@ export function ComparePage() {
                         </div>
                         <div className="mt-3 flex items-end gap-2">
                           <span
-                            className={`text-3xl font-bold tabular-nums ${
-                              (candidate.total_score ?? 0) >= 80
-                                ? "text-emerald-600"
-                                : (candidate.total_score ?? 0) >= 60
-                                  ? "text-amber-600"
-                                  : "text-red-600"
-                            }`}
+                            className={cn("text-3xl font-bold tabular-nums", scoreTierTextClass(candidate.total_score ?? 0))}
                           >
                             {candidate.total_score ?? "--"}
                           </span>

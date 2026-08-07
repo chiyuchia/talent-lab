@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   darkMode: ["class"],
@@ -9,17 +10,42 @@ const config: Config = {
         border: "hsl(var(--border))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        muted: "hsl(var(--muted))",
-        "muted-foreground": "hsl(var(--muted-foreground))",
-        primary: "hsl(var(--primary))",
-        "primary-foreground": "hsl(var(--primary-foreground))",
-        accent: "hsl(var(--accent))",
-        "accent-foreground": "hsl(var(--accent-foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        ring: "hsl(var(--ring))",
       },
       borderRadius: {
         lg: "0.5rem",
         md: "0.375rem",
         sm: "0.25rem",
+      },
+      animationDelay: {
+        50: "0.05s",
+        100: "0.1s",
+        150: "0.15s",
+        200: "0.2s",
+        250: "0.25s",
+        300: "0.3s",
       },
       keyframes: {
         "fade-in": {
@@ -64,19 +90,23 @@ const config: Config = {
         "scale-in": "scale-in 0.35s ease-out both",
         "slide-up": "slide-up 0.4s ease-out both",
         "shimmer": "shimmer 2s linear infinite",
-        // Stagger delay variants
-        "fade-in-up-1": "fade-in-up 0.5s ease-out 0.05s both",
-        "fade-in-up-2": "fade-in-up 0.5s ease-out 0.1s both",
-        "fade-in-up-3": "fade-in-up 0.5s ease-out 0.15s both",
-        "fade-in-up-4": "fade-in-up 0.5s ease-out 0.2s both",
-        "fade-in-up-5": "fade-in-up 0.5s ease-out 0.25s both",
-        "fade-in-up-6": "fade-in-up 0.5s ease-out 0.3s both",
         // Alias that CandidateDetailPage already uses
         fadeIn: "fade-in 0.35s ease-out both",
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ matchUtilities, theme }) => {
+      matchUtilities(
+        {
+          "animation-delay": (value) => ({
+            animationDelay: value as string,
+          }),
+        },
+        { values: theme("animationDelay") },
+      );
+    }),
+  ],
 };
 
 export default config;

@@ -44,7 +44,7 @@ def create_app(test_config: dict | None = None) -> Flask:
     @app.cli.command("init-db")
     def init_db_command() -> None:
         db.create_all()
-        print("Initialized the TalentLens database.")
+        print("Initialized the talent-lab database.")
 
     @app.errorhandler(HTTPException)
     def handle_http_exception(error: HTTPException):

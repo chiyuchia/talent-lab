@@ -11,6 +11,8 @@ import {
 
 import { CandidateStatusBadge } from "./StatusBadge";
 import { normalizeProfile } from "../lib/candidate-profile";
+import { scoreTierBarClass, scoreTierTextClass } from "../lib/format";
+import { cn } from "../lib/utils";
 import type { CandidateDetail, ScoreResult } from "../types/api";
 
 function ScoreBar({
@@ -23,16 +25,12 @@ function ScoreBar({
   max?: number;
 }) {
   const pct = Math.max(0, Math.min(100, (score / max) * 100));
-  let color = "bg-red-500";
-  if (pct >= 80) color = "bg-emerald-500";
-  else if (pct >= 60) color = "bg-amber-500";
-  else if (pct >= 40) color = "bg-orange-500";
   return (
     <div className="flex items-center gap-2 text-xs">
       <span className="w-12 shrink-0 text-muted-foreground">{label}</span>
       <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
         <div
-          className={`h-full rounded-full ${color} transition-all`}
+          className={cn("h-full rounded-full transition-all", scoreTierBarClass(score))}
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -46,7 +44,7 @@ function ScoreBar({
 function ScoreCard({ score }: { score: ScoreResult }) {
   const [expanded, setExpanded] = useState(false);
   return (
-    <div className="rounded-lg border border-border bg-muted/40 p-3">
+    <div className="rounded-lg border border-border bg-muted/50 p-3">
       <div className="flex items-center justify-between gap-2">
         <p className="text-sm font-medium truncate">{score.job_title}</p>
         <span className="shrink-0 text-lg font-bold tabular-nums text-primary">
@@ -127,7 +125,7 @@ export function CompareResultPanel({
         return (
           <div
             key={candidate.id}
-            className="card-hover flex flex-col rounded-xl border border-border bg-background overflow-hidden"
+            className="card-hover flex flex-col rounded-lg border border-border bg-background overflow-hidden"
           >
             <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 px-4 pt-5 pb-4">
               <div className="flex items-start justify-between gap-3">
@@ -156,7 +154,7 @@ export function CompareResultPanel({
               </div>
               <div className="mt-3 flex items-end gap-2">
                 <span
-                  className={`text-3xl font-bold tabular-nums ${(candidate.total_score ?? 0) >= 80 ? "text-emerald-600" : (candidate.total_score ?? 0) >= 60 ? "text-amber-600" : "text-red-600"}`}
+                  className={cn("text-3xl font-bold tabular-nums", scoreTierTextClass(candidate.total_score ?? 0))}
                 >
                   {candidate.total_score ?? "--"}
                 </span>

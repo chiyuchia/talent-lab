@@ -12,7 +12,7 @@ def make_client():
             "APP_ACCESS_KEY": "test-key",
             "SECRET_KEY": "test-secret",
             "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
-            "UPLOAD_DIR": "/tmp/talentlens-test-uploads",
+            "UPLOAD_DIR": "instance/test_uploads",
         }
     )
     with app.app_context():

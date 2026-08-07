@@ -36,3 +36,14 @@ export function parseJsonArray(value: string): unknown[] {
   }
 }
 
+export function scoreTierTextClass(score: number): string {
+  if (score >= 80) return "text-success";
+  if (score >= 60) return "text-warning";
+  return "text-destructive";
+}
+
+export function scoreTierBarClass(score: number): string {
+  if (score >= 80) return "bg-success";
+  if (score >= 60) return "bg-warning";
+  return "bg-destructive";
+}

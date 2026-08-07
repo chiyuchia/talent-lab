@@ -4,6 +4,8 @@ import { Trash2 } from "lucide-react";
 
 import { AnimatedPage } from "../components/AnimatedPage";
 import { TagInput } from "../components/TagInput";
+import { Button } from "../components/ui/button";
+import { Input, Textarea } from "../components/ui/input";
 import { jobsApi } from "../lib/api";
 import type { JobDescription } from "../types/api";
 
@@ -82,18 +84,18 @@ export function JobsPage() {
           <p className="mt-1 text-sm text-muted-foreground">岗位描述、必备技能与加分技能</p>
         </div>
         <div className="grid gap-4 xl:grid-cols-[1fr_24rem]">
-          <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-border bg-muted/20 p-5 animate-fade-in-up-1">
-            <input
+          <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-border bg-card p-5 animate-fade-in-up animation-delay-50">
+            <Input
               id="job-title"
               value={form.title}
               onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))}
-              className="h-11 w-full rounded-md border border-border bg-background px-3"
+              className="h-11"
               placeholder="岗位名称"
             />
-            <textarea
+            <Textarea
               value={form.description}
               onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
-              className="min-h-72 w-full rounded-md border border-border bg-background p-4 outline-none focus:ring-2 focus:ring-primary"
+              className="min-h-72 p-4"
               placeholder="输入岗位描述"
             />
             <div className="grid gap-3 md:grid-cols-2">
@@ -118,12 +120,12 @@ export function JobsPage() {
                 />
               </label>
             </div>
-            {saveMutation.isError ? <p className="text-sm text-red-600 animate-fade-in">{saveMutation.error.message}</p> : null}
-            <button type="submit" className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90 transition-opacity">
+            {saveMutation.isError ? <p className="text-sm text-destructive animate-fade-in">{saveMutation.error.message}</p> : null}
+            <Button type="submit">
               {editingId ? "保存岗位" : "创建岗位"}
-            </button>
+            </Button>
           </form>
-          <div className="rounded-lg border border-border bg-muted/20 p-5 animate-fade-in-up-2">
+          <div className="rounded-lg border border-border bg-card p-5 animate-fade-in-up animation-delay-100">
             <h3 className="font-medium">岗位列表</h3>
             <div className="mt-5 space-y-3 stagger-children">
               {jobsQuery.isLoading ? <div className="h-24 rounded-md bg-muted skeleton-shimmer" /> : null}
@@ -135,9 +137,9 @@ export function JobsPage() {
                   <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{job.description}</p>
                   <div className="mt-3 flex items-center justify-between">
                     <span className="text-xs text-muted-foreground">{job.required_skills.length} 必备技能</span>
-                    <button type="button" onClick={() => deleteMutation.mutate(job.id)} className="rounded-md p-2 text-red-600 hover:bg-red-50 transition-colors" aria-label="删除岗位">
+                    <Button variant="destructive" size="icon" onClick={() => deleteMutation.mutate(job.id)} aria-label="删除岗位">
                       <Trash2 className="h-4 w-4" />
-                    </button>
+                    </Button>
                   </div>
                 </div>
               ))}

@@ -144,7 +144,6 @@ vite.config.ts.timestamp-*
 # Project docs
 .claude/
 .codex/
-docs/
 
 # Python
 __pycache__/

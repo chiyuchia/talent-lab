@@ -7,6 +7,8 @@ import { EmptyState } from "../components/EmptyState";
 import { ParseStatusBadge } from "../components/StatusBadge";
 import { ResumeStreamViewer } from "../components/ResumeStreamViewer";
 import { Skeleton } from "../components/Skeleton";
+import { Button } from "../components/ui/button";
+import { cn } from "../lib/utils";
 import { API_PREFIX, uploadApi } from "../lib/api";
 import type { CandidateDetail, CandidateSummary } from "../types/api";
 
@@ -30,25 +32,25 @@ function UploadQueueSkeleton() {
               <div className="flex items-start gap-3">
                 <Skeleton className="mt-1 h-5 w-5 rounded skeleton-shimmer" />
                 <div className="space-y-2">
-                  <Skeleton className={`h-4 skeleton-shimmer ${index === 0 ? "w-48" : "w-40"}`} />
+                  <Skeleton className={cn("h-4 skeleton-shimmer", index === 0 ? "w-48" : "w-40")} />
                   <Skeleton className="h-3 w-56 max-w-full skeleton-shimmer" />
                 </div>
               </div>
               <Skeleton className="h-6 w-20 rounded-full skeleton-shimmer" />
             </div>
-            <div className="grid grid-cols-1 gap-4 rounded-xl border border-slate-200/80 bg-slate-50/40 p-4 dark:border-slate-800 dark:bg-slate-900/40 lg:grid-cols-12">
+            <div className="grid grid-cols-1 gap-4 rounded-lg border border-border bg-muted/50 p-4 lg:grid-cols-12">
               <div className="space-y-3 lg:col-span-7">
-                <Skeleton className="h-10 w-full rounded-xl skeleton-shimmer" />
+                <Skeleton className="h-10 w-full rounded-lg skeleton-shimmer" />
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <Skeleton className="h-16 w-full rounded-xl skeleton-shimmer" />
-                  <Skeleton className="h-16 w-full rounded-xl skeleton-shimmer" />
+                  <Skeleton className="h-16 w-full rounded-lg skeleton-shimmer" />
+                  <Skeleton className="h-16 w-full rounded-lg skeleton-shimmer" />
                 </div>
-                <Skeleton className="h-20 w-full rounded-xl skeleton-shimmer" />
+                <Skeleton className="h-20 w-full rounded-lg skeleton-shimmer" />
               </div>
-              <div className="space-y-2 rounded-xl bg-slate-950 p-4 lg:col-span-5">
-                <Skeleton className="h-3 w-4/5 rounded-sm bg-cyan-400/10 dark:bg-cyan-400/10" />
-                <Skeleton className="h-3 w-11/12 rounded-sm bg-cyan-400/10 dark:bg-cyan-400/10" />
-                <Skeleton className="h-3 w-2/3 rounded-sm bg-cyan-400/10 dark:bg-cyan-400/10" />
+              <div className="space-y-2 rounded-lg bg-slate-950 p-4 lg:col-span-5">
+                <Skeleton className="h-3 w-4/5 rounded-sm bg-cyan-400/10" />
+                <Skeleton className="h-3 w-11/12 rounded-sm bg-cyan-400/10" />
+                <Skeleton className="h-3 w-2/3 rounded-sm bg-cyan-400/10" />
               </div>
             </div>
           </div>
@@ -150,7 +152,7 @@ export function UploadPage() {
           <p className="mt-1 text-sm text-muted-foreground">PDF 批量上传与解析队列</p>
         </div>
         <div
-          className="grid min-h-72 place-items-center rounded-lg border border-dashed border-border bg-muted/20 p-8 text-center transition-all duration-300 hover:bg-muted/40 hover:border-primary/40 hover:shadow-lg animate-fade-in-up-1"
+          className="grid min-h-72 place-items-center rounded-lg border border-dashed border-border bg-card p-8 text-center transition-all duration-300 hover:bg-muted/50 hover:border-primary/40 hover:shadow-lg animate-fade-in-up animation-delay-50"
           onDragOver={(event) => event.preventDefault()}
           onDrop={handleDrop}
         >
@@ -166,21 +168,20 @@ export function UploadPage() {
               multiple
               onChange={handleInputChange}
             />
-            <button
-              type="button"
+            <Button
               onClick={() => inputRef.current?.click()}
               disabled={uploadMutation.isPending}
-              className="mt-5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-60 hover:opacity-90 transition-opacity"
+              className="mt-5"
             >
               选择文件
-            </button>
+            </Button>
           </div>
         </div>
-        {error ? <p className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 animate-fade-in">{error}</p> : null}
+        {error ? <p className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive animate-fade-in">{error}</p> : null}
         {uploadMutation.isPending ? (
           <UploadQueueSkeleton />
         ) : queue.length ? (
-          <div className="rounded-lg border border-border animate-fade-in-up-2">
+          <div className="rounded-lg border border-border bg-card animate-fade-in-up animation-delay-100">
             <div className="border-b border-border px-4 py-3 font-medium">解析队列</div>
             <div className="divide-y divide-border">
               {queue.map((item, index) => (

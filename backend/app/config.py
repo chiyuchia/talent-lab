@@ -7,7 +7,7 @@ class Config:
     ENV = os.getenv("FLASK_ENV", "development")
     SECRET_KEY = os.getenv("FLASK_SECRET_KEY", "dev-secret-change-me")
     APP_ACCESS_KEY = os.getenv("APP_ACCESS_KEY", "")
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///talentlens.sqlite3")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///talent-lab.sqlite3")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_DIR = os.getenv("UPLOAD_DIR", "instance/uploads")
     AI_MODE = os.getenv("AI_MODE", "mock")
