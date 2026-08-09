@@ -176,3 +176,9 @@ uploads/
 
 # Deploy environment files with secrets
 deploy/.env.production
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
