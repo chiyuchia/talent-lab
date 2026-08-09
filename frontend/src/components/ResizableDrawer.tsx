@@ -89,7 +89,7 @@ export function ResizableDrawer({
   return (
     <>
       <div
-        className="fixed inset-0 z-40 bg-black/40 transition-opacity"
+        className="fixed inset-0 z-40 bg-[hsl(var(--scrim)/0.45)] transition-opacity"
         onClick={onClose}
       />
       <aside

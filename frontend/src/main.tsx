@@ -7,6 +7,7 @@ import { router } from "./app/router";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { GlobalFeedback } from "./components/GlobalFeedback";
 import { queryClient } from "./lib/query-client";
+import "@fontsource-variable/inter";
 import "./styles/index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -85,19 +85,24 @@ export function JobsPage() {
         </div>
         <div className="grid gap-4 xl:grid-cols-[1fr_24rem]">
           <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-border bg-card p-5 animate-fade-in-up animation-delay-50">
-            <Input
-              id="job-title"
-              value={form.title}
-              onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))}
-              className="h-11"
-              placeholder="岗位名称"
-            />
-            <Textarea
-              value={form.description}
-              onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
-              className="min-h-72 p-4"
-              placeholder="输入岗位描述"
-            />
+            <label className="block text-sm" htmlFor="job-title">
+              <span className="text-muted-foreground">岗位名称</span>
+              <Input
+                id="job-title"
+                value={form.title}
+                onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))}
+                className="mt-1 h-11"
+              />
+            </label>
+            <label className="block text-sm" htmlFor="job-description">
+              <span className="text-muted-foreground">岗位描述</span>
+              <Textarea
+                id="job-description"
+                value={form.description}
+                onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
+                className="mt-1 min-h-72 p-4"
+              />
+            </label>
             <div className="grid gap-3 md:grid-cols-2">
               <label className="text-sm">
                 <span className="text-muted-foreground">必备技能</span>

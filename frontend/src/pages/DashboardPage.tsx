@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   BarChart,
   Bar,
+  CartesianGrid,
   Cell,
   Legend,
   Pie,
@@ -16,17 +17,11 @@ import { BarChart3, FileText, TrendingUp, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { AnimatedPage } from "../components/AnimatedPage";
+import { BarGradientDefs } from "../components/chart-theme";
 import { candidateApi, jobsApi } from "../lib/api";
+import { axisTickProps, statusChartColors, tooltipProps } from "../lib/chart-theme";
 import { statusLabels } from "../lib/format";
 import type { CandidateStatus } from "../types/api";
-
-const statusChartColors: Record<CandidateStatus, string> = {
-  pending: "hsl(var(--muted-foreground))",
-  screen_passed: "hsl(var(--primary))",
-  interviewing: "hsl(var(--warning))",
-  hired: "hsl(var(--success))",
-  rejected: "hsl(var(--destructive))",
-};
 
 export function DashboardPage() {
   const candidatesQuery = useQuery({
@@ -98,35 +93,32 @@ export function DashboardPage() {
 
   return (
     <AnimatedPage>
-      <section className="space-y-6">
-        <div className="animate-fade-in-down">
+      <section className="space-y-8">
+        <div>
           <h2 className="text-2xl font-semibold">总览</h2>
           <p className="mt-1 text-sm text-muted-foreground">
             候选人解析和评分概况
           </p>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {metrics.map((metric, index) => (
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border stagger-children md:grid-cols-4">
+          {metrics.map((metric) => (
             <div
               key={metric.label}
-              className="card-hover rounded-lg border border-border bg-card p-5"
-              style={{
-                animation: `fade-in-up 0.45s ease-out ${0.05 + index * 0.07}s both`,
-              }}
+              className="bg-card p-5"
             >
               <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground">{metric.label}</p>
                 <metric.icon className="h-4 w-4 text-muted-foreground" />
               </div>
-              <p className="mt-4 text-3xl font-semibold tabular-nums">{metric.value}</p>
+              <p className="mt-3 text-3xl font-semibold tabular-nums">{metric.value}</p>
             </div>
           ))}
         </div>
-        <div className="rounded-lg border border-border bg-card p-6 animate-fade-in-up animation-delay-150">
-          <h3 className="text-lg font-medium">数据分布</h3>
-          <div className="mt-6 grid gap-4 xl:grid-cols-2">
-            <div className="h-80 rounded-md border border-border bg-background p-4 animate-fade-in-up animation-delay-200">
-              <h4 className="text-sm font-medium text-muted-foreground mb-2">
+        <div>
+          <h3 className="border-b border-border pb-3 text-lg font-medium">数据分布</h3>
+          <div className="mt-6 grid gap-8 xl:grid-cols-2">
+            <div className="h-80">
+              <h4 className="mb-2 text-sm font-medium text-muted-foreground">
                 候选人状态分布
               </h4>
               <ResponsiveContainer width="100%" height="90%">
@@ -136,6 +128,8 @@ export function DashboardPage() {
                     dataKey="value"
                     nameKey="label"
                     outerRadius={80}
+                    stroke="hsl(var(--card))"
+                    strokeWidth={2}
                     label={({ label, value, percent }) =>
                       `${label}: ${value} (${(percent * 100).toFixed(0)}%)`
                     }
@@ -144,8 +138,9 @@ export function DashboardPage() {
                       <Cell key={item.status} fill={statusChartColors[item.status]} />
                     ))}
                   </Pie>
-                  <Legend />
+                  <Legend wrapperStyle={{ fontSize: 12 }} />
                   <Tooltip
+                    {...tooltipProps}
                     formatter={(value, _name, props) => [
                       `${value} 人 (${((props?.payload?.percent ?? 0) * 100).toFixed(0)}%)`,
                       props?.payload?.label ?? "数量",
@@ -154,34 +149,34 @@ export function DashboardPage() {
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="h-80 rounded-md border border-border bg-background p-4 animate-fade-in-up animation-delay-250">
-              <h4 className="text-sm font-medium text-muted-foreground mb-2">
+            <div className="h-80">
+              <h4 className="mb-2 text-sm font-medium text-muted-foreground">
                 候选人评分
               </h4>
               <ResponsiveContainer width="100%" height="90%">
                 <BarChart data={scoreData}>
-                  <XAxis dataKey="name" />
-                  <YAxis domain={[0, 100]} />
+                  <BarGradientDefs />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                  <XAxis dataKey="name" {...axisTickProps} />
+                  <YAxis domain={[0, 100]} {...axisTickProps} />
                   <Tooltip
+                    {...tooltipProps}
                     formatter={(value) => [value, "评分"]}
                     labelFormatter={(label) => `候选人：${label}`}
                   />
-                  <Bar dataKey="score" fill="hsl(var(--primary))" />
+                  <Bar dataKey="score" fill="url(#barGradient)" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
         </div>
-        <div className="rounded-lg border border-border bg-card p-6 animate-fade-in-up animation-delay-250">
-          <h3 className="text-lg font-medium">最近上传</h3>
-          <div className="mt-4 divide-y divide-border rounded-md border border-border bg-background">
-            {candidates.slice(0, 6).map((candidate, index) => (
+        <div>
+          <h3 className="border-b border-border pb-3 text-lg font-medium">最近上传</h3>
+          <div className="divide-y divide-border stagger-children">
+            {candidates.slice(0, 6).map((candidate) => (
               <div
                 key={candidate.id}
                 className="flex items-center justify-between px-4 py-3 text-sm table-row-hover hover:bg-muted/30"
-                style={{
-                  animation: `fade-in-up 0.35s ease-out ${0.05 * index}s both`,
-                }}
               >
                 <Link
                   className="hover:text-primary transition-colors"
@@ -189,13 +184,13 @@ export function DashboardPage() {
                 >
                   {candidate.name || candidate.original_filename}
                 </Link>
-                <span className="text-muted-foreground">
+                <span className="tabular-nums text-muted-foreground">
                   {candidate.total_score ?? "--"}
                 </span>
               </div>
             ))}
             {!candidates.length ? (
-              <div className="p-6 text-sm text-muted-foreground animate-fade-in">
+              <div className="p-6 text-sm text-muted-foreground">
                 暂无候选人
               </div>
             ) : null}

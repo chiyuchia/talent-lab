@@ -30,6 +30,15 @@ const navItems = [
   { to: "/jobs", label: "岗位", icon: BriefcaseBusiness },
 ];
 
+function resolvePageTitle(pathname: string): string {
+  if (pathname === "/") return "总览";
+  if (pathname.startsWith("/upload")) return "上传";
+  if (pathname.startsWith("/jobs")) return "岗位";
+  if (pathname.startsWith("/candidates/")) return "候选人详情";
+  if (pathname.startsWith("/candidates")) return "候选人";
+  return "talent-lab";
+}
+
 type AppRouteHandle = {
   fullWidth?: boolean;
 };
@@ -42,6 +51,9 @@ export function AppShell() {
   const matches = useMatches();
   const isFullWidth = matches.some((match) =>
     Boolean((match.handle as AppRouteHandle | undefined)?.fullWidth),
+  );
+  const pageTitle = resolvePageTitle(
+    matches[matches.length - 1]?.pathname ?? "/",
   );
   const queryClient = useQueryClient();
   const {
@@ -92,11 +104,11 @@ export function AppShell() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-dvh bg-background text-foreground">
       {/* Desktop sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 hidden border-r border-border bg-card p-4 transition-all duration-300 ease-in-out lg:block",
+          "fixed inset-y-0 left-0 hidden border-r border-border bg-card p-4 lg:block",
           sidebarCollapsed ? "w-16" : "w-56",
         )}
       >
@@ -121,24 +133,21 @@ export function AppShell() {
             )}
           </Button>
         </div>
-        <nav className="space-y-1">
-          {navItems.map((item, index) => (
+        <nav className="space-y-1 stagger-children">
+          {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               end={item.to === "/"}
               className={({ isActive }) =>
                 cn(
-                  "nav-indicator flex items-center rounded-md py-2 text-sm transition-all duration-200",
+                  "nav-indicator flex items-center rounded-md py-2 text-sm transition-colors duration-200",
                   sidebarCollapsed ? "justify-center px-2" : "gap-3 px-3",
                   isActive
                     ? "active bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:translate-x-0.5",
+                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
                 )
               }
-              style={{
-                animation: `fade-in-up 0.35s ease-out ${0.05 + index * 0.04}s both`,
-              }}
               title={item.label}
             >
               <item.icon aria-hidden className="h-4 w-4 shrink-0" />
@@ -152,7 +161,7 @@ export function AppShell() {
       {sidebarOpen && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+            className="fixed inset-0 z-40 bg-[hsl(var(--scrim)/0.5)] lg:hidden"
             onClick={closeSidebar}
           />
           <aside className="fixed inset-y-0 left-0 z-50 w-56 border-r border-border bg-background p-4 lg:hidden animate-fade-in-left">
@@ -197,8 +206,8 @@ export function AppShell() {
         </>
       )}
 
-      <div className={`transition-all duration-300 ease-in-out ${sidebarCollapsed ? "lg:pl-16" : "lg:pl-56"}`}>
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-border bg-background/95 px-4 backdrop-blur lg:px-8 animate-fade-in-down">
+      <div className={sidebarCollapsed ? "lg:pl-16" : "lg:pl-56"}>
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-border bg-background/95 px-4 backdrop-blur lg:px-8">
           <div className="flex items-center gap-3">
             <Button
               variant="outline"
@@ -209,10 +218,7 @@ export function AppShell() {
             >
               <Menu className="h-4 w-4" />
             </Button>
-            <div>
-              <p className="text-sm text-muted-foreground">招聘工作台</p>
-              <h1 className="text-lg font-semibold">talent-lab</h1>
-            </div>
+            <h1 className="text-base font-semibold">{pageTitle}</h1>
           </div>
           <div className="flex items-center gap-2">
             <Button

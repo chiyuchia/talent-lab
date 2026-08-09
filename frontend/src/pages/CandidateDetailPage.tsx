@@ -1,11 +1,12 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 import { useParams } from "react-router-dom";
 import { User, Mail, Phone, MapPin, Cpu, GraduationCap, Briefcase, FolderGit2, Sparkles, Trophy, Edit3, Eye, Trash2 } from "lucide-react";
 
 import { AnimatedPage } from "../components/AnimatedPage";
+import { BarGradientDefs } from "../components/chart-theme";
 
 import { CandidateStatusBadge, ParseStatusBadge } from "../components/StatusBadge";
 import { Tag } from "../components/Tag";
@@ -14,6 +15,7 @@ import { Badge, type BadgeVariant } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
 import { Input, Textarea } from "../components/ui/input";
 import { API_PREFIX, candidateApi, jobsApi, scoresApi } from "../lib/api";
+import { axisTickProps, tooltipProps } from "../lib/chart-theme";
 import { normalizeProfile } from "../lib/candidate-profile";
 import { parseJsonArray, statusLabels, stringifyJson } from "../lib/format";
 import { cn } from "../lib/utils";
@@ -582,20 +584,34 @@ export function CandidateDetailPage() {
                 <div className="mt-4 h-72">
                   <ResponsiveContainer width="100%" height="100%">
                     <RadarChart data={chartData}>
-                      <PolarGrid />
-                      <PolarAngleAxis dataKey="metric" />
-                      <Radar dataKey="score" fill="hsl(var(--primary))" fillOpacity={0.35} stroke="hsl(var(--primary))" />
-                      <Tooltip formatter={(value) => [value, "评分"]} />
+                      <defs>
+                        <radialGradient id="radarGradient">
+                          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.45} />
+                          <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.12} />
+                        </radialGradient>
+                      </defs>
+                      <PolarGrid stroke="hsl(var(--border))" />
+                      <PolarAngleAxis dataKey="metric" tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }} />
+                      <Radar
+                        dataKey="score"
+                        fill="url(#radarGradient)"
+                        stroke="hsl(var(--primary))"
+                        strokeWidth={2}
+                        dot={{ r: 3, fill: "hsl(var(--primary))", strokeWidth: 0 }}
+                      />
+                      <Tooltip {...tooltipProps} formatter={(value) => [value, "评分"]} />
                     </RadarChart>
                   </ResponsiveContainer>
                 </div>
                 <div className="mt-4 h-52">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={candidateScores}>
-                      <XAxis dataKey="job_title" />
-                      <YAxis domain={[0, 100]} />
-                      <Tooltip formatter={(value) => [value, "总分"]} labelFormatter={(label) => `岗位：${label}`} />
-                      <Bar dataKey="total_score" fill="hsl(var(--primary))" />
+                      <BarGradientDefs />
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                      <XAxis dataKey="job_title" {...axisTickProps} />
+                      <YAxis domain={[0, 100]} {...axisTickProps} />
+                      <Tooltip {...tooltipProps} formatter={(value) => [value, "总分"]} labelFormatter={(label) => `岗位：${label}`} />
+                      <Bar dataKey="total_score" fill="url(#barGradient)" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

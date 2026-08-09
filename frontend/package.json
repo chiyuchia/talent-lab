@@ -11,6 +11,7 @@
     "typecheck": "tsc -b"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
     "@tanstack/react-query": "^5.51.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -39,4 +40,3 @@
     "vite": "^5.3.5"
   }
 }
-

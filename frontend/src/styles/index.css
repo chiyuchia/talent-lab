@@ -10,7 +10,7 @@
   --muted: 210 40% 96%;
   --muted-foreground: 215 16% 47%;
   --border: 214 32% 91%;
-  --primary: 168 76% 32%;
+  --primary: 221 72% 38%;
   --primary-foreground: 0 0% 100%;
   --accent: 210 40% 96%;
   --accent-foreground: 222 47% 11%;
@@ -18,7 +18,20 @@
   --destructive-foreground: 0 0% 100%;
   --success: 160 84% 30%;
   --warning: 32 95% 36%;
-  --ring: 168 76% 32%;
+  --ring: 221 72% 38%;
+  --terminal-bg: 222 47% 11%;
+  --terminal-fg: 221 45% 72%;
+  --terminal-dim: 215 18% 52%;
+  --terminal-line: 217 25% 24%;
+  --terminal-accent: 221 85% 68%;
+  --scrim: 222 47% 11%;
+  --primary-deep: 221 70% 26%;
+  --primary-deep-foreground: 0 0% 100%;
+  --chart-pending: 215 20% 55%;
+  --chart-passed: 221 65% 48%;
+  --chart-interviewing: 36 85% 44%;
+  --chart-hired: 158 64% 36%;
+  --chart-rejected: 0 62% 50%;
 }
 
 .dark {
@@ -29,7 +42,7 @@
   --muted: 217 33% 17%;
   --muted-foreground: 215 20% 65%;
   --border: 217 33% 24%;
-  --primary: 168 76% 42%;
+  --primary: 221 75% 62%;
   --primary-foreground: 222 47% 11%;
   --accent: 217 33% 18%;
   --accent-foreground: 210 40% 98%;
@@ -37,7 +50,26 @@
   --destructive-foreground: 0 0% 100%;
   --success: 160 84% 45%;
   --warning: 38 92% 55%;
-  --ring: 168 76% 42%;
+  --ring: 221 75% 62%;
+  --terminal-bg: 222 47% 8%;
+  --terminal-fg: 221 45% 72%;
+  --terminal-dim: 215 18% 45%;
+  --terminal-line: 217 25% 18%;
+  --terminal-accent: 221 85% 68%;
+  --scrim: 222 47% 4%;
+  --primary-deep: 221 55% 20%;
+  --primary-deep-foreground: 221 30% 92%;
+  --chart-pending: 215 18% 60%;
+  --chart-passed: 221 75% 62%;
+  --chart-interviewing: 38 88% 56%;
+  --chart-hired: 160 60% 46%;
+  --chart-rejected: 0 68% 58%;
+}
+
+/* Deep brand surface (login panel). White text clears WCAG AA at body size. */
+.brand-panel {
+  background: hsl(var(--primary-deep));
+  color: hsl(var(--primary-deep-foreground));
 }
 
 * {
@@ -49,8 +81,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    "Inter Variable", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   background: hsl(var(--background));
 }
 
@@ -60,20 +92,9 @@ textarea {
   font: inherit;
 }
 
-/* ===== Global transition helpers ===== */
+/* ===== Surface & feedback helpers ===== */
 
-/* Smooth transitions for interactive elements */
-a,
-button,
-input,
-select,
-textarea {
-  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Card hover lift effect */
+/* Card hover lift effect (shadow tinted toward foreground hue, not pure black) */
 .card-hover {
   transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
@@ -81,13 +102,39 @@ textarea {
 .card-hover:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 8px 25px -5px rgba(0, 0, 0, 0.08),
-    0 4px 10px -3px rgba(0, 0, 0, 0.04);
+    0 8px 25px -5px hsl(var(--foreground) / 0.08),
+    0 4px 10px -3px hsl(var(--foreground) / 0.05);
 }
 .dark .card-hover:hover {
   box-shadow:
-    0 8px 25px -5px rgba(0, 0, 0, 0.3),
-    0 4px 10px -3px rgba(0, 0, 0, 0.2);
+    0 8px 25px -5px hsl(var(--scrim) / 0.5),
+    0 4px 10px -3px hsl(var(--scrim) / 0.35);
+}
+
+/* ===== SSE terminal (brand-teal, token-driven, dark in both themes) ===== */
+
+.terminal-surface {
+  background: hsl(var(--terminal-bg));
+  color: hsl(var(--terminal-fg));
+  border-color: hsl(var(--terminal-bg));
+}
+.terminal-text {
+  color: hsl(var(--terminal-fg));
+}
+.terminal-dim {
+  color: hsl(var(--terminal-dim));
+}
+.terminal-accent {
+  color: hsl(var(--terminal-accent));
+}
+.terminal-accent-bg {
+  background: hsl(var(--terminal-accent));
+}
+.terminal-line-bg {
+  background: hsl(var(--terminal-fg) / 0.12);
+}
+.terminal-border {
+  border-color: hsl(var(--terminal-line));
 }
 
 /* Table row hover transition */
@@ -140,13 +187,6 @@ textarea {
 }
 .nav-indicator.active::before {
   height: 60%;
-}
-
-/* Focus ring animation */
-input:focus,
-select:focus,
-textarea:focus {
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 /* Skeleton shimmer enhancement */

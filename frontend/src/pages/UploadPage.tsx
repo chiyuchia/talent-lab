@@ -25,9 +25,9 @@ function UploadQueueSkeleton() {
       <div className="border-b border-border px-4 py-3">
         <Skeleton className="h-5 w-24 skeleton-shimmer" />
       </div>
-      <div className="divide-y divide-border">
+      <div className="divide-y divide-border stagger-children">
         {Array.from({ length: 3 }).map((_, index) => (
-          <div key={index} className="flex flex-col gap-4 p-4" style={{ animation: `fade-in-up 0.4s ease-out ${0.1 * index}s both` }}>
+          <div key={index} className="flex flex-col gap-4 p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-start gap-3">
                 <Skeleton className="mt-1 h-5 w-5 rounded skeleton-shimmer" />
@@ -47,10 +47,10 @@ function UploadQueueSkeleton() {
                 </div>
                 <Skeleton className="h-20 w-full rounded-lg skeleton-shimmer" />
               </div>
-              <div className="space-y-2 rounded-lg bg-slate-950 p-4 lg:col-span-5">
-                <Skeleton className="h-3 w-4/5 rounded-sm bg-cyan-400/10" />
-                <Skeleton className="h-3 w-11/12 rounded-sm bg-cyan-400/10" />
-                <Skeleton className="h-3 w-2/3 rounded-sm bg-cyan-400/10" />
+              <div className="terminal-surface space-y-2 rounded-lg p-4 lg:col-span-5">
+                <Skeleton className="terminal-line-bg h-3 w-4/5 rounded-sm" />
+                <Skeleton className="terminal-line-bg h-3 w-11/12 rounded-sm" />
+                <Skeleton className="terminal-line-bg h-3 w-2/3 rounded-sm" />
               </div>
             </div>
           </div>
@@ -152,7 +152,7 @@ export function UploadPage() {
           <p className="mt-1 text-sm text-muted-foreground">PDF 批量上传与解析队列</p>
         </div>
         <div
-          className="grid min-h-72 place-items-center rounded-lg border border-dashed border-border bg-card p-8 text-center transition-all duration-300 hover:bg-muted/50 hover:border-primary/40 hover:shadow-lg animate-fade-in-up animation-delay-50"
+          className="grid min-h-72 place-items-center rounded-lg border border-dashed border-border bg-card p-8 text-center transition-colors duration-300 hover:bg-muted/50 hover:border-primary/40 animate-fade-in-up animation-delay-50"
           onDragOver={(event) => event.preventDefault()}
           onDrop={handleDrop}
         >
@@ -183,12 +183,11 @@ export function UploadPage() {
         ) : queue.length ? (
           <div className="rounded-lg border border-border bg-card animate-fade-in-up animation-delay-100">
             <div className="border-b border-border px-4 py-3 font-medium">解析队列</div>
-            <div className="divide-y divide-border">
-              {queue.map((item, index) => (
+            <div className="divide-y divide-border stagger-children">
+              {queue.map((item) => (
                 <div
                   key={item.id}
                   className="p-4 flex flex-col"
-                  style={{ animation: `fade-in-up 0.4s ease-out ${0.06 * index}s both` }}
                 >
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-start gap-3">
