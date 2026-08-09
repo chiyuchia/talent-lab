@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import { User, Mail, Phone, MapPin, Cpu, GraduationCap, Briefcase, FolderGit2, Sparkles, Trophy, Edit3, Eye, Trash2 } from "lucide-react";
 
 import { AnimatedPage } from "../components/AnimatedPage";
-import { BarGradientDefs } from "../components/chart-theme";
 
 import { CandidateStatusBadge, ParseStatusBadge } from "../components/StatusBadge";
 import { Tag } from "../components/Tag";
@@ -15,7 +14,7 @@ import { Badge, type BadgeVariant } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
 import { Input, Textarea } from "../components/ui/input";
 import { API_PREFIX, candidateApi, jobsApi, scoresApi } from "../lib/api";
-import { axisTickProps, tooltipProps } from "../lib/chart-theme";
+import { axisTickProps, barGradientDefs, tooltipProps } from "../lib/chart-theme";
 import { normalizeProfile } from "../lib/candidate-profile";
 import { parseJsonArray, statusLabels, stringifyJson } from "../lib/format";
 import { cn } from "../lib/utils";
@@ -606,7 +605,7 @@ export function CandidateDetailPage() {
                 <div className="mt-4 h-52">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={candidateScores}>
-                      <BarGradientDefs />
+                      {barGradientDefs}
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
                       <XAxis dataKey="job_title" {...axisTickProps} />
                       <YAxis domain={[0, 100]} {...axisTickProps} />

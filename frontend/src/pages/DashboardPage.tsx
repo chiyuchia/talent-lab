@@ -17,9 +17,8 @@ import { BarChart3, FileText, TrendingUp, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { AnimatedPage } from "../components/AnimatedPage";
-import { BarGradientDefs } from "../components/chart-theme";
 import { candidateApi, jobsApi } from "../lib/api";
-import { axisTickProps, statusChartColors, tooltipProps } from "../lib/chart-theme";
+import { axisTickProps, barGradientDefs, statusChartColors, tooltipProps } from "../lib/chart-theme";
 import { statusLabels } from "../lib/format";
 import type { CandidateStatus } from "../types/api";
 
@@ -155,7 +154,7 @@ export function DashboardPage() {
               </h4>
               <ResponsiveContainer width="100%" height="90%">
                 <BarChart data={scoreData}>
-                  <BarGradientDefs />
+                  {barGradientDefs}
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
                   <XAxis dataKey="name" {...axisTickProps} />
                   <YAxis domain={[0, 100]} {...axisTickProps} />

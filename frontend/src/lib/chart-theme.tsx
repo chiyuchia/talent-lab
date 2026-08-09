@@ -25,3 +25,14 @@ export const tooltipProps = {
   labelStyle: { color: "hsl(var(--card-foreground))", fontWeight: 500 },
   itemStyle: { color: "hsl(var(--muted-foreground))" },
 } as const;
+
+// Recharts filters out custom component children, so the gradient must be a
+// plain <defs> element to end up inside the chart's <svg>.
+export const barGradientDefs = (
+  <defs>
+    <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={1} />
+      <stop offset="100%" stopColor="hsl(var(--primary-deep))" stopOpacity={0.85} />
+    </linearGradient>
+  </defs>
+);
