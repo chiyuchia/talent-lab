@@ -169,10 +169,40 @@ make compose-down     # 停止 Docker 服务
 
 ## 7. 编码规范
 
-- **提交信息**：Conventional Commits（`feat|fix|docs|style|refactor|test|chore|build|ci(scope): subject`），详细规则见 README。
+- **提交信息**：遵循 Conventional Commits，格式与示例见本文 §7.1。
 - **后端**：遵循 PEP 8；业务逻辑下沉到 `services/`，蓝图保持薄层只做参数解析与响应。
 - **前端**：函数组件 + Hooks；共享逻辑放 `lib/` 或自定义 Hook；样式优先 Tailwind 原子类，避免散落行内样式。
 - **环境变量**：新增配置项需同步更新 README 环境变量表与部署示例文件；`.env` 一律不入库。
+
+### 7.1 提交信息规范
+
+本项目使用 [Conventional Commits](https://www.conventionalcommits.org/)，格式为：
+
+```text
+<type>(<scope>): <subject>
+```
+
+常用 `type`：
+
+| 类型 | 说明 |
+|------|------|
+| `feat` | 新增功能 |
+| `fix` | 修复问题 |
+| `docs` | 文档更新 |
+| `style` | 不影响逻辑的格式或样式调整 |
+| `refactor` | 重构 |
+| `test` | 测试相关 |
+| `chore` | 工程配置、依赖、脚本等维护工作 |
+| `build` | 构建或部署相关 |
+| `ci` | CI/CD 配置 |
+
+示例：
+
+```text
+feat(auth): add access key login
+fix(upload): handle invalid PDF files
+docs(readme): add deployment instructions
+```
 
 ## 8. 新增一个 API 的推荐流程
 

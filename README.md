@@ -219,35 +219,7 @@ JobDescription     岗位需求（标题、描述、必备技能、加分技能�
 
 ## 开发规范
 
-### 提交信息格式
-
-本项目使用 [Conventional Commits](https://www.conventionalcommits.org/)。
-
-```text
-<type>(<scope>): <subject>
-```
-
-常用 `type`：
-
-| 类型 | 说明 |
-|------|------|
-| `feat` | 新增功能 |
-| `fix` | 修复问题 |
-| `docs` | 文档更新 |
-| `style` | 不影响逻辑的格式或样式调整 |
-| `refactor` | 重构 |
-| `test` | 测试相关 |
-| `chore` | 工程配置、依赖、脚本等维护工作 |
-| `build` | 构建或部署相关 |
-| `ci` | CI/CD 配置 |
-
-示例：
-
-```text
-feat(auth): add access key login
-fix(upload): handle invalid PDF files
-docs(readme): add deployment instructions
-```
+提交信息遵循 [Conventional Commits](https://www.conventionalcommits.org/)，详细规则见 [docs/development.md](docs/development.md) §7.1。
 
 ## 许可证
 
