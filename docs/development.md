@@ -170,6 +170,7 @@ make compose-down     # 停止 Docker 服务
 ## 7. 编码规范
 
 - **提交信息**：遵循 Conventional Commits，格式与示例见本文 §7.1。
+- **文件规模**：单个源码文件不超过 200 行，细则见本文 §7.2。
 - **后端**：遵循 PEP 8；业务逻辑下沉到 `services/`，蓝图保持薄层只做参数解析与响应。
 - **前端**：函数组件 + Hooks；共享逻辑放 `lib/` 或自定义 Hook；样式优先 Tailwind 原子类，避免散落行内样式。
 - **环境变量**：新增配置项需同步更新 README 环境变量表与部署示例文件；`.env` 一律不入库。
@@ -203,6 +204,31 @@ feat(auth): add access key login
 fix(upload): handle invalid PDF files
 docs(readme): add deployment instructions
 ```
+
+### 7.2 文件规模规范
+
+单个源码文件不超过 **200 行**（`wc -l` 口径，含空行与注释）。
+
+**适用范围**
+
+- 后端：`backend/app/**/*.py`
+- 前端：`frontend/src/**/*.{ts,tsx}`
+
+**豁免**
+
+- 测试文件（如 `backend/tests/`）：测试长是常态，硬拆反而伤可读性。
+- 自动生成的文件。
+
+**执行方式**
+
+- 新文件一律遵守；改动既有文件时若超限，应在本次改动中顺带拆分。
+- 拆分方向按职责划分：后端下沉 `services/` 或 `utils/`，前端提取子组件、常量配置或自定义 Hook（参考 `components/candidates/`、`components/stream/` 等既有拆分）。
+- 行数只是复杂度的代理信号，真正目标是单一职责：一个 210 行的内聚模块不必硬拆，一个 150 行塞了多件事的文件也应该拆。
+
+**现状与工具**
+
+- 当前全库达标（2026-08 完成存量重构）。
+- 工具落地为可选增强：前端可在 ESLint 配置 `max-lines: ["warn", { max: 200, skipBlankLines: true, skipComments: true }]`；后端可用 CI 脚本对 `backend/app/` 做 `wc -l` 检查。未配置前以 code review 人工把关。
 
 ## 8. 新增一个 API 的推荐流程
 

@@ -19,6 +19,7 @@ cd frontend && npm run lint          # 前端 lint
 ## 关键约定（摘要，详见 docs/development.md）
 
 - **提交信息**：遵循 Conventional Commits，格式与示例见 `docs/development.md` §7.1。
+- **文件规模**：单个源码文件不超过 200 行（测试文件豁免），超限按职责拆分；细则见 `docs/development.md` §7.2。
 - **后端**：业务逻辑下沉 `services/`，蓝图保持薄层只做参数解析与响应；统一响应走 `app/utils/responses.py`；除 `auth/login` 与 `health` 外所有 API 挂 `@require_auth`。
 - **前端**：数据获取一律走 TanStack Query，不要裸用 `fetch`；UI 状态进 Zustand；接口字段变更需同步后端序列化器与 `src/types/api.ts`。
 - **环境变量**：新增配置项需同步 README 环境变量表与部署示例文件；`.env` 不入库。
