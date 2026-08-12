@@ -6,6 +6,7 @@ import {
   ChevronsRight,
 } from "lucide-react";
 
+import { Select } from "../ui/select";
 import { cn } from "../../lib/utils";
 import { getVisiblePages } from "./candidate-list-options";
 
@@ -47,19 +48,20 @@ export function CandidatePagination({
       <div className="flex flex-wrap items-center gap-3">
         <label className="inline-flex items-center gap-2 text-muted-foreground">
           <span>每页</span>
-          <select
+          <Select
             value={pageSize}
             onChange={(event) => {
               onPageSizeChange(Number(event.target.value));
             }}
-            className="h-9 rounded-md border border-border bg-background px-2 text-sm text-foreground outline-none transition focus:ring-2 focus:ring-ring"
+            controlSize="sm"
+            containerClassName="w-[4.5rem]"
           >
             {pageSizeOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
 
         <div className="inline-flex overflow-hidden rounded-md border border-border bg-background">

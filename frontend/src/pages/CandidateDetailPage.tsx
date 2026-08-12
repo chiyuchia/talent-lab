@@ -13,6 +13,7 @@ import { emptyProfileForm, statusOptions } from "../components/candidate-detail/
 import type { ProfileForm } from "../components/candidate-detail/profile-utils";
 import { CandidateStatusBadge, ParseStatusBadge } from "../components/StatusBadge";
 import { Button } from "../components/ui/button";
+import { Select } from "../components/ui/select";
 import { API_PREFIX, candidateApi, jobsApi, scoresApi } from "../lib/api";
 import { normalizeProfile } from "../lib/candidate-profile";
 import { parseJsonArray, stringifyJson } from "../lib/format";
@@ -159,11 +160,18 @@ export function CandidateDetailPage() {
         <div className="space-y-4 animate-fade-in-up animation-delay-100">
           <div className="rounded-lg border border-border bg-card p-5">
             <h3 className="font-medium">状态流转</h3>
-            <select value={candidate.status} onChange={(event) => statusMutation.mutate(event.target.value as CandidateStatus)} className="mt-4 h-10 w-full rounded-md border border-border bg-background px-3 text-sm outline-none transition focus:ring-2 focus:ring-ring">
+            <Select
+              aria-label="候选状态"
+              value={candidate.status}
+              onChange={(event) =>
+                statusMutation.mutate(event.target.value as CandidateStatus)
+              }
+              containerClassName="mt-4 block w-full"
+            >
               {statusOptions.map(([value, label]) => (
                 <option key={value} value={value}>{label}</option>
               ))}
-            </select>
+            </Select>
           </div>
           <JobScorePanel
             jobs={jobsQuery.data?.items ?? []}
