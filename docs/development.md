@@ -4,16 +4,16 @@
 
 ## 1. 架构概览
 
-talent-lab 采用前后端分离开发、生产环境同源部署的架构：
+talent-lab 采用前后端分离架构；开发环境由 Vite 代理 API，生产环境的前端与后端分别部署：
 
 ```text
 浏览器
   |
   |-- 开发环境：Vite Dev Server (5173) --proxy--> Flask (8000)
   |
-  `-- 生产环境：宿主机 Nginx --> Docker Compose
-                                   |-- 容器内 Nginx：托管前端静态资源 + 反代 /api
-                                   `-- Gunicorn + Flask：REST API + SSE
+  `-- 生产环境：Cloudflare Pages（前端静态资源）
+          |
+          `-- HTTPS /api --> 宿主机 Nginx --> Gunicorn + Flask（REST API + SSE）
 ```
 
 核心数据流（简历处理链路）：
@@ -162,7 +162,9 @@ make compose-down     # 停止 Docker 服务
 
 ## 6. 部署要点
 
-- 入口为 `deploy/docker-compose.yml`；容器内 Nginx 托管前端并反代 `/api`（见 `deploy/nginx/app.conf`）。
+- **前端**部署在 Cloudflare Pages，生产地址为 <https://talent-lab.440115.xyz/>；Pages 关联 `master` 分支，分支更新后自动构建并发布。
+- Cloudflare Pages 构建时通过 `VITE_API_BASE_URL` 指向生产后端 API；后端的 `FRONTEND_ORIGIN` 应设置为 `https://talent-lab.440115.xyz`，以允许携带 Cookie 的跨域请求。
+- **后端**通过 `deploy/docker-compose.yml` 部署；仓库中的容器内 Nginx 配置仍可用于完整的 Docker 自托管部署。
 - 宿主机反代参考 `deploy/nginx/nginx-host.conf.example` 与 `vps-backend.conf.example`，注意：
   - SSE 必须 `proxy_buffering off`，并配置较长超时；
   - `client_max_body_size 50m` 支持批量上传；

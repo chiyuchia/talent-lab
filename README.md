@@ -8,6 +8,10 @@
   上传 PDF 简历 · AI 结构化提取 · 岗位匹配评分 · 候选人管理
 </p>
 
+<p align="center">
+  <a href="https://talent-lab.440115.xyz/">访问生产环境</a>
+</p>
+
 ---
 
 ## 特性
@@ -33,7 +37,7 @@
 | 数据库 | SQLite |
 | PDF 解析 | PyMuPDF |
 | AI 接口 | DeepSeek |
-| 部署 | Docker Compose + Nginx |
+| 部署 | Cloudflare Pages（前端）+ Docker Compose / Nginx（后端） |
 
 ## 项目结构
 
@@ -155,9 +159,17 @@ make frontend-dev
 | POST | `/api/scores` | 对候选人执行评分 |
 | GET | `/api/health` | 健康检查 |
 
-## Docker 部署
+## 生产部署
 
-### 1. 配置生产环境变量
+### 前端（Cloudflare Pages）
+
+生产环境前端部署在 Cloudflare Pages：<https://talent-lab.440115.xyz/>。
+
+Cloudflare Pages 关联本仓库的 `master` 分支；`master` 更新后会自动执行前端构建并发布。构建时需配置 `VITE_API_BASE_URL`，使前端请求指向生产环境后端 API。
+
+### 后端（Docker Compose）
+
+#### 1. 配置生产环境变量
 
 ```bash
 cp deploy/.env.production.example deploy/.env.production
@@ -165,7 +177,7 @@ cp deploy/.env.production.example deploy/.env.production
 # APP_ACCESS_KEY、FLASK_SECRET_KEY、AI_MODE 等
 ```
 
-### 2. 启动服务
+#### 2. 启动服务
 
 ```bash
 docker compose -f deploy/docker-compose.yml up -d --build
@@ -173,7 +185,7 @@ docker compose -f deploy/docker-compose.yml up -d --build
 
 Compose 默认将容器内 Web 服务绑定到宿主机 `127.0.0.1:8080`。
 
-### 3. 配置宿主机 Nginx
+#### 3. 配置宿主机 Nginx
 
 参考 `deploy/nginx/nginx-host.conf.example` 配置反向代理。注意：
 
@@ -181,8 +193,9 @@ Compose 默认将容器内 Web 服务绑定到宿主机 `127.0.0.1:8080`。
 - 配置较长代理超时，避免 AI 提取期间连接被关闭
 - 配置 `client_max_body_size 50m` 以支持批量上传
 - 有域名时启用 HTTPS
+- 将 `FRONTEND_ORIGIN` 设置为 `https://talent-lab.440115.xyz`，允许 Cloudflare Pages 前端携带 Cookie 跨域访问 API
 
-### 4. 数据持久化
+#### 4. 数据持久化
 
 SQLite 数据库和上传的 PDF 文件通过 Docker volume 持久化，容器重启后数据不丢失。
 
