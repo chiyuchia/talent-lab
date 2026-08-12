@@ -1,24 +1,12 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import {
-  BarChart,
-  Bar,
-  CartesianGrid,
-  Cell,
-  Legend,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import { BarChart3, FileText, TrendingUp, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { AnimatedPage } from "../components/AnimatedPage";
+import { ScoreBarChart } from "../components/dashboard/ScoreBarChart";
+import { StatusDistributionChart } from "../components/dashboard/StatusDistributionChart";
 import { candidateApi, jobsApi } from "../lib/api";
-import { axisTickProps, barGradientDefs, statusChartColors, tooltipProps } from "../lib/chart-theme";
 import { statusLabels } from "../lib/format";
 import type { CandidateStatus } from "../types/api";
 
@@ -116,57 +104,8 @@ export function DashboardPage() {
         <div>
           <h3 className="border-b border-border pb-3 text-lg font-medium">数据分布</h3>
           <div className="mt-6 grid gap-8 xl:grid-cols-2">
-            <div className="h-80">
-              <h4 className="mb-2 text-sm font-medium text-muted-foreground">
-                候选人状态分布
-              </h4>
-              <ResponsiveContainer width="100%" height="90%">
-                <PieChart>
-                  <Pie
-                    data={statusData}
-                    dataKey="value"
-                    nameKey="label"
-                    outerRadius={80}
-                    stroke="hsl(var(--card))"
-                    strokeWidth={2}
-                    label={({ label, value, percent }) =>
-                      `${label}: ${value} (${(percent * 100).toFixed(0)}%)`
-                    }
-                  >
-                    {statusData.map((item) => (
-                      <Cell key={item.status} fill={statusChartColors[item.status]} />
-                    ))}
-                  </Pie>
-                  <Legend wrapperStyle={{ fontSize: 12 }} />
-                  <Tooltip
-                    {...tooltipProps}
-                    formatter={(value, _name, props) => [
-                      `${value} 人 (${((props?.payload?.percent ?? 0) * 100).toFixed(0)}%)`,
-                      props?.payload?.label ?? "数量",
-                    ]}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="h-80">
-              <h4 className="mb-2 text-sm font-medium text-muted-foreground">
-                候选人评分
-              </h4>
-              <ResponsiveContainer width="100%" height="90%">
-                <BarChart data={scoreData}>
-                  {barGradientDefs}
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                  <XAxis dataKey="name" {...axisTickProps} />
-                  <YAxis domain={[0, 100]} {...axisTickProps} />
-                  <Tooltip
-                    {...tooltipProps}
-                    formatter={(value) => [value, "评分"]}
-                    labelFormatter={(label) => `候选人：${label}`}
-                  />
-                  <Bar dataKey="score" fill="url(#barGradient)" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            <StatusDistributionChart statusData={statusData} />
+            <ScoreBarChart scoreData={scoreData} />
           </div>
         </div>
         <div>

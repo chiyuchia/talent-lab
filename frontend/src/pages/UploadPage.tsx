@@ -1,64 +1,17 @@
 import { ChangeEvent, DragEvent, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { FileText, UploadCloud } from "lucide-react";
+import { UploadCloud } from "lucide-react";
 
 import { AnimatedPage } from "../components/AnimatedPage";
 import { EmptyState } from "../components/EmptyState";
-import { ParseStatusBadge } from "../components/StatusBadge";
-import { ResumeStreamViewer } from "../components/ResumeStreamViewer";
-import { Skeleton } from "../components/Skeleton";
 import { Button } from "../components/ui/button";
-import { cn } from "../lib/utils";
+import { UploadQueueList } from "../components/upload/UploadQueueList";
+import type { QueueItem } from "../components/upload/UploadQueueList";
+import { UploadQueueSkeleton } from "../components/upload/UploadQueueSkeleton";
 import { API_PREFIX, uploadApi } from "../lib/api";
 import type { CandidateDetail, CandidateSummary } from "../types/api";
 
-type QueueItem = CandidateSummary & {
-  message?: string;
-};
-
 const MAX_UPLOAD_FILES = 5;
-
-function UploadQueueSkeleton() {
-  return (
-    <div className="rounded-lg border border-border animate-fade-in" role="status" aria-live="polite" aria-label="正在创建解析队列">
-      <span className="sr-only">正在创建解析队列</span>
-      <div className="border-b border-border px-4 py-3">
-        <Skeleton className="h-5 w-24 skeleton-shimmer" />
-      </div>
-      <div className="divide-y divide-border stagger-children">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <div key={index} className="flex flex-col gap-4 p-4">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-start gap-3">
-                <Skeleton className="mt-1 h-5 w-5 rounded skeleton-shimmer" />
-                <div className="space-y-2">
-                  <Skeleton className={cn("h-4 skeleton-shimmer", index === 0 ? "w-48" : "w-40")} />
-                  <Skeleton className="h-3 w-56 max-w-full skeleton-shimmer" />
-                </div>
-              </div>
-              <Skeleton className="h-6 w-20 rounded-full skeleton-shimmer" />
-            </div>
-            <div className="grid grid-cols-1 gap-4 rounded-lg border border-border bg-muted/50 p-4 lg:grid-cols-12">
-              <div className="space-y-3 lg:col-span-7">
-                <Skeleton className="h-10 w-full rounded-lg skeleton-shimmer" />
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <Skeleton className="h-16 w-full rounded-lg skeleton-shimmer" />
-                  <Skeleton className="h-16 w-full rounded-lg skeleton-shimmer" />
-                </div>
-                <Skeleton className="h-20 w-full rounded-lg skeleton-shimmer" />
-              </div>
-              <div className="terminal-surface space-y-2 rounded-lg p-4 lg:col-span-5">
-                <Skeleton className="terminal-line-bg h-3 w-4/5 rounded-sm" />
-                <Skeleton className="terminal-line-bg h-3 w-11/12 rounded-sm" />
-                <Skeleton className="terminal-line-bg h-3 w-2/3 rounded-sm" />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export function UploadPage() {
   const [queue, setQueue] = useState<QueueItem[]>([]);
@@ -181,35 +134,7 @@ export function UploadPage() {
         {uploadMutation.isPending ? (
           <UploadQueueSkeleton />
         ) : queue.length ? (
-          <div className="rounded-lg border border-border bg-card animate-fade-in-up animation-delay-100">
-            <div className="border-b border-border px-4 py-3 font-medium">解析队列</div>
-            <div className="divide-y divide-border stagger-children">
-              {queue.map((item) => (
-                <div
-                  key={item.id}
-                  className="p-4 flex flex-col"
-                >
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex items-start gap-3">
-                      <FileText className="mt-1 h-5 w-5 text-muted-foreground" />
-                      <div>
-                        <p className="font-medium">{item.name || item.original_filename}</p>
-                        <p className="mt-1 text-sm text-muted-foreground">{item.message || item.error_message || item.email || "等待处理"}</p>
-                      </div>
-                    </div>
-                    <ParseStatusBadge status={item.parse_status} />
-                  </div>
-                  {/* Real-time Streaming Area */}
-                  {(item.parse_status === "extracting" || streams[item.id]) && (
-                    <ResumeStreamViewer
-                      streamText={streams[item.id] || ""}
-                      isCompleted={item.parse_status === "completed"}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
+          <UploadQueueList queue={queue} streams={streams} />
         ) : (
           <EmptyState title="暂无上传任务" description="上传后会在这里展示每份简历的解析状态" />
         )}
