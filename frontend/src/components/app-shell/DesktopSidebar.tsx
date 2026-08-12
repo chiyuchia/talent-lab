@@ -51,10 +51,10 @@ export function DesktopSidebar({
             end={item.to === "/"}
             className={({ isActive }) =>
               cn(
-                "nav-indicator flex items-center rounded-md py-2 text-sm transition-colors duration-200",
+                "flex items-center rounded-md py-2 text-sm transition-colors duration-200",
                 sidebarCollapsed ? "justify-center px-2" : "gap-3 px-3",
                 isActive
-                  ? "active bg-primary text-primary-foreground"
+                  ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
               )
             }

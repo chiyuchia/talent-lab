@@ -169,26 +169,6 @@ textarea {
   animation: fade-in-up 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-/* Sidebar nav item active indicator slide */
-.nav-indicator {
-  position: relative;
-}
-.nav-indicator::before {
-  content: "";
-  position: absolute;
-  left: -4px;
-  top: 50%;
-  height: 0;
-  width: 3px;
-  border-radius: 2px;
-  background: hsl(var(--primary));
-  transform: translateY(-50%);
-  transition: height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.nav-indicator.active::before {
-  height: 60%;
-}
-
 /* Skeleton shimmer enhancement */
 .skeleton-shimmer {
   background: linear-gradient(
