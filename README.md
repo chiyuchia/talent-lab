@@ -74,42 +74,37 @@ talent-lab/
 - Python >= 3.12
 - Docker & Docker Compose（部署用）
 
-### 后端
+### 首次安装
 
 ```bash
-cd backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-
-# 配置环境变量
-cp .env.example .env
-# 编辑 .env 设置 APP_ACCESS_KEY 和 FLASK_SECRET_KEY
-
-# 初始化数据库
-flask --app wsgi init-db
-
-# 启动开发服务器
-flask --app wsgi run --host 0.0.0.0 --port 8000 --debug
+# 在项目根目录执行
+make backend-install
+cp backend/.env.example backend/.env
+make backend-init
+make frontend-install
 ```
 
-后端默认使用 `AI_MODE=mock`，无需真实 AI Key 即可跑通完整流程。
+可按需修改 `backend/.env` 中的 `APP_ACCESS_KEY`。本地默认使用 `AI_MODE=mock`，无需真实 AI Key 即可跑通完整流程。
 
-### 前端
+### 日常启动
+
+分别打开两个终端，在项目根目录执行：
 
 ```bash
-cd frontend
-npm install
-npm run dev
+# 终端一：后端开发服务器 :8000
+make backend-dev
+
+# 终端二：前端开发服务器 :5173
+make frontend-dev
 ```
 
-前端开发服务默认运行在 `http://localhost:5173`，通过 Vite proxy 访问 `http://localhost:8000/api`。
+打开 `http://localhost:5173`。前端通过 Vite proxy 访问 `http://localhost:8000/api`。
 
 ### 登录
 
 项目采用单密钥访问控制，无用户注册系统。首次访问需输入访问密钥登录。
 
-本地开发可使用 `.env` 中的 `APP_ACCESS_KEY` 默认值；**生产环境必须替换为高强度随机密钥**。
+本地开发可使用 `backend/.env.example` 提供的开发访问密钥；**生产环境必须替换为高强度随机密钥**。
 
 ## 环境变量
 
@@ -195,7 +190,10 @@ SQLite 数据库和上传的 PDF 文件通过 Docker volume 持久化，容器�
 
 ```bash
 # 本地开发
+make backend-install    # 首次安装后端依赖
+make backend-init       # 首次初始化数据库
 make backend-dev        # 启动后端开发服务器
+make frontend-install   # 首次安装前端依赖
 make frontend-dev       # 启动前端开发服务器
 
 # 测试

@@ -66,23 +66,22 @@ SSE 事件流 (GET /api/uploads/:id/events)
 
 ### 2.4 本地开发
 
-```bash
-cd backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+首次安装在项目根目录执行：
 
-# .env 至少设置 APP_ACCESS_KEY 与 FLASK_SECRET_KEY（文件已加入 .gitignore）
-flask --app wsgi init-db
-flask --app wsgi run --host 0.0.0.0 --port 8000 --debug
+```bash
+make backend-install
+cp backend/.env.example backend/.env
+make backend-init
 ```
+
+日常启动执行 `make backend-dev`。该命令直接使用 `backend/.venv` 中的 Flask，无需手动激活虚拟环境。可按需修改 `backend/.env` 中的 `APP_ACCESS_KEY`。
 
 数据库与上传文件默认落在 `backend/instance/` 下（相对路径基于 instance 目录解析）。
 
 ### 2.5 测试
 
 ```bash
-make backend-test   # 等价于 cd backend && pytest
+make backend-test   # 使用 backend/.venv 中的 pytest
 ```
 
 测试位于 `backend/tests/`：
@@ -126,13 +125,13 @@ make backend-test   # 等价于 cd backend && pytest
 
 ### 3.4 本地开发
 
+首次安装在项目根目录执行：
+
 ```bash
-cd frontend
-npm install
-npm run dev
+make frontend-install
 ```
 
-开发服务器默认 `http://localhost:5173`，`/api` 经 Vite proxy 转发到 `http://localhost:8000`。
+日常启动执行 `make frontend-dev`。开发服务器默认 `http://localhost:5173`，`/api` 经 Vite proxy 转发到 `http://localhost:8000`。
 
 ## 4. 数据模型
 
@@ -151,7 +150,10 @@ JobDescription (title, description, required_skills, bonus_skills)
 ## 5. 常用命令
 
 ```bash
+make backend-install  # 首次安装后端依赖
+make backend-init     # 首次初始化数据库
 make backend-dev      # 后端开发服务器 :8000
+make frontend-install # 首次安装前端依赖
 make frontend-dev     # 前端开发服务器 :5173
 make backend-test     # 后端测试
 make compose-up       # Docker 构建并启动

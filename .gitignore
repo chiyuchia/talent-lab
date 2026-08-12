@@ -171,7 +171,8 @@ uploads/
 *.sqlite
 *.sqlite3
 
-# Production env examples are tracked explicitly
+# Environment examples are tracked explicitly
+!backend/.env.example
 !deploy/.env.production.example
 
 # Deploy environment files with secrets
