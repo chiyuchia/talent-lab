@@ -7,6 +7,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useTranslation } from "react-i18next";
 
 import { axisTickProps, barGradientDefs, tooltipProps } from "../../lib/chart-theme";
 
@@ -15,10 +16,11 @@ interface ScoreBarChartProps {
 }
 
 export function ScoreBarChart({ scoreData }: ScoreBarChartProps) {
+  const { t } = useTranslation();
   return (
     <div className="h-80">
       <h4 className="mb-2 text-sm font-medium text-muted-foreground">
-        候选人评分
+        {t("候选人评分")}
       </h4>
       <ResponsiveContainer width="100%" height="90%">
         <BarChart data={scoreData}>
@@ -28,8 +30,8 @@ export function ScoreBarChart({ scoreData }: ScoreBarChartProps) {
           <YAxis domain={[0, 100]} {...axisTickProps} />
           <Tooltip
             {...tooltipProps}
-            formatter={(value) => [value, "评分"]}
-            labelFormatter={(label) => `候选人：${label}`}
+            formatter={(value) => [value, t("评分")]}
+            labelFormatter={(label) => t("候选人：{{name}}", { name: label })}
           />
           <Bar dataKey="score" fill="url(#barGradient)" radius={[4, 4, 0, 0]} />
         </BarChart>

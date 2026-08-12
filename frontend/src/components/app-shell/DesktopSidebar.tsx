@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
@@ -15,6 +16,7 @@ export function DesktopSidebar({
   sidebarCollapsed,
   setSidebarCollapsed,
 }: DesktopSidebarProps) {
+  const { t } = useTranslation();
   return (
     <aside
       className={cn(
@@ -26,7 +28,7 @@ export function DesktopSidebar({
         {!sidebarCollapsed && (
           <div>
             <p className="text-xl font-semibold">talent-lab</p>
-            <p className="mt-1 text-sm text-muted-foreground">智能简历分析平台</p>
+            <p className="mt-1 text-sm text-muted-foreground">{t("智能简历分析平台")}</p>
           </div>
         )}
         <Button
@@ -34,7 +36,7 @@ export function DesktopSidebar({
           size="icon"
           onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
           className="h-8 w-8 shrink-0"
-          aria-label={sidebarCollapsed ? "展开侧边栏" : "收起侧边栏"}
+          aria-label={t(sidebarCollapsed ? "展开侧边栏" : "收起侧边栏")}
         >
           {sidebarCollapsed ? (
             <ChevronsRight className="h-4 w-4" />
@@ -58,10 +60,10 @@ export function DesktopSidebar({
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
               )
             }
-            title={item.label}
+            title={t(item.labelKey)}
           >
             <item.icon aria-hidden className="h-4 w-4 shrink-0" />
-            {!sidebarCollapsed && <span>{item.label}</span>}
+            {!sidebarCollapsed && <span>{t(item.labelKey)}</span>}
           </NavLink>
         ))}
       </nav>

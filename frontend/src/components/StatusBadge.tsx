@@ -1,4 +1,5 @@
 import type { CandidateStatus } from "../types/api";
+import { useTranslation } from "react-i18next";
 import { parseStatusLabels, statusLabels } from "../lib/format";
 import { Badge, type BadgeVariant } from "./ui/badge";
 
@@ -19,17 +20,19 @@ const parseStatusVariant: Record<string, BadgeVariant> = {
 };
 
 export function CandidateStatusBadge({ status }: { status: CandidateStatus }) {
+  const { t } = useTranslation();
   return (
     <Badge variant={statusVariant[status]}>
-      {statusLabels[status]}
+      {t(statusLabels[status])}
     </Badge>
   );
 }
 
 export function ParseStatusBadge({ status }: { status: string }) {
+  const { t } = useTranslation();
   return (
     <Badge variant={parseStatusVariant[status] ?? "outline"}>
-      {parseStatusLabels[status] ?? status}
+      {t(parseStatusLabels[status] ?? status)}
     </Badge>
   );
 }

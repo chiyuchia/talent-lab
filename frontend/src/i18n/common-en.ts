@@ -1,0 +1,72 @@
+export const commonEnglish = {
+  "智能简历分析平台": "Smart resume analysis platform",
+  "上传 PDF 简历，AI 结构化提取，岗位匹配评分":
+    "Upload PDF resumes, extract structured data with AI, and score job fit",
+  "访问密钥": "Access key",
+  "验证中": "Verifying",
+  "进入工作台": "Enter workspace",
+  "加载中": "Loading",
+  "总览": "Dashboard",
+  "上传": "Upload",
+  "候选人": "Candidates",
+  "岗位": "Jobs",
+  "候选人详情": "Candidate details",
+  "展开导航": "Open navigation",
+  "关闭导航": "Close navigation",
+  "展开侧边栏": "Expand sidebar",
+  "收起侧边栏": "Collapse sidebar",
+  "切换主题": "Toggle theme",
+  "切换到中文": "Switch to Chinese",
+  "切换到英文": "Switch to English",
+  "退出登录": "Sign out",
+  "调整抽屉宽度": "Resize drawer",
+  "关闭": "Close",
+  "暂无对比对象": "No candidates to compare",
+  "候选人对比": "Candidate comparison",
+  "对比中...": "Comparing...",
+  "选择 2-3 名候选人后点击「开始对比」":
+    "Select 2–3 candidates, then click Compare",
+  "页面运行异常": "Page error",
+  "页面渲染失败，请刷新后重试。":
+    "The page could not be rendered. Refresh and try again.",
+  "页面遇到问题": "Something went wrong",
+  "重试": "Try again",
+  "关闭错误提示": "Dismiss error",
+  "正在处理": "Processing",
+  "正在加载": "Loading",
+  "页面运行异常，请刷新后重试。":
+    "The page encountered an error. Refresh and try again.",
+  "操作失败，请稍后重试。": "The operation failed. Try again later.",
+  "网络连接异常，请检查服务状态后重试。":
+    "Network error. Check the service and try again.",
+  "服务异常": "Service error",
+  "登录状态失效": "Session expired",
+  "没有权限": "Permission denied",
+  "资源不存在": "Resource not found",
+  "请求失败": "Request failed",
+  "操作失败": "Operation failed",
+  "删除 {{name}}": "Remove {{name}}",
+  "标签": "Tag",
+  "请先登录。": "Please sign in first.",
+  "访问密钥不正确。": "The access key is incorrect.",
+  "候选人不存在。": "Candidate not found.",
+  "候选人状态不合法。": "Invalid candidate status.",
+  "请选择 2-3 名候选人进行对比。":
+    "Select 2–3 candidates to compare.",
+  "原始 PDF 文件不存在。": "The original PDF was not found.",
+  "请提供候选人 ID 和至少一个岗位 ID。":
+    "Provide a candidate ID and at least one job ID.",
+  "岗位不存在。": "Job not found.",
+  "岗位名称和岗位描述不能为空。":
+    "Job title and description are required.",
+  "请至少上传一个 PDF 文件。": "Upload at least one PDF file.",
+  "仅支持 PDF 文件。": "Only PDF files are supported.",
+  "上传批次不存在。": "Upload batch not found.",
+  "单次最多上传 5 个 PDF 文件。": "You can upload up to 5 PDFs at a time.",
+  "服务暂时不可用，请稍后重试。":
+    "The service is temporarily unavailable. Try again later.",
+  "未能从 PDF 中提取文本，扫描版 PDF 暂不支持 OCR。":
+    "No text could be extracted from the PDF. Scanned PDFs are not yet supported.",
+  "AI_MODE=real 时必须配置 API Key（OPENAI_API_KEY 或 MOONSHOT_API_KEY）。":
+    "An API key is required when AI_MODE is real (OPENAI_API_KEY or MOONSHOT_API_KEY).",
+} as const;

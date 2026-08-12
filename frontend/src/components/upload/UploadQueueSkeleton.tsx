@@ -1,10 +1,12 @@
 import { Skeleton } from "../Skeleton";
+import { useTranslation } from "react-i18next";
 import { cn } from "../../lib/utils";
 
 export function UploadQueueSkeleton() {
+  const { t } = useTranslation();
   return (
-    <div className="rounded-lg border border-border animate-fade-in" role="status" aria-live="polite" aria-label="正在创建解析队列">
-      <span className="sr-only">正在创建解析队列</span>
+    <div className="rounded-lg border border-border animate-fade-in" role="status" aria-live="polite" aria-label={t("正在创建解析队列")}>
+      <span className="sr-only">{t("正在创建解析队列")}</span>
       <div className="border-b border-border px-4 py-3">
         <Skeleton className="h-5 w-24 skeleton-shimmer" />
       </div>

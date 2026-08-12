@@ -2,6 +2,7 @@ import { Component, type ErrorInfo, type ReactNode } from "react";
 import { AlertTriangle, RotateCcw } from "lucide-react";
 
 import { getErrorMessage } from "../lib/errors";
+import i18n from "../i18n";
 import { useUiStore } from "../lib/ui-store";
 import { Button } from "./ui/button";
 
@@ -24,7 +25,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     useUiStore.getState().pushError({
-      title: "页面运行异常",
+      title: i18n.t("页面运行异常"),
       message: getErrorMessage(error, "页面渲染失败，请刷新后重试。"),
     });
     console.error(error, errorInfo);
@@ -45,13 +46,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-md bg-destructive/10 text-destructive">
             <AlertTriangle className="h-5 w-5" />
           </div>
-          <h1 className="mt-5 text-xl font-semibold">页面遇到问题</h1>
+          <h1 className="mt-5 text-xl font-semibold">{i18n.t("页面遇到问题")}</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             {getErrorMessage(this.state.error, "页面渲染失败，请刷新后重试。")}
           </p>
           <Button onClick={this.reset} className="mt-6">
             <RotateCcw className="h-4 w-4" />
-            重试
+            {i18n.t("重试")}
           </Button>
         </section>
       </main>

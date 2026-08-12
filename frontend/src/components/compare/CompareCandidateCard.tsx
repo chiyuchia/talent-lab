@@ -1,4 +1,5 @@
 import { Briefcase, GraduationCap, Mail, MapPin } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { normalizeProfile } from "../../lib/candidate-profile";
 import { scoreTierTextClass } from "../../lib/format";
@@ -8,6 +9,7 @@ import { CandidateStatusBadge } from "../StatusBadge";
 import { ScoreCard } from "./ScoreCard";
 
 export function CompareCandidateCard({ candidate }: { candidate: CandidateDetail }) {
+  const { t } = useTranslation();
   const profile = normalizeProfile(candidate.profile, candidate);
   const scores = candidate.scores ?? [];
   const topEdu = profile.education[0] as
@@ -53,7 +55,7 @@ export function CompareCandidateCard({ candidate }: { candidate: CandidateDetail
             {candidate.total_score ?? "--"}
           </span>
           <span className="mb-1 text-xs text-muted-foreground">
-            综合评分
+            {t("综合评分")}
           </span>
         </div>
       </div>
@@ -62,7 +64,7 @@ export function CompareCandidateCard({ candidate }: { candidate: CandidateDetail
         {profile.skills.length ? (
           <div>
             <p className="text-xs font-medium text-muted-foreground mb-1.5">
-              技能
+              {t("技能")}
             </p>
             <div className="flex flex-wrap gap-1.5">
               {profile.skills.slice(0, 8).map((skill) => (
@@ -114,7 +116,7 @@ export function CompareCandidateCard({ candidate }: { candidate: CandidateDetail
         {scores.length ? (
           <div className="space-y-2 pt-2 border-t border-border">
             <p className="text-xs font-medium text-muted-foreground">
-              岗位匹配 ({scores.length})
+              {t("岗位匹配 ({{value}})", { value: scores.length })}
             </p>
             <div className="space-y-2">
               {scores.map((score) => (

@@ -1,8 +1,10 @@
 import type { Dispatch, SetStateAction } from "react";
 import type { UseMutationResult } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 import type { JobDescription, ScoreCreateResponse } from "../../types/api";
 import { Button } from "../ui/button";
+import { getErrorMessage } from "../../lib/errors";
 
 interface JobScorePanelProps {
   jobs: JobDescription[];
@@ -17,9 +19,10 @@ export function JobScorePanel({
   setSelectedJobIds,
   scoreMutation,
 }: JobScorePanelProps) {
+  const { t } = useTranslation();
   return (
     <div className="rounded-lg border border-border bg-card p-5">
-      <h3 className="font-medium">岗位评分</h3>
+      <h3 className="font-medium">{t("岗位评分")}</h3>
       <div className="mt-4 space-y-2">
         {jobs.map((job) => (
           <label key={job.id} className="flex items-center gap-2 text-sm">
@@ -37,9 +40,9 @@ export function JobScorePanel({
         ))}
       </div>
       <Button onClick={() => scoreMutation.mutate()} disabled={!selectedJobIds.length || scoreMutation.isPending} className="mt-4">
-        {scoreMutation.isPending ? "评分中" : "生成评分"}
+        {t(scoreMutation.isPending ? "评分中" : "生成评分")}
       </Button>
-      {scoreMutation.isError ? <p className="mt-3 text-sm text-destructive">{scoreMutation.error.message}</p> : null}
+      {scoreMutation.isError ? <p className="mt-3 text-sm text-destructive">{getErrorMessage(scoreMutation.error)}</p> : null}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
@@ -10,6 +11,7 @@ interface MobileSidebarProps {
 }
 
 export function MobileSidebar({ closeSidebar }: MobileSidebarProps) {
+  const { t } = useTranslation();
   return (
     <>
       <div
@@ -21,14 +23,14 @@ export function MobileSidebar({ closeSidebar }: MobileSidebarProps) {
           <div>
             <p className="text-xl font-semibold">talent-lab</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              智能简历分析平台
+              {t("智能简历分析平台")}
             </p>
           </div>
           <Button
             variant="outline"
             size="icon"
             onClick={closeSidebar}
-            aria-label="关闭导航"
+            aria-label={t("关闭导航")}
           >
             <X className="h-4 w-4" />
           </Button>
@@ -50,7 +52,7 @@ export function MobileSidebar({ closeSidebar }: MobileSidebarProps) {
               }
             >
                 <item.icon aria-hidden className="h-4 w-4" />
-                {item.label}
+                {t(item.labelKey)}
               </NavLink>
             ))}
           </nav>

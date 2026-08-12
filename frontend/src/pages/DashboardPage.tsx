@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { BarChart3, FileText, TrendingUp, Users } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { AnimatedPage } from "../components/AnimatedPage";
 import { ScoreBarChart } from "../components/dashboard/ScoreBarChart";
@@ -11,6 +12,7 @@ import { statusLabels } from "../lib/format";
 import type { CandidateStatus } from "../types/api";
 
 export function DashboardPage() {
+  const { t } = useTranslation();
   const candidatesQuery = useQuery({
     queryKey: ["candidates", "dashboard"],
     queryFn: () =>
@@ -63,12 +65,12 @@ export function DashboardPage() {
       (Object.entries(statusLabels) as Array<[CandidateStatus, string]>)
         .map(([status, label]) => ({
           status,
-          label,
+          label: t(label),
           value: candidates.filter((candidate) => candidate.status === status)
             .length,
         }))
         .filter((item) => item.value > 0),
-    [candidates],
+    [candidates, t],
   );
   const scoreData = candidates
     .filter((candidate) => typeof candidate.total_score === "number")
@@ -82,9 +84,9 @@ export function DashboardPage() {
     <AnimatedPage>
       <section className="space-y-8">
         <div>
-          <h2 className="text-2xl font-semibold">总览</h2>
+          <h2 className="text-2xl font-semibold">{t("总览")}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            候选人解析和评分概况
+            {t("候选人解析和评分概况")}
           </p>
         </div>
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border stagger-children md:grid-cols-4">
@@ -94,7 +96,7 @@ export function DashboardPage() {
               className="bg-card p-5"
             >
               <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">{metric.label}</p>
+                <p className="text-sm text-muted-foreground">{t(metric.label)}</p>
                 <metric.icon className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="mt-3 text-3xl font-semibold tabular-nums">{metric.value}</p>
@@ -102,14 +104,14 @@ export function DashboardPage() {
           ))}
         </div>
         <div>
-          <h3 className="border-b border-border pb-3 text-lg font-medium">数据分布</h3>
+          <h3 className="border-b border-border pb-3 text-lg font-medium">{t("数据分布")}</h3>
           <div className="mt-6 grid gap-8 xl:grid-cols-2">
             <StatusDistributionChart statusData={statusData} />
             <ScoreBarChart scoreData={scoreData} />
           </div>
         </div>
         <div>
-          <h3 className="border-b border-border pb-3 text-lg font-medium">最近上传</h3>
+          <h3 className="border-b border-border pb-3 text-lg font-medium">{t("最近上传")}</h3>
           <div className="divide-y divide-border stagger-children">
             {candidates.slice(0, 6).map((candidate) => (
               <div
@@ -129,7 +131,7 @@ export function DashboardPage() {
             ))}
             {!candidates.length ? (
               <div className="p-6 text-sm text-muted-foreground">
-                暂无候选人
+                {t("暂无候选人")}
               </div>
             ) : null}
           </div>

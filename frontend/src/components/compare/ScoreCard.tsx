@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { scoreTierBarClass } from "../../lib/format";
 import { cn } from "../../lib/utils";
@@ -32,6 +33,7 @@ function ScoreBar({
 }
 
 export function ScoreCard({ score }: { score: ScoreResult }) {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   return (
     <div className="rounded-lg border border-border bg-muted/50 p-3">
@@ -42,9 +44,9 @@ export function ScoreCard({ score }: { score: ScoreResult }) {
         </span>
       </div>
       <div className="mt-2 space-y-1">
-        <ScoreBar label="技能" score={score.skill_score} />
-        <ScoreBar label="经验" score={score.experience_score} />
-        <ScoreBar label="教育" score={score.education_score} />
+        <ScoreBar label={t("技能")} score={score.skill_score} />
+        <ScoreBar label={t("经验")} score={score.experience_score} />
+        <ScoreBar label={t("教育")} score={score.education_score} />
       </div>
       {score.ai_comment ? (
         <div className="mt-2">
@@ -55,11 +57,11 @@ export function ScoreCard({ score }: { score: ScoreResult }) {
           >
             {expanded ? (
               <>
-                <ChevronUp className="h-3 w-3" /> 收起评价
+                <ChevronUp className="h-3 w-3" /> {t("收起评价")}
               </>
             ) : (
               <>
-                <ChevronDown className="h-3 w-3" /> 展开评价
+                <ChevronDown className="h-3 w-3" /> {t("展开评价")}
               </>
             )}
           </button>

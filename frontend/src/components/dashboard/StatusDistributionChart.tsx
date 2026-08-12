@@ -6,6 +6,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { useTranslation } from "react-i18next";
 
 import { statusChartColors, tooltipProps } from "../../lib/chart-theme";
 import type { CandidateStatus } from "../../types/api";
@@ -15,10 +16,11 @@ interface StatusDistributionChartProps {
 }
 
 export function StatusDistributionChart({ statusData }: StatusDistributionChartProps) {
+  const { t } = useTranslation();
   return (
     <div className="h-80">
       <h4 className="mb-2 text-sm font-medium text-muted-foreground">
-        候选人状态分布
+        {t("候选人状态分布")}
       </h4>
       <ResponsiveContainer width="100%" height="90%">
         <PieChart>
@@ -41,8 +43,11 @@ export function StatusDistributionChart({ statusData }: StatusDistributionChartP
           <Tooltip
             {...tooltipProps}
             formatter={(value, _name, props) => [
-              `${value} 人 (${((props?.payload?.percent ?? 0) * 100).toFixed(0)}%)`,
-              props?.payload?.label ?? "数量",
+              t("{{value}} 人 ({{percent}}%)", {
+                value,
+                percent: ((props?.payload?.percent ?? 0) * 100).toFixed(0),
+              }),
+              props?.payload?.label ?? t("数量"),
             ]}
           />
         </PieChart>

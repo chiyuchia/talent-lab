@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Outlet, useMatches, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { authApi } from "../lib/api";
 import { useCompareStore } from "../lib/compare-store";
@@ -9,7 +10,7 @@ import { cn } from "../lib/utils";
 import { AppHeader } from "./app-shell/AppHeader";
 import { DesktopSidebar } from "./app-shell/DesktopSidebar";
 import { MobileSidebar } from "./app-shell/MobileSidebar";
-import { resolvePageTitle } from "./app-shell/nav";
+import { resolvePageTitleKey } from "./app-shell/nav";
 import { CompareResultPanel } from "./CompareResultPanel";
 import { ResizableDrawer } from "./ResizableDrawer";
 
@@ -18,6 +19,7 @@ type AppRouteHandle = {
 };
 
 export function AppShell() {
+  const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { theme, toggleTheme } = useUiStore();
@@ -26,9 +28,9 @@ export function AppShell() {
   const isFullWidth = matches.some((match) =>
     Boolean((match.handle as AppRouteHandle | undefined)?.fullWidth),
   );
-  const pageTitle = resolvePageTitle(
+  const pageTitle = t(resolvePageTitleKey(
     matches[matches.length - 1]?.pathname ?? "/",
-  );
+  ));
   const queryClient = useQueryClient();
   const {
     selectedIds,
@@ -65,7 +67,7 @@ export function AppShell() {
         window.setTimeout(
           () =>
             document
-              .querySelector<HTMLInputElement>('input[placeholder*="搜索"]')
+              .querySelector<HTMLInputElement>('[data-candidate-search]')
               ?.focus(),
           0,
         );
@@ -107,7 +109,7 @@ export function AppShell() {
           closeDrawer();
           clearSelected();
         }}
-        title="候选人对比"
+        title={t("候选人对比")}
         defaultWidth={Math.min(
           1200,
           Math.max(
@@ -126,10 +128,10 @@ export function AppShell() {
           empty={
             <p className="mt-2 text-xs text-muted-foreground text-center">
               {isComparing
-                ? "对比中..."
+                ? t("对比中...")
                 : compareError
                   ? compareError.message
-                  : "选择 2-3 名候选人后点击「开始对比」"}
+                  : t("选择 2-3 名候选人后点击「开始对比」")}
             </p>
           }
         />

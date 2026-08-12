@@ -1,5 +1,6 @@
 import { Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { CandidateStatusBadge } from "../StatusBadge";
 import { TagList } from "../Tag";
@@ -22,6 +23,7 @@ export function CandidateCardGrid({
   toggleCandidate,
   deleteMutation,
 }: CandidateCardGridProps) {
+  const { t } = useTranslation();
   return (
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 stagger-children">
       {candidates.map((candidate) => {
@@ -42,7 +44,7 @@ export function CandidateCardGrid({
                 checked={isSelected}
                 disabled={isMaxReached}
                 onChange={() => toggleCandidate(candidate.id)}
-                aria-label={`选择 ${candidate.name || candidate.original_filename}`}
+                aria-label={t("选择 {{name}}", { name: candidate.name || candidate.original_filename })}
               />
             </div>
             <Link to={`/candidates/${candidate.id}`} className="block">
@@ -52,7 +54,7 @@ export function CandidateCardGrid({
                     {candidate.name || candidate.original_filename}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {candidate.email || candidate.city || "暂无联系方式"}
+                    {candidate.email || candidate.city || t("暂无联系方式")}
                   </p>
                 </div>
               </div>
@@ -62,7 +64,7 @@ export function CandidateCardGrid({
                 className="mt-4"
               />
               <p className="mt-4 text-sm text-muted-foreground">
-                评分：{candidate.total_score ?? "--"}
+                {t("评分：{{value}}", { value: candidate.total_score ?? "--" })}
               </p>
             </Link>
             <div className="mt-3 flex items-center justify-between">
@@ -71,13 +73,13 @@ export function CandidateCardGrid({
                 variant="destructive"
                 size="icon"
                 onClick={() => {
-                  if (window.confirm(`确定要删除候选人「${candidate.name || candidate.original_filename}」吗？`)) {
+                  if (window.confirm(t("确定要删除候选人「{{name}}」吗？", { name: candidate.name || candidate.original_filename }))) {
                     deleteMutation.mutate(candidate.id);
                   }
                 }}
                 disabled={deleteMutation.isPending}
                 className="h-8 w-8"
-                aria-label="删除候选人"
+                aria-label={t("删除候选人")}
               >
                 <Trash2 className="h-4 w-4" />
               </Button>

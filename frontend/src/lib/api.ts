@@ -13,6 +13,7 @@ import type {
   UploadResponse,
 } from "../types/api";
 import { ApiError } from "./errors";
+import i18n from "../i18n";
 
 export const API_PREFIX = import.meta.env.VITE_API_BASE_URL || "/api";
 
@@ -37,6 +38,7 @@ export async function apiRequest<T>(path: string, init: RequestInit = {}): Promi
   if (!(init.body instanceof FormData) && init.body && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }
+  headers.set("Accept-Language", i18n.language);
 
   const response = await fetch(`${API_PREFIX}${path}`, {
     ...init,
@@ -48,7 +50,7 @@ export async function apiRequest<T>(path: string, init: RequestInit = {}): Promi
 
   if (!response.ok) {
     const apiError = payload && "error" in payload ? payload.error : null;
-    const message = apiError?.message || "请求失败";
+    const message = apiError?.message || i18n.t("请求失败");
     if (response.status === 401 && window.location.pathname !== "/login") {
       window.location.assign("/login");
     }

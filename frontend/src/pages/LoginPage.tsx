@@ -2,12 +2,16 @@ import { FormEvent, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { KeyRound } from "lucide-react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { authApi } from "../lib/api";
+import { LanguageSwitcher } from "../components/LanguageSwitcher";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
+import { getErrorMessage } from "../lib/errors";
 
 export function LoginPage() {
+  const { t } = useTranslation();
   const [accessKey, setAccessKey] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,17 +36,18 @@ export function LoginPage() {
   }
 
   return (
-    <main className="grid min-h-dvh bg-background text-foreground lg:grid-cols-2">
+    <main className="relative grid min-h-dvh bg-background text-foreground lg:grid-cols-2">
+      <LanguageSwitcher className="absolute right-4 top-4 z-10 lg:right-6 lg:top-6" />
       {/* Brand panel: the one place the primary color gets full stage */}
       <div className="brand-panel hidden lg:flex lg:flex-col lg:justify-between lg:p-12">
         <p className="text-sm font-medium opacity-90">talent-lab</p>
         <div className="animate-fade-in-up">
           <p className="text-5xl font-semibold leading-tight">talent-lab</p>
           <p className="mt-4 max-w-sm text-lg opacity-90">
-            智能简历分析平台
+            {t("智能简历分析平台")}
           </p>
         </div>
-        <p className="text-sm opacity-90">上传 PDF 简历，AI 结构化提取，岗位匹配评分</p>
+        <p className="text-sm opacity-90">{t("上传 PDF 简历，AI 结构化提取，岗位匹配评分")}</p>
       </div>
 
       <div className="grid place-items-center px-4 py-12">
@@ -51,9 +56,9 @@ export function LoginPage() {
             <KeyRound className="h-5 w-5" />
           </div>
           <h1 className="text-2xl font-semibold">talent-lab</h1>
-          <p className="mt-1 text-sm text-muted-foreground lg:hidden">智能简历分析平台</p>
+          <p className="mt-1 text-sm text-muted-foreground lg:hidden">{t("智能简历分析平台")}</p>
           <label className="mt-8 block text-sm font-medium" htmlFor="access-key">
-            访问密钥
+            {t("访问密钥")}
           </label>
           <Input
             id="access-key"
@@ -63,13 +68,13 @@ export function LoginPage() {
             autoComplete="current-password"
             className="mt-2 h-11"
           />
-          {loginMutation.isError ? <p className="mt-3 text-sm text-destructive animate-fade-in">{loginMutation.error.message}</p> : null}
+          {loginMutation.isError ? <p className="mt-3 text-sm text-destructive animate-fade-in">{getErrorMessage(loginMutation.error)}</p> : null}
           <Button
             type="submit"
             disabled={loginMutation.isPending}
             className="mt-6 h-11 w-full"
           >
-            {loginMutation.isPending ? "验证中" : "进入工作台"}
+            {t(loginMutation.isPending ? "验证中" : "进入工作台")}
           </Button>
         </form>
       </div>

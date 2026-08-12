@@ -1,4 +1,5 @@
 import { Cpu } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { Skeleton } from "../Skeleton";
 
@@ -7,9 +8,10 @@ export function FieldValueSkeleton({ className = "w-28" }: { className?: string 
 }
 
 export function SkillListSkeleton() {
+  const { t } = useTranslation();
   return (
-    <div className="flex flex-wrap gap-1.5" role="status" aria-label="正在加载技能标签">
-      <span className="sr-only">正在加载技能标签</span>
+    <div className="flex flex-wrap gap-1.5" role="status" aria-label={t("正在加载技能标签")}>
+      <span className="sr-only">{t("正在加载技能标签")}</span>
       {["w-12", "w-16", "w-10", "w-20", "w-14"].map((width, index) => (
         <Skeleton key={index} className={`h-6 ${width}`} />
       ))}
@@ -24,12 +26,13 @@ export function TimelineSkeleton({
   count?: number;
   variant: "education" | "experience";
 }) {
+  const { t } = useTranslation();
   const lineClass = "border-primary/25";
   const dotClass = "bg-primary/40";
 
   return (
-    <div className={`relative ml-3 space-y-5 border-l-2 border-dashed pl-6 ${lineClass}`} role="status" aria-label="正在加载时间线">
-      <span className="sr-only">正在加载时间线</span>
+    <div className={`relative ml-3 space-y-5 border-l-2 border-dashed pl-6 ${lineClass}`} role="status" aria-label={t("正在加载时间线")}>
+      <span className="sr-only">{t("正在加载时间线")}</span>
       {Array.from({ length: count }).map((_, index) => (
         <div key={index} className="relative">
           <span className={`absolute -left-[32px] top-1.5 h-4 w-4 rounded-full border-2 border-card shadow-sm ${dotClass}`} />
@@ -59,9 +62,10 @@ export function TimelineSkeleton({
 }
 
 export function ProjectSkeleton() {
+  const { t } = useTranslation();
   return (
-    <div className="space-y-3.5" role="status" aria-label="正在加载项目经历">
-      <span className="sr-only">正在加载项目经历</span>
+    <div className="space-y-3.5" role="status" aria-label={t("正在加载项目经历")}>
+      <span className="sr-only">{t("正在加载项目经历")}</span>
       {["w-44", "w-36"].map((titleWidth, index) => (
         <div key={index} className="rounded-lg border border-border/60 bg-muted/40 p-4">
           <div className="flex items-start gap-2">
@@ -85,15 +89,16 @@ export function ProjectSkeleton() {
 }
 
 export function TerminalSkeleton() {
+  const { t } = useTranslation();
   return (
-    <div className="space-y-2" role="status" aria-label="等待大模型提取接口响应">
-      <span className="sr-only">等待大模型提取接口响应</span>
+    <div className="space-y-2" role="status" aria-label={t("等待大模型提取接口响应")}>
+      <span className="sr-only">{t("等待大模型提取接口响应")}</span>
       {["w-4/5", "w-11/12", "w-2/3", "w-5/6", "w-3/5", "w-10/12", "w-7/12"].map((width, index) => (
         <Skeleton key={index} className={`terminal-line-bg h-3 rounded-sm ${width}`} />
       ))}
       <div className="terminal-dim flex items-center gap-2 pt-3">
         <Cpu className="terminal-accent h-5 w-5 animate-pulse opacity-50" />
-        <span className="animate-pulse">正在建立解析流...</span>
+        <span className="animate-pulse">{t("正在建立解析流...")}</span>
       </div>
     </div>
   );

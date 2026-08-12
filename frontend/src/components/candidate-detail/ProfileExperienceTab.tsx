@@ -1,4 +1,5 @@
 import { Briefcase } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { asRecord, toDisplayText } from "./profile-utils";
 
@@ -30,6 +31,7 @@ interface ProfileExperienceTabProps {
 }
 
 export function ProfileExperienceTab({ workExperience }: ProfileExperienceTabProps) {
+  const { t } = useTranslation();
   return (
     <div className="space-y-4 animate-fadeIn max-h-[300px] overflow-y-auto pr-1">
       {workExperience.length > 0 ? (
@@ -48,11 +50,11 @@ export function ProfileExperienceTab({ workExperience }: ProfileExperienceTabPro
                   <div className="flex justify-between items-start gap-2 flex-wrap sm:flex-nowrap">
                     <div className="flex items-start gap-2">
                       <Briefcase className="h-4 w-4 text-success shrink-0 mt-0.5" />
-                      <h5 className="font-bold text-foreground text-xs sm:text-sm">{company || "公司名称"}</h5>
+                      <h5 className="font-bold text-foreground text-xs sm:text-sm">{company || t("公司名称")}</h5>
                     </div>
-                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide bg-muted px-2 py-0.5 rounded shrink-0">{period || "在职时间"}</span>
+                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide bg-muted px-2 py-0.5 rounded shrink-0">{period || t("在职时间")}</span>
                   </div>
-                  <p className="text-xs font-bold text-success mt-1.5 bg-success/10 inline-block px-2 py-0.5 rounded border border-success/20">{title || "岗位职称"}</p>
+                  <p className="text-xs font-bold text-success mt-1.5 bg-success/10 inline-block px-2 py-0.5 rounded border border-success/20">{title || t("岗位职称")}</p>
                   {renderWorkSummary(summary)}
                 </div>
               </div>
@@ -62,7 +64,7 @@ export function ProfileExperienceTab({ workExperience }: ProfileExperienceTabPro
       ) : (
         <div className="flex h-40 flex-col items-center justify-center text-muted-foreground gap-2">
           <Briefcase className="h-8 w-8 text-muted-foreground/40" />
-          <span className="text-xs">暂无工作经历</span>
+          <span className="text-xs">{t("暂无工作经历")}</span>
         </div>
       )}
     </div>

@@ -1,5 +1,6 @@
 import { Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { CandidateStatusBadge, ParseStatusBadge } from "../StatusBadge";
 import { TagList } from "../Tag";
@@ -26,9 +27,10 @@ export function CandidateTable({
   toggleCandidate,
   deleteMutation,
 }: CandidateTableProps) {
+  const { t } = useTranslation();
   return (
-    <div className="overflow-hidden rounded-lg border border-border bg-card animate-fade-in-up animation-delay-100">
-      <table className="w-full border-collapse text-sm">
+    <div className="overflow-x-auto rounded-lg border border-border bg-card animate-fade-in-up animation-delay-100">
+      <table className="w-full min-w-[64rem] border-collapse text-sm">
         <thead className="whitespace-nowrap bg-muted/50 text-left text-muted-foreground">
           <tr>
             <th className="w-14 px-4 py-3">
@@ -52,15 +54,15 @@ export function CandidateTable({
                     deselectMany(candidates.map((c) => c.id));
                   }
                 }}
-                aria-label="全选当前页"
+                aria-label={t("全选当前页")}
               />
             </th>
-            <th className="px-4 py-3 font-medium">姓名</th>
-            <th className="px-4 py-3 font-medium">技能</th>
-            <th className="px-4 py-3 font-medium">评分</th>
-            <th className="px-4 py-3 font-medium">解析</th>
-            <th className="px-4 py-3 font-medium">状态</th>
-            <th className="px-4 py-3 font-medium text-right">操作</th>
+            <th className="px-4 py-3 font-medium">{t("姓名")}</th>
+            <th className="px-4 py-3 font-medium">{t("技能")}</th>
+            <th className="px-4 py-3 font-medium">{t("评分")}</th>
+            <th className="px-4 py-3 font-medium">{t("解析")}</th>
+            <th className="px-4 py-3 font-medium">{t("状态")}</th>
+            <th className="px-4 py-3 font-medium text-right">{t("操作")}</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-border">
@@ -83,7 +85,7 @@ export function CandidateTable({
                     checked={isSelected}
                     disabled={isMaxReached}
                     onChange={() => toggleCandidate(candidate.id)}
-                    aria-label={`选择 ${candidate.name || candidate.original_filename}`}
+                    aria-label={t("选择 {{name}}", { name: candidate.name || candidate.original_filename })}
                   />
                 </td>
                 <td className="px-4 py-4">
@@ -118,13 +120,13 @@ export function CandidateTable({
                     variant="destructive"
                     size="icon"
                     onClick={() => {
-                      if (window.confirm(`确定要删除候选人「${candidate.name || candidate.original_filename}」吗？`)) {
+                      if (window.confirm(t("确定要删除候选人「{{name}}」吗？", { name: candidate.name || candidate.original_filename }))) {
                         deleteMutation.mutate(candidate.id);
                       }
                     }}
                     disabled={deleteMutation.isPending}
                     className="h-8 w-8"
-                    aria-label="删除候选人"
+                    aria-label={t("删除候选人")}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { AnimatedPage } from "../components/AnimatedPage";
 import { JobFormPanel, type JobForm } from "../components/jobs/JobFormPanel";
 import { Button } from "../components/ui/button";
 import { jobsApi } from "../lib/api";
+import { getErrorMessage } from "../lib/errors";
 import type { JobDescription } from "../types/api";
 
 const emptyJobForm: JobForm = {
@@ -24,6 +26,7 @@ function copyJobForm(form: JobForm): JobForm {
 }
 
 export function JobsPage() {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const jobsQuery = useQuery({ queryKey: ["jobs"], queryFn: jobsApi.list });
   const [showForm, setShowForm] = useState(false);
@@ -81,7 +84,7 @@ export function JobsPage() {
   }
 
   function returnToList() {
-    if (isDirty && !window.confirm("当前填写的内容尚未保存，确定放弃并返回岗位列表吗？")) return;
+    if (isDirty && !window.confirm(t("当前填写的内容尚未保存，确定放弃并返回岗位列表吗？"))) return;
     closeForm();
   }
 
@@ -108,7 +111,7 @@ export function JobsPage() {
           form={form}
           editing={editingId !== null}
           saving={saveMutation.isPending}
-          error={saveMutation.isError ? saveMutation.error.message : null}
+          error={saveMutation.isError ? getErrorMessage(saveMutation.error) : null}
           onChange={setForm}
           onCancel={returnToList}
           onSubmit={() => saveMutation.mutate()}
@@ -117,17 +120,17 @@ export function JobsPage() {
         <section className="space-y-6">
           <div className="flex items-start justify-between gap-4 animate-fade-in-down">
             <div>
-              <h2 className="text-2xl font-semibold">岗位管理</h2>
-              <p className="mt-1 text-sm text-muted-foreground">管理用于候选人匹配评分的岗位</p>
+              <h2 className="text-2xl font-semibold">{t("岗位管理")}</h2>
+              <p className="mt-1 text-sm text-muted-foreground">{t("管理用于候选人匹配评分的岗位")}</p>
             </div>
             <Button onClick={createJob}>
               <Plus className="h-4 w-4" />
-              创建岗位
+              {t("创建岗位")}
             </Button>
           </div>
 
           <div className="rounded-lg border border-border bg-card p-5 animate-fade-in-up animation-delay-50">
-            <h3 className="font-medium">已有岗位</h3>
+            <h3 className="font-medium">{t("已有岗位")}</h3>
             <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3 stagger-children">
               {jobsQuery.isLoading ? <div className="h-28 rounded-md bg-muted skeleton-shimmer" /> : null}
               {(jobsQuery.data?.items ?? []).map((job) => (
@@ -142,13 +145,13 @@ export function JobsPage() {
                   </button>
                   <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{job.description}</p>
                   <div className="mt-4 flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">{job.required_skills.length} 项必备技能</span>
+                    <span className="text-xs text-muted-foreground">{t("{{value}} 项必备技能", { value: job.required_skills.length })}</span>
                     <Button
                       variant="destructive"
                       size="icon"
                       disabled={deleteMutation.isPending}
                       onClick={() => deleteMutation.mutate(job.id)}
-                      aria-label={`删除岗位 ${job.title}`}
+                      aria-label={t("删除岗位 {{name}}", { name: job.title })}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -158,9 +161,9 @@ export function JobsPage() {
             </div>
             {!jobsQuery.isLoading && !jobsQuery.data?.items.length ? (
               <div className="py-12 text-center">
-                <p className="font-medium">还没有岗位</p>
-                <p className="mt-1 text-sm text-muted-foreground">创建岗位后，即可进行候选人匹配评分。</p>
-                <Button className="mt-4" onClick={createJob}>创建第一个岗位</Button>
+                <p className="font-medium">{t("还没有岗位")}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{t("创建岗位后，即可进行候选人匹配评分。")}</p>
+                <Button className="mt-4" onClick={createJob}>{t("创建第一个岗位")}</Button>
               </div>
             ) : null}
           </div>

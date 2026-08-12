@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "./ui/button";
 
@@ -22,6 +23,7 @@ export function ResizableDrawer({
   defaultWidth = 720,
   children,
 }: ResizableDrawerProps) {
+  const { t } = useTranslation();
   const [width, setWidth] = useState(defaultWidth);
   const [isDragging, setIsDragging] = useState(false);
   const startXRef = useRef(0);
@@ -101,7 +103,7 @@ export function ResizableDrawer({
           className="relative z-10 w-4 -ml-2 cursor-col-resize flex items-center justify-center group"
           onMouseDown={handleMouseDown}
           role="separator"
-          aria-label="调整抽屉宽度"
+          aria-label={t("调整抽屉宽度")}
         >
           <div className="h-12 w-1 rounded-full bg-border group-hover:bg-primary/50 transition-colors" />
         </div>
@@ -114,7 +116,7 @@ export function ResizableDrawer({
               variant="outline"
               size="icon"
               onClick={onClose}
-              aria-label="关闭"
+              aria-label={t("关闭")}
             >
               <X className="h-4 w-4" />
             </Button>

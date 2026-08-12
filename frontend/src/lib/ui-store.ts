@@ -1,5 +1,7 @@
 import { create } from "zustand";
 
+import i18n from "../i18n";
+
 type Theme = "light" | "dark";
 
 export type GlobalErrorNotice = {
@@ -42,7 +44,7 @@ export const useUiStore = create<UiState>((set, get) => ({
   toggleTheme: () => {
     get().setTheme(get().theme === "dark" ? "light" : "dark");
   },
-  pushError: ({ title = "操作失败", message }) => {
+  pushError: ({ title = i18n.t("操作失败"), message }) => {
     const id = createErrorId();
     set((state) => ({
       errors: [

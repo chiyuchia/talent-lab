@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { User, CheckCircle, GraduationCap, Briefcase, FolderGit2, Cpu } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { parsePartialJson } from "../lib/resume-stream";
 import { TerminalSkeleton } from "./stream/ResumeStreamSkeletons";
@@ -14,6 +15,7 @@ interface ResumeStreamViewerProps {
 }
 
 export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamViewerProps) {
+  const { t } = useTranslation();
   const terminalEndRef = useRef<HTMLDivElement | null>(null);
   const [expanded, setExpanded] = useState(true);
   const [activeTab, setActiveTab] = useState<"basic" | "education" | "experience" | "projects">("basic");
@@ -51,12 +53,12 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
       >
         <span className="flex items-center gap-2">
           <Cpu className="h-4 w-4 text-primary animate-pulse" />
-          <span>AI 简历实时分析与结构化看板 (SSE)</span>
+          <span>{t("AI 简历实时分析与结构化看板 (SSE)")}</span>
         </span>
         <div className="flex items-center gap-3">
           {isCompleted ? (
             <span className="inline-flex items-center gap-1 text-success font-semibold">
-              <CheckCircle className="h-3.5 w-3.5" /> 解析完成
+              <CheckCircle className="h-3.5 w-3.5" /> {t("解析完成")}
             </span>
           ) : isInitialLoading ? (
             <span className="inline-flex items-center gap-1.5 text-primary font-semibold">
@@ -64,7 +66,7 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60"></span>
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
               </span>
-              准备解析
+              {t("准备解析")}
             </span>
           ) : (
             <span className="relative flex h-2 w-2">
@@ -72,7 +74,7 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
           )}
-          <span className="text-muted-foreground">{expanded ? "收起" : "展开"}</span>
+          <span className="text-muted-foreground">{t(expanded ? "收起" : "展开")}</span>
         </div>
       </div>
 
@@ -91,7 +93,7 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
                     : "text-muted-foreground hover:bg-muted"
                 }`}
               >
-                <User className="h-3.5 w-3.5" /> 基本信息
+                <User className="h-3.5 w-3.5" /> {t("基本信息")}
               </button>
               <button
                 onClick={() => setActiveTab("education")}
@@ -101,7 +103,7 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
                     : "text-muted-foreground hover:bg-muted"
                 }`}
               >
-                <GraduationCap className="h-3.5 w-3.5" /> 教育经历 ({education.length})
+                <GraduationCap className="h-3.5 w-3.5" /> {t("教育经历 ({{value}})", { value: education.length })}
               </button>
               <button
                 onClick={() => setActiveTab("experience")}
@@ -111,7 +113,7 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
                     : "text-muted-foreground hover:bg-muted"
                 }`}
               >
-                <Briefcase className="h-3.5 w-3.5" /> 工作经历 ({workExperience.length})
+                <Briefcase className="h-3.5 w-3.5" /> {t("工作经历 ({{value}})", { value: workExperience.length })}
               </button>
               <button
                 onClick={() => setActiveTab("projects")}
@@ -121,7 +123,7 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
                     : "text-muted-foreground hover:bg-muted"
                 }`}
               >
-                <FolderGit2 className="h-3.5 w-3.5" /> 项目经验 ({projects.length})
+                <FolderGit2 className="h-3.5 w-3.5" /> {t("项目经验 ({{value}})", { value: projects.length })}
               </button>
             </div>
 
@@ -158,7 +160,7 @@ export function ResumeStreamViewer({ streamText, isCompleted }: ResumeStreamView
                 <div className="h-2 w-2 rounded-full bg-yellow-500/80" />
                 <div className="h-2 w-2 rounded-full bg-green-500/80" />
               </div>
-              <span className="text-[10px] select-none">简历解析结果</span>
+              <span className="text-[10px] select-none">{t("简历解析结果")}</span>
               <div className="flex items-center gap-1.5">
                 <span className="terminal-accent-bg inline-block h-1.5 w-1.5 rounded-full animate-pulse" />
                 <span className="terminal-accent text-[9px] font-bold uppercase tracking-wider">LIVE</span>

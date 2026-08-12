@@ -1,5 +1,6 @@
 import { GitCompare, Search, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { AnimatedPage } from "../components/AnimatedPage";
 import { CandidateCardGrid } from "../components/candidates/CandidateCardGrid";
@@ -14,6 +15,7 @@ import { useCompareStore } from "../lib/compare-store";
 import { cn } from "../lib/utils";
 
 export function CandidatesPage() {
+  const { t } = useTranslation();
   const {
     selectedIds,
     toggleCandidate,
@@ -61,9 +63,9 @@ export function CandidatesPage() {
       <section className="space-y-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between animate-fade-in-down">
           <div>
-            <h2 className="text-2xl font-semibold">候选人</h2>
+            <h2 className="text-2xl font-semibold">{t("候选人")}</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              搜索、筛选与状态管理
+              {t("搜索、筛选与状态管理")}
             </p>
           </div>
           <div className="relative w-full sm:w-80">
@@ -75,8 +77,9 @@ export function CandidatesPage() {
                 resetToFirstPage();
               }}
               className={cn("pl-9", q ? "pr-9" : "pr-3")}
-              placeholder="搜索姓名、技能、学校等"
-              aria-label="关键字搜索"
+              placeholder={t("搜索姓名、技能、学校等")}
+              aria-label={t("关键字搜索")}
+              data-candidate-search
             />
             {q ? (
               <Button
@@ -84,7 +87,7 @@ export function CandidatesPage() {
                 size="icon"
                 onClick={clearKeyword}
                 className="absolute right-2 top-2 h-6 w-6 rounded text-muted-foreground"
-                aria-label="清空关键字搜索"
+                aria-label={t("清空关键字搜索")}
               >
                 <X className="h-3.5 w-3.5" />
               </Button>
@@ -127,7 +130,7 @@ export function CandidatesPage() {
               className="hover:text-foreground transition-colors"
               to="/upload"
             >
-              暂无候选人，前往上传
+              {t("暂无候选人，前往上传")}
             </Link>
           </div>
         ) : null}
@@ -166,14 +169,14 @@ export function CandidatesPage() {
           <div className="sticky bottom-4 z-20 flex items-center justify-between gap-3 rounded-lg border border-border bg-background/95 px-4 py-3 shadow-lg backdrop-blur animate-fade-in-up">
             <div className="flex items-center gap-3">
               <span className="text-sm font-medium">
-                已选 {selectedIds.length} 人
+                {t("已选 {{value}} 人", { value: selectedIds.length })}
               </span>
               <button
                 type="button"
                 onClick={clearSelected}
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
-                清空
+                {t("清空")}
               </button>
             </div>
             <Button
@@ -181,7 +184,7 @@ export function CandidatesPage() {
               disabled={selectedIds.length < 2 || isComparing}
             >
               <GitCompare className="h-4 w-4" />
-              {isComparing ? "对比中..." : "开始对比"}
+              {t(isComparing ? "对比中..." : "开始对比")}
             </Button>
           </div>
         ) : null}

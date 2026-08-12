@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 import { AlertCircle, Loader2, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import type { GlobalErrorNotice } from "../lib/ui-store";
 import { useUiStore } from "../lib/ui-store";
@@ -24,6 +25,7 @@ function useDelayedVisibility(active: boolean, delayMs = 250) {
 }
 
 function GlobalErrorToast({ error }: { error: GlobalErrorNotice }) {
+  const { t } = useTranslation();
   const dismissError = useUiStore((state) => state.dismissError);
 
   useEffect(() => {
@@ -46,7 +48,7 @@ function GlobalErrorToast({ error }: { error: GlobalErrorNotice }) {
         size="icon"
         onClick={() => dismissError(error.id)}
         className="h-7 w-7 shrink-0 text-muted-foreground"
-        aria-label="关闭错误提示"
+        aria-label={t("关闭错误提示")}
       >
         <X className="h-4 w-4" />
       </Button>
@@ -55,6 +57,7 @@ function GlobalErrorToast({ error }: { error: GlobalErrorNotice }) {
 }
 
 export function GlobalFeedback() {
+  const { t } = useTranslation();
   const errors = useUiStore((state) => state.errors);
   const loadingCount = useUiStore((state) => state.loadingCount);
   const pushError = useUiStore((state) => state.pushError);
@@ -62,7 +65,10 @@ export function GlobalFeedback() {
   const isMutating = useIsMutating();
   const pendingCount = isFetching + isMutating + loadingCount;
   const showLoading = useDelayedVisibility(pendingCount > 0);
-  const loadingLabel = useMemo(() => (isMutating + loadingCount > 0 ? "正在处理" : "正在加载"), [isMutating, loadingCount]);
+  const loadingLabel = useMemo(
+    () => t(isMutating + loadingCount > 0 ? "正在处理" : "正在加载"),
+    [isMutating, loadingCount, t],
+  );
 
   useEffect(() => {
     function handleWindowError(event: ErrorEvent) {

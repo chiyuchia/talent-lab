@@ -1,4 +1,5 @@
 import { Briefcase } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import type { WorkExperienceItem } from "../../lib/resume-stream";
 import { TimelineSkeleton } from "./ResumeStreamSkeletons";
@@ -33,6 +34,7 @@ const renderWorkSummary = (summary?: string) => {
 };
 
 export function StreamExperienceTab({ workExperience, isCompleted }: StreamExperienceTabProps) {
+  const { t } = useTranslation();
   return (
     <div className="space-y-4 animate-fadeIn max-h-[310px] overflow-y-auto pr-1">
       {workExperience.length > 0 ? (
@@ -45,11 +47,11 @@ export function StreamExperienceTab({ workExperience, isCompleted }: StreamExper
                 <div className="flex justify-between items-start gap-2 flex-wrap sm:flex-nowrap">
                   <div className="flex items-start gap-2">
                     <Briefcase className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                    <h5 className="font-bold text-foreground text-xs sm:text-sm">{work.company || "公司名称"}</h5>
+                    <h5 className="font-bold text-foreground text-xs sm:text-sm">{work.company || t("公司名称")}</h5>
                   </div>
-                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide bg-muted px-2 py-0.5 rounded shrink-0">{work.period || "在职时间"}</span>
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide bg-muted px-2 py-0.5 rounded shrink-0">{work.period || t("在职时间")}</span>
                 </div>
-                <p className="text-xs font-bold text-primary mt-1.5 bg-primary/5 inline-block px-2 py-0.5 rounded border border-primary/10">{work.title || "岗位职称"}</p>
+                <p className="text-xs font-bold text-primary mt-1.5 bg-primary/5 inline-block px-2 py-0.5 rounded border border-primary/10">{work.title || t("岗位职称")}</p>
                 {renderWorkSummary(work.summary)}
               </div>
             </div>
@@ -58,7 +60,7 @@ export function StreamExperienceTab({ workExperience, isCompleted }: StreamExper
       ) : isCompleted ? (
         <div className="flex h-40 flex-col items-center justify-center text-muted-foreground gap-2">
           <Briefcase className="h-8 w-8 text-muted-foreground/40" />
-          <span className="text-xs">未提取到工作经历信息</span>
+          <span className="text-xs">{t("未提取到工作经历信息")}</span>
         </div>
       ) : (
         <TimelineSkeleton variant="experience" />

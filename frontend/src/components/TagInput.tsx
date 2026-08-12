@@ -1,5 +1,6 @@
 import { ClipboardEvent, KeyboardEvent, useState } from "react";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { cn } from "../lib/utils";
 
@@ -19,6 +20,7 @@ function splitTags(value: string): string[] {
 }
 
 export function TagInput({ value, onChange, placeholder, inputLabel, className }: TagInputProps) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState("");
 
   function addTags(rawValue: string) {
@@ -92,7 +94,7 @@ export function TagInput({ value, onChange, placeholder, inputLabel, className }
             type="button"
             onClick={() => removeTag(index)}
             className="grid h-4 w-4 shrink-0 place-items-center rounded-sm text-muted-foreground transition hover:bg-background hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-            aria-label={`删除 ${tag}`}
+            aria-label={t("删除 {{name}}", { name: tag })}
           >
             <X className="h-3 w-3" />
           </button>
@@ -106,7 +108,7 @@ export function TagInput({ value, onChange, placeholder, inputLabel, className }
         onPaste={handlePaste}
         className="min-w-28 flex-1 border-0 bg-transparent p-1 text-sm outline-none placeholder:text-muted-foreground"
         placeholder={value.length ? "" : placeholder}
-        aria-label={inputLabel ?? placeholder ?? "标签"}
+        aria-label={inputLabel ?? placeholder ?? t("标签")}
       />
     </div>
   );

@@ -101,6 +101,7 @@ make backend-test   # 使用 backend/.venv 中的 pytest
 - Vite + React 18 + TypeScript，React Router
 - TanStack Query：服务端状态（列表、详情、评分等数据获取与缓存）
 - Zustand：UI 状态（主题、对比选择等）
+- i18next + react-i18next：中英文界面与浏览器语言检测（非中文环境默认英文，手动选择会保存在 localStorage）
 - Tailwind CSS + lucide-react 图标，Recharts 图表
 
 视觉令牌、组件样式和交互约束见 [前端设计规范](frontend-design-guidelines.md)。
@@ -113,6 +114,7 @@ make backend-test   # 使用 backend/.venv 中的 pytest
 | `src/pages/` | 页面：登录、仪表盘、上传、候选人列表/详情、对比、JD |
 | `src/components/` | 共享组件：`AppShell`、`ResumeStreamViewer`、`CompareResultPanel`、状态徽标、空态、骨架屏等 |
 | `src/lib/api.ts` | 统一 API 客户端（fetch 封装、错误归一化、SSE 解析） |
+| `src/i18n/` | 国际化初始化与中英文翻译资源 |
 | `src/lib/query-client.ts` | TanStack Query 客户端配置 |
 | `src/lib/*-store.ts` | Zustand store（UI 状态、对比选择） |
 | `src/types/api.ts` | 与后端响应对齐的 TypeScript 类型 |

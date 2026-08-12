@@ -1,4 +1,5 @@
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { Tag } from "../Tag";
 
@@ -25,14 +26,15 @@ export function CandidateFilterChips({
   skillSuggestions,
   addSkillFilter,
 }: CandidateFilterChipsProps) {
+  const { t } = useTranslation();
   return (
     <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-border pt-3">
       <span className="text-xs font-medium text-muted-foreground">
-        当前结果：{total} 人
+        {t("当前结果：{{value}} 人", { value: total })}
       </span>
       {total > 0 ? (
         <span className="text-xs text-muted-foreground">
-          当前显示 {pageStart}-{pageEnd}
+          {t("当前显示 {{start}}-{{end}}", { start: pageStart, end: pageEnd })}
         </span>
       ) : null}
       {q ? (
@@ -41,7 +43,7 @@ export function CandidateFilterChips({
           onClick={clearKeyword}
           className="inline-flex max-w-full items-center gap-1 rounded-md border border-primary/20 bg-primary/10 px-2 py-1 text-xs font-medium text-primary transition hover:bg-primary/15"
         >
-          <span className="truncate">关键字：{q}</span>
+          <span className="truncate">{t("关键字：{{value}}", { value: q })}</span>
           <X className="h-3 w-3 shrink-0" />
         </button>
       ) : null}
@@ -52,14 +54,14 @@ export function CandidateFilterChips({
           onClick={() => removeSkillFilter(item)}
           className="inline-flex max-w-full items-center gap-1 rounded-md border border-primary/20 bg-primary/10 px-2 py-1 text-xs font-medium text-primary transition hover:bg-primary/15"
         >
-          <span className="truncate">技能：{item}</span>
+          <span className="truncate">{t("技能：{{value}}", { value: item })}</span>
           <X className="h-3 w-3 shrink-0" />
         </button>
       ))}
       {skillSuggestions.length ? (
         <>
           <span className="ml-0 text-xs text-muted-foreground sm:ml-2">
-            常见技能
+            {t("常见技能")}
           </span>
           {skillSuggestions.map((item) => (
             <button
@@ -67,7 +69,7 @@ export function CandidateFilterChips({
               type="button"
               onClick={() => addSkillFilter(item)}
               className="transition hover:-translate-y-0.5"
-              aria-label={`添加技能筛选 ${item}`}
+              aria-label={t("添加技能筛选 {{name}}", { name: item })}
             >
               <Tag>{item}</Tag>
             </button>

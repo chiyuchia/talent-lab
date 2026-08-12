@@ -1,6 +1,7 @@
 import { ChangeEvent, DragEvent, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UploadCloud } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { AnimatedPage } from "../components/AnimatedPage";
 import { EmptyState } from "../components/EmptyState";
@@ -14,6 +15,7 @@ import type { CandidateDetail, CandidateSummary } from "../types/api";
 const MAX_UPLOAD_FILES = 5;
 
 export function UploadPage() {
+  const { t } = useTranslation();
   const [queue, setQueue] = useState<QueueItem[]>([]);
   const [error, setError] = useState("");
   const [streams, setStreams] = useState<Record<number, string>>({});
@@ -37,11 +39,11 @@ export function UploadPage() {
     );
     setError("");
     if (!selected.length) {
-      setError("请选择 PDF 文件。");
+      setError(t("请选择 PDF 文件。"));
       return;
     }
     if (selected.length > MAX_UPLOAD_FILES) {
-      setError(`单次最多上传 ${MAX_UPLOAD_FILES} 个 PDF 文件，请减少后重试。`);
+      setError(t("单次最多上传 {{value}} 个 PDF 文件，请减少后重试。", { value: MAX_UPLOAD_FILES }));
       return;
     }
     uploadMutation.mutate(selected);
@@ -101,8 +103,8 @@ export function UploadPage() {
     <AnimatedPage>
       <section className="space-y-6">
         <div className="animate-fade-in-down">
-          <h2 className="text-2xl font-semibold">上传简历</h2>
-          <p className="mt-1 text-sm text-muted-foreground">PDF 批量上传与解析队列</p>
+          <h2 className="text-2xl font-semibold">{t("上传简历")}</h2>
+          <p className="mt-1 text-sm text-muted-foreground">{t("PDF 批量上传与解析队列")}</p>
         </div>
         <div
           className="grid min-h-72 place-items-center rounded-lg border border-dashed border-border bg-card p-8 text-center transition-colors duration-300 hover:bg-muted/50 hover:border-primary/40 animate-fade-in-up animation-delay-50"
@@ -111,8 +113,8 @@ export function UploadPage() {
         >
           <div>
             <UploadCloud className="mx-auto h-10 w-10 text-muted-foreground" />
-            <p className="mt-4 font-medium">拖拽 PDF 到此处</p>
-            <p className="mt-2 text-sm text-muted-foreground">支持批量上传，单次最多 5 份 PDF 简历</p>
+            <p className="mt-4 font-medium">{t("拖拽 PDF 到此处")}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{t("支持批量上传，单次最多 {{value}} 份 PDF 简历", { value: MAX_UPLOAD_FILES })}</p>
             <input
               ref={inputRef}
               className="hidden"
@@ -126,7 +128,7 @@ export function UploadPage() {
               disabled={uploadMutation.isPending}
               className="mt-5"
             >
-              选择文件
+              {t("选择文件")}
             </Button>
           </div>
         </div>
@@ -136,7 +138,7 @@ export function UploadPage() {
         ) : queue.length ? (
           <UploadQueueList queue={queue} streams={streams} />
         ) : (
-          <EmptyState title="暂无上传任务" description="上传后会在这里展示每份简历的解析状态" />
+          <EmptyState title={t("暂无上传任务")} description={t("上传后会在这里展示每份简历的解析状态")} />
         )}
       </section>
     </AnimatedPage>

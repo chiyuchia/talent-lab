@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { AnimatedPage } from "../components/AnimatedPage";
 import { JobScorePanel } from "../components/candidate-detail/JobScorePanel";
@@ -20,6 +21,7 @@ import { parseJsonArray, stringifyJson } from "../lib/format";
 import type { CandidateStatus, ResumeProfile } from "../types/api";
 
 export function CandidateDetailPage() {
+  const { t } = useTranslation();
   const { candidateId } = useParams();
   const numericCandidateId = Number(candidateId);
   const queryClient = useQueryClient();
@@ -105,7 +107,7 @@ export function CandidateDetailPage() {
   }
 
   if (!candidate) {
-    return <div className="rounded-lg border border-border p-6 text-sm text-muted-foreground">候选人不存在</div>;
+    return <div className="rounded-lg border border-border p-6 text-sm text-muted-foreground">{t("候选人不存在")}</div>;
   }
 
   return (
@@ -114,7 +116,7 @@ export function CandidateDetailPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between animate-fade-in-down">
         <div>
           <h2 className="text-2xl font-semibold">{profile.name || candidate.original_filename}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">结构化简历、评分详情与原始 PDF</p>
+          <p className="mt-1 text-sm text-muted-foreground">{t("结构化简历、评分详情与原始 PDF")}</p>
         </div>
         <div className="flex items-center gap-2">
           <ParseStatusBadge status={candidate.parse_status} />
@@ -123,12 +125,12 @@ export function CandidateDetailPage() {
             variant="destructive"
             size="icon"
             onClick={() => {
-              if (window.confirm(`确定要删除候选人「${profile.name || candidate.original_filename}」吗？`)) {
+              if (window.confirm(t("确定要删除候选人「{{name}}」吗？", { name: profile.name || candidate.original_filename }))) {
                 deleteMutation.mutate();
               }
             }}
             disabled={deleteMutation.isPending}
-            aria-label="删除候选人"
+            aria-label={t("删除候选人")}
           >
             <Trash2 className="h-4 w-4" />
           </Button>
@@ -153,15 +155,15 @@ export function CandidateDetailPage() {
             />
           )}
           <div className="rounded-lg border border-border bg-card p-5 animate-fade-in-up animation-delay-150">
-            <h3 className="font-medium">原始 PDF</h3>
-            <iframe title="原始 PDF" src={`${API_PREFIX}${candidate.pdf_url}`} className="mt-4 h-[34rem] w-full rounded-md border border-border bg-background" />
+            <h3 className="font-medium">{t("原始 PDF")}</h3>
+            <iframe title={t("原始 PDF")} src={`${API_PREFIX}${candidate.pdf_url}`} className="mt-4 h-[34rem] w-full rounded-md border border-border bg-background" />
           </div>
         </div>
         <div className="space-y-4 animate-fade-in-up animation-delay-100">
           <div className="rounded-lg border border-border bg-card p-5">
-            <h3 className="font-medium">状态流转</h3>
+            <h3 className="font-medium">{t("状态流转")}</h3>
             <Select
-              aria-label="候选状态"
+              aria-label={t("候选状态")}
               value={candidate.status}
               onChange={(event) =>
                 statusMutation.mutate(event.target.value as CandidateStatus)
@@ -169,7 +171,7 @@ export function CandidateDetailPage() {
               containerClassName="mt-4 block w-full"
             >
               {statusOptions.map(([value, label]) => (
-                <option key={value} value={value}>{label}</option>
+                <option key={value} value={value}>{t(label)}</option>
               ))}
             </Select>
           </div>
