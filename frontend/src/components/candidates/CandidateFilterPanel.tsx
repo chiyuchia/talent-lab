@@ -1,4 +1,10 @@
-import { LayoutGrid, List, SlidersHorizontal, X } from "lucide-react";
+import {
+  ChevronDown,
+  LayoutGrid,
+  List,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
 
 import { TagInput } from "../TagInput";
 import { Button } from "../ui/button";
@@ -47,20 +53,26 @@ export function CandidateFilterPanel({
           <span className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
             <SlidersHorizontal className="h-3.5 w-3.5" /> 候选状态
           </span>
-          <select
-            value={status}
-            onChange={(event) => {
-              setStatus(event.target.value as "" | CandidateStatus);
-              resetToFirstPage();
-            }}
-            className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm outline-none transition focus:ring-2 focus:ring-ring"
-          >
-            {statusOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          <span className="relative block">
+            <select
+              value={status}
+              onChange={(event) => {
+                setStatus(event.target.value as "" | CandidateStatus);
+                resetToFirstPage();
+              }}
+              className="h-10 w-full appearance-none rounded-md border border-border bg-background py-0 pl-3 pr-9 text-sm outline-none transition focus:ring-2 focus:ring-ring"
+            >
+              {statusOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              aria-hidden="true"
+              className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+            />
+          </span>
         </label>
 
         <div className="block text-sm">

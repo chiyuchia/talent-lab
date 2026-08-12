@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { CandidateStatusBadge, ParseStatusBadge } from "../StatusBadge";
 import { TagList } from "../Tag";
 import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
 import { cn } from "../../lib/utils";
 import type { CandidateSummary } from "../../types/api";
 import type { DeleteCandidateMutation } from "./candidate-list-options";
@@ -30,9 +31,8 @@ export function CandidateTable({
       <table className="w-full border-collapse text-sm">
         <thead className="bg-muted/50 text-left text-muted-foreground">
           <tr>
-            <th className="w-10 px-2 py-3">
-              <input
-                type="checkbox"
+            <th className="w-14 px-4 py-3">
+              <Checkbox
                 checked={
                   candidates.length > 0 &&
                   candidates.every((c) => selectedIds.includes(c.id))
@@ -52,7 +52,6 @@ export function CandidateTable({
                     deselectMany(candidates.map((c) => c.id));
                   }
                 }}
-                className="accent-primary"
                 aria-label="全选当前页"
               />
             </th>
@@ -79,13 +78,11 @@ export function CandidateTable({
                   animation: `fade-in-up 0.4s ease-out ${0.04 * Math.min(index, 12)}s both`,
                 }}
               >
-                <td className="px-2 py-4">
-                  <input
-                    type="checkbox"
+                <td className="px-4 py-4">
+                  <Checkbox
                     checked={isSelected}
                     disabled={isMaxReached}
                     onChange={() => toggleCandidate(candidate.id)}
-                    className="accent-primary"
                     aria-label={`选择 ${candidate.name || candidate.original_filename}`}
                   />
                 </td>

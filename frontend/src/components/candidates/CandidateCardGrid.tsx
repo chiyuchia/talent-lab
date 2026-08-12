@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { CandidateStatusBadge } from "../StatusBadge";
 import { TagList } from "../Tag";
 import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
 import { cn } from "../../lib/utils";
 import type { CandidateSummary } from "../../types/api";
 import type { DeleteCandidateMutation } from "./candidate-list-options";
@@ -37,12 +38,10 @@ export function CandidateCardGrid({
             )}
           >
             <div className="absolute right-3 top-3">
-              <input
-                type="checkbox"
+              <Checkbox
                 checked={isSelected}
                 disabled={isMaxReached}
                 onChange={() => toggleCandidate(candidate.id)}
-                className="accent-primary h-4 w-4"
                 aria-label={`选择 ${candidate.name || candidate.original_filename}`}
               />
             </div>
