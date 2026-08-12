@@ -29,7 +29,7 @@ export function CandidateTable({
   return (
     <div className="overflow-hidden rounded-lg border border-border bg-card animate-fade-in-up animation-delay-100">
       <table className="w-full border-collapse text-sm">
-        <thead className="bg-muted/50 text-left text-muted-foreground">
+        <thead className="whitespace-nowrap bg-muted/50 text-left text-muted-foreground">
           <tr>
             <th className="w-14 px-4 py-3">
               <Checkbox
