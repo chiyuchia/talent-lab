@@ -103,6 +103,8 @@ make backend-test   # 使用 backend/.venv 中的 pytest
 - Zustand：UI 状态（主题、对比选择等）
 - Tailwind CSS + lucide-react 图标，Recharts 图表
 
+视觉令牌、组件样式和交互约束见 [前端设计规范](frontend-design-guidelines.md)。
+
 ### 3.2 目录与职责
 
 | 目录 | 职责 |
