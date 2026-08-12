@@ -182,3 +182,5 @@ deploy/.env.production
 .AppleDouble
 .LSOverride
 ._*
+
+.omo
