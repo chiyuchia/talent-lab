@@ -1,19 +1,20 @@
-import json
 import uuid
 
-from flask import Blueprint, Response, current_app, request, stream_with_context
+from flask import Blueprint, Response, request, stream_with_context
 from werkzeug.datastructures import FileStorage
 from werkzeug.utils import secure_filename
 
 from ..constants import MAX_UPLOAD_FILES
 from ..extensions import db
-from ..models import Candidate, ResumeProfile
+from ..models import Candidate
 from ..security import require_auth
-from ..services.ai_service import AiService
+from ..services.ai_service import make_ai_service
 from ..services.pdf_service import extract_pdf_text
+from ..services.profile_service import normalize_profile, upsert_profile
 from ..utils.paths import resolve_storage_path, upload_dir_path
 from ..utils.responses import error_response, ok_response
 from ..utils.serializers import serialize_candidate_detail, serialize_candidate_summary
+from ..utils.sse import sse_event
 
 uploads_bp = Blueprint("uploads", __name__)
 
@@ -168,66 +169,3 @@ def validate_pdf_upload(file: FileStorage):
     if mimetype and mimetype not in {"application/pdf", "application/octet-stream"}:
         return error_response("INVALID_FILE_TYPE", "仅支持 PDF 文件。", status=400)
     return None
-
-
-def make_ai_service() -> AiService:
-    provider = current_app.config.get("AI_PROVIDER", "openai")
-    if provider == "moonshot":
-        return AiService(
-            mode=current_app.config["AI_MODE"],
-            api_key=current_app.config["MOONSHOT_API_KEY"],
-            base_url=current_app.config["MOONSHOT_BASE_URL"],
-            model=current_app.config["MOONSHOT_MODEL"],
-        )
-    if provider == "deepseek":
-        return AiService(
-            mode=current_app.config["AI_MODE"],
-            api_key=current_app.config["DEEPSEEK_API_KEY"],
-            base_url=current_app.config["DEEPSEEK_BASE_URL"],
-            model=current_app.config["DEEPSEEK_MODEL"],
-        )
-    return AiService(
-        mode=current_app.config["AI_MODE"],
-        api_key=current_app.config["OPENAI_API_KEY"],
-        base_url=current_app.config["OPENAI_BASE_URL"],
-        model=current_app.config["OPENAI_MODEL"],
-    )
-
-
-def upsert_profile(candidate: Candidate, payload: dict) -> ResumeProfile:
-    profile = candidate.profile or ResumeProfile(candidate_id=candidate.id)
-    profile.name = payload["name"]
-    profile.phone = payload["phone"]
-    profile.email = payload["email"]
-    profile.city = payload["city"]
-    profile.education = payload["education"]
-    profile.work_experience = payload["work_experience"]
-    profile.skills = payload["skills"]
-    profile.projects = payload["projects"]
-    db.session.add(profile)
-    return profile
-
-
-def normalize_profile(payload: dict) -> dict:
-    return {
-        "name": str(payload.get("name") or ""),
-        "phone": str(payload.get("phone") or ""),
-        "email": str(payload.get("email") or ""),
-        "city": str(payload.get("city") or ""),
-        "education": ensure_list(payload.get("education")),
-        "work_experience": ensure_list(payload.get("work_experience")),
-        "skills": [str(skill) for skill in ensure_list(payload.get("skills"))],
-        "projects": ensure_list(payload.get("projects")),
-    }
-
-
-def ensure_list(value):
-    if isinstance(value, list):
-        return value
-    if value in (None, ""):
-        return []
-    return [value]
-
-
-def sse_event(event: str, data: dict) -> str:
-    return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"

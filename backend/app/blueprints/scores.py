@@ -3,8 +3,8 @@ from flask import Blueprint, request
 from ..extensions import db
 from ..models import Candidate, JobDescription, ScoreResult
 from ..security import require_auth
+from ..services.ai_service import make_ai_service
 from ..utils.responses import error_response, ok_response
-from .uploads import make_ai_service
 from ..utils.serializers import (
     serialize_candidate_detail,
     serialize_job,
