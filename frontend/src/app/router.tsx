@@ -1,18 +1,49 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import { AppShell } from "../components/AppShell";
 import { ProtectedRoute } from "../components/ProtectedRoute";
-import { CandidateDetailPage } from "../pages/CandidateDetailPage";
-import { CandidatesPage } from "../pages/CandidatesPage";
-import { DashboardPage } from "../pages/DashboardPage";
-import { JobsPage } from "../pages/JobsPage";
-import { LoginPage } from "../pages/LoginPage";
-import { UploadPage } from "../pages/UploadPage";
+import { RouteLoadingBoundary } from "../components/RouteLoadingBoundary";
+
+const CandidateDetailPage = lazy(() =>
+  import("../pages/CandidateDetailPage").then((module) => ({
+    default: module.CandidateDetailPage,
+  })),
+);
+const CandidatesPage = lazy(() =>
+  import("../pages/CandidatesPage").then((module) => ({
+    default: module.CandidatesPage,
+  })),
+);
+const DashboardPage = lazy(() =>
+  import("../pages/DashboardPage").then((module) => ({
+    default: module.DashboardPage,
+  })),
+);
+const JobsPage = lazy(() =>
+  import("../pages/JobsPage").then((module) => ({
+    default: module.JobsPage,
+  })),
+);
+const LoginPage = lazy(() =>
+  import("../pages/LoginPage").then((module) => ({
+    default: module.LoginPage,
+  })),
+);
+const UploadPage = lazy(() =>
+  import("../pages/UploadPage").then((module) => ({
+    default: module.UploadPage,
+  })),
+);
 
 export const router = createBrowserRouter([
   {
     path: "/login",
-    element: <LoginPage />,
+    element: (
+      <RouteLoadingBoundary fullScreen>
+        <LoginPage />
+      </RouteLoadingBoundary>
+    ),
   },
   {
     element: <ProtectedRoute />,
@@ -20,19 +51,49 @@ export const router = createBrowserRouter([
       {
         element: <AppShell />,
         children: [
-          { index: true, element: <DashboardPage /> },
-          { path: "upload", element: <UploadPage /> },
+          {
+            index: true,
+            element: (
+              <RouteLoadingBoundary>
+                <DashboardPage />
+              </RouteLoadingBoundary>
+            ),
+          },
+          {
+            path: "upload",
+            element: (
+              <RouteLoadingBoundary>
+                <UploadPage />
+              </RouteLoadingBoundary>
+            ),
+          },
           {
             path: "candidates",
-            element: <CandidatesPage />,
+            element: (
+              <RouteLoadingBoundary>
+                <CandidatesPage />
+              </RouteLoadingBoundary>
+            ),
             handle: { fullWidth: true },
           },
           {
             path: "candidates/:candidateId",
-            element: <CandidateDetailPage />,
+            element: (
+              <RouteLoadingBoundary>
+                <CandidateDetailPage />
+              </RouteLoadingBoundary>
+            ),
             handle: { fullWidth: true },
           },
-          { path: "jobs", element: <JobsPage />, handle: { fullWidth: true } },
+          {
+            path: "jobs",
+            element: (
+              <RouteLoadingBoundary>
+                <JobsPage />
+              </RouteLoadingBoundary>
+            ),
+            handle: { fullWidth: true },
+          },
         ],
       },
     ],
