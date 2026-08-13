@@ -3,10 +3,12 @@ from flask import Blueprint, request
 from ..extensions import db
 from ..models import JobDescription
 from ..security import require_auth
+from ..services.ai_service import make_ai_service
 from ..utils.responses import error_response, ok_response
 from ..utils.serializers import serialize_job
 
 jobs_bp = Blueprint("jobs", __name__)
+MAX_JOB_TEXT_LENGTH = 20_000
 
 
 @jobs_bp.get("")
@@ -14,6 +16,24 @@ jobs_bp = Blueprint("jobs", __name__)
 def list_jobs():
     jobs = JobDescription.query.order_by(JobDescription.updated_at.desc()).all()
     return ok_response({"items": [serialize_job(job) for job in jobs]})
+
+
+@jobs_bp.post("/parse")
+@require_auth
+def parse_job():
+    payload = request.get_json(silent=True) or {}
+    text = str(payload.get("text") or "").strip()
+    if not text:
+        return error_response("VALIDATION_ERROR", "请粘贴需要解析的 JD 文本。", status=400)
+    if len(text) > MAX_JOB_TEXT_LENGTH:
+        return error_response(
+            "VALIDATION_ERROR",
+            f"JD 文本不能超过 {MAX_JOB_TEXT_LENGTH} 个字符。",
+            status=400,
+        )
+
+    parsed_job = make_ai_service().parse_job_description(text)
+    return ok_response(parsed_job)
 
 
 @jobs_bp.post("")

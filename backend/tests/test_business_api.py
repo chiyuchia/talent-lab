@@ -42,6 +42,34 @@ def test_create_and_list_job():
     assert len(list_response.get_json()["data"]["items"]) == 1
 
 
+def test_parse_job_description_without_creating_job():
+    client = make_client()
+    jd_text = """岗位名称：Python 后端工程师
+任职要求：熟悉 Python、Flask、PostgreSQL
+加分项：有 Docker 和 Kubernetes 经验"""
+
+    response = client.post("/api/jobs/parse", json={"text": jd_text})
+
+    assert response.status_code == 200
+    parsed = response.get_json()["data"]
+    assert parsed["title"] == "Python 后端工程师"
+    assert parsed["description"] == jd_text
+    assert parsed["required_skills"] == ["Python", "Flask", "PostgreSQL"]
+    assert parsed["bonus_skills"] == ["Docker", "Kubernetes"]
+
+    list_response = client.get("/api/jobs")
+    assert list_response.get_json()["data"]["items"] == []
+
+
+def test_parse_job_description_requires_text():
+    client = make_client()
+
+    response = client.post("/api/jobs/parse", json={"text": "  "})
+
+    assert response.status_code == 400
+    assert response.get_json()["error"]["code"] == "VALIDATION_ERROR"
+
+
 def test_upload_rejects_non_pdf():
     client = make_client()
 

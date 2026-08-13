@@ -5,6 +5,7 @@ import type {
   CandidateStatus,
   CompareResponse,
   JobDescription,
+  JobDraft,
   JobListResponse,
   ResumeProfile,
   ScoreCreateResponse,
@@ -118,6 +119,11 @@ export const candidateApi = {
 
 export const jobsApi = {
   list: () => apiRequest<JobListResponse>("/jobs"),
+  parse: (text: string) =>
+    apiRequest<JobDraft>("/jobs/parse", {
+      method: "POST",
+      body: JSON.stringify({ text }),
+    }),
   create: (payload: Pick<JobDescription, "title" | "description" | "required_skills" | "bonus_skills">) =>
     apiRequest<JobDescription>("/jobs", {
       method: "POST",

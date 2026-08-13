@@ -22,6 +22,20 @@ RESUME_PARSER_SYSTEM_PROMPT = (
     "Return empty arrays [] for sections that have no data."
 )
 
+JOB_PARSER_SYSTEM_PROMPT = (
+    "You are a job description parser. Extract structured hiring requirements "
+    "from the provided job description. Return ONLY valid JSON without markdown. "
+    "Use this exact structure:\n"
+    "{\n"
+    '  "title": "job title",\n'
+    '  "required_skills": ["skill1", "skill2"],\n'
+    '  "bonus_skills": ["skill3"]\n'
+    "}\n"
+    "Keep skill names concise and preserve their conventional capitalization. "
+    "Only put explicitly optional, preferred, or nice-to-have skills in bonus_skills. "
+    "Do not invent requirements. Use empty arrays when no skills are found."
+)
+
 CANDIDATE_EVALUATOR_SYSTEM_PROMPT = (
     "You are a candidate evaluator. Score the candidate against the job requirements. "
     "Return ONLY valid JSON without markdown formatting, no code blocks. "

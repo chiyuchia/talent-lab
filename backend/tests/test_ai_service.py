@@ -35,3 +35,23 @@ def test_mock_resume_extraction_returns_empty_sections_when_not_found():
     assert profile["education"] == []
     assert profile["work_experience"] == []
     assert profile["projects"] == []
+
+
+def test_mock_job_description_parser_extracts_title_and_skills():
+    jd_text = """
+职位名称：高级前端工程师
+
+任职要求：
+- 熟练掌握 React、TypeScript 和 CSS
+- 熟悉 REST API，能够使用 Git 协作
+
+加分项：
+- 有 Node.js、Docker 或 AWS 经验者优先
+"""
+
+    job = AiService(mode="mock").parse_job_description(jd_text)
+
+    assert job["title"] == "高级前端工程师"
+    assert job["description"] == jd_text.strip()
+    assert job["required_skills"] == ["TypeScript", "React", "CSS", "Git", "REST"]
+    assert job["bonus_skills"] == ["Node.js", "Docker", "AWS"]

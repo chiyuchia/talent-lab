@@ -6,6 +6,7 @@ from typing import Any
 from flask import current_app
 
 from .ai_scoring import AiScoringMixin
+from .job_parser import JobParserMixin
 from .mock_resume_education import MockResumeEducationMixin
 from .mock_resume_experience import MockResumeExperienceMixin
 from .prompts import RESUME_PARSER_SYSTEM_PROMPT
@@ -17,6 +18,7 @@ class AiService(
     ResumeTextMixin,
     MockResumeEducationMixin,
     MockResumeExperienceMixin,
+    JobParserMixin,
     AiScoringMixin,
 ):
     mode: str = "mock"

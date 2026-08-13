@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { TagInput } from "../TagInput";
 import { Button } from "../ui/button";
 import { Input, Textarea } from "../ui/input";
+import { JobTextParser } from "./JobTextParser";
 
 export type JobForm = {
   title: string;
@@ -53,6 +54,17 @@ export function JobFormPanel({
       </div>
 
       <form onSubmit={handleSubmit} className="max-w-4xl space-y-4 rounded-lg border border-border bg-card p-5 animate-fade-in-up">
+        {!editing ? (
+          <>
+            <JobTextParser disabled={saving} onParsed={onChange} />
+            <div className="flex items-center gap-3 py-1 text-xs text-muted-foreground" aria-hidden="true">
+              <span className="h-px flex-1 bg-border" />
+              {t("或直接填写")}
+              <span className="h-px flex-1 bg-border" />
+            </div>
+          </>
+        ) : null}
+
         <label className="block text-sm" htmlFor="job-title">
           <span className="text-muted-foreground">{t("岗位名称")}</span>
           <Input

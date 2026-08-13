@@ -79,6 +79,11 @@ export type JobDescription = {
   updated_at: string;
 };
 
+export type JobDraft = Pick<
+  JobDescription,
+  "title" | "description" | "required_skills" | "bonus_skills"
+>;
+
 export type JobListResponse = {
   items: JobDescription[];
 };

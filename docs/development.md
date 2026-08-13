@@ -50,7 +50,8 @@ SSE 事件流 (GET /api/uploads/:id/events)
 | 认证 | `app/security.py` | 单密钥登录校验（`hmac.compare_digest`）、`require_auth` 装饰器 |
 | 蓝图 | `app/blueprints/` | REST API：`auth`、`uploads`、`candidates`、`jobs`、`scores`、`health` |
 | 模型 | `app/models/` | `Candidate`、`ResumeProfile`、`JobDescription`、`ScoreResult` |
-| AI 服务 | `app/services/ai_service.py` | `AiService`：简历结构化提取与岗位评分，支持 mock/real 模式 |
+| AI 服务 | `app/services/ai_service.py` | `AiService`：简历结构化提取、JD 解析与岗位评分，支持 mock/real 模式 |
+| JD 解析 | `app/services/job_parser.py` | 从粘贴的 JD 文本提取岗位名称、必备技能与加分技能 |
 | PDF 服务 | `app/services/pdf_service.py` | `extract_pdf_text` / `clean_resume_text` |
 | Prompt | `app/services/prompts.py` | AI 提取与评分的提示词模板 |
 | 工具 | `app/utils/` | 统一响应格式（`responses.py`）、序列化（`serializers.py`）、路径（`paths.py`） |

@@ -59,6 +59,9 @@ export const commonEnglish = {
   "岗位不存在。": "Job not found.",
   "岗位名称和岗位描述不能为空。":
     "Job title and description are required.",
+  "请粘贴需要解析的 JD 文本。": "Paste a job description to parse.",
+  "JD 文本不能超过 20000 个字符。":
+    "The job description cannot exceed 20,000 characters.",
   "请至少上传一个 PDF 文件。": "Upload at least one PDF file.",
   "仅支持 PDF 文件。": "Only PDF files are supported.",
   "上传批次不存在。": "Upload batch not found.",

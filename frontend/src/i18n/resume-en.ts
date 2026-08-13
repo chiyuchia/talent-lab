@@ -88,6 +88,17 @@ export const resumeEnglish = {
   "编辑岗位": "Edit job",
   "修改岗位描述和技能要求": "Update the job description and skill requirements",
   "填写岗位描述和技能要求": "Enter the job description and skill requirements",
+  "粘贴 JD，自动提取岗位信息": "Paste a JD to extract job details",
+  "粘贴完整的职位描述，AI 会识别岗位名称、必备技能和加分技能。":
+    "Paste the full job description. AI will identify the title, required skills, and bonus skills.",
+  "JD 原文": "Original job description",
+  "在这里粘贴完整的职位描述...": "Paste the full job description here...",
+  "{{value}} / {{max}} 字符": "{{value}} / {{max}} characters",
+  "正在解析": "Parsing",
+  "解析 JD": "Parse JD",
+  "解析完成，已填入下方表单，请确认后保存。":
+    "Parsed and filled into the form below. Review it before saving.",
+  "或直接填写": "Or enter details manually",
   "岗位名称": "Job title",
   "岗位描述": "Job description",
   "必备技能": "Required skills",
