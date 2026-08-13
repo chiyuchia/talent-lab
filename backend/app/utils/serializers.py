@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from ..models import Candidate, JobDescription, ResumeProfile, ScoreResult
+from ..models import Candidate, ResumeProfile, ScoreResult
+from .job_serializers import serialize_job as serialize_job
 
 
 def isoformat(value: datetime | None) -> str | None:
@@ -82,16 +83,3 @@ def serialize_candidate_detail(candidate: Candidate) -> dict:
         }
     )
     return data
-
-
-def serialize_job(job: JobDescription) -> dict:
-    return {
-        "id": job.id,
-        "title": job.title,
-        "description": job.description,
-        "required_skills": job.required_skills or [],
-        "bonus_skills": job.bonus_skills or [],
-        "created_at": isoformat(job.created_at),
-        "updated_at": isoformat(job.updated_at),
-    }
-

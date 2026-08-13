@@ -1,12 +1,16 @@
 import type {
   ApiResponse,
+  ApplicationEvent,
+  ApplicationEventDraft,
+  ApplicationEventListResponse,
   CandidateDetail,
   CandidateListResponse,
   CandidateStatus,
   CompareResponse,
-  JobDescription,
   JobDraft,
   JobListResponse,
+  JobOpportunity,
+  JobParseResult,
   ResumeProfile,
   ScoreCreateResponse,
   ScoreListResponse,
@@ -118,28 +122,37 @@ export const candidateApi = {
 };
 
 export const jobsApi = {
-  list: () => apiRequest<JobListResponse>("/jobs"),
+  list: (params: QueryParams = {}) => {
+    const search = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => appendSearchParam(search, key, value));
+    const query = search.size ? `?${search.toString()}` : "";
+    return apiRequest<JobListResponse>(`/jobs${query}`);
+  },
   parse: (text: string) =>
-    apiRequest<JobDraft>("/jobs/parse", {
+    apiRequest<JobParseResult>("/jobs/parse", {
       method: "POST",
       body: JSON.stringify({ text }),
     }),
-  create: (payload: Pick<JobDescription, "title" | "description" | "required_skills" | "bonus_skills">) =>
-    apiRequest<JobDescription>("/jobs", {
+  create: (payload: JobDraft) =>
+    apiRequest<JobOpportunity>("/jobs", {
       method: "POST",
       body: JSON.stringify(payload),
     }),
-  update: (
-    jobId: number,
-    payload: Pick<JobDescription, "title" | "description" | "required_skills" | "bonus_skills">,
-  ) =>
-    apiRequest<JobDescription>(`/jobs/${jobId}`, {
+  update: (jobId: number, payload: Partial<JobDraft>) =>
+    apiRequest<JobOpportunity>(`/jobs/${jobId}`, {
       method: "PATCH",
       body: JSON.stringify(payload),
     }),
   delete: (jobId: number) =>
     apiRequest<{ id: number; deleted: boolean }>(`/jobs/${jobId}`, {
       method: "DELETE",
+    }),
+  listEvents: (jobId: number) =>
+    apiRequest<ApplicationEventListResponse>(`/jobs/${jobId}/events`),
+  createEvent: (jobId: number, payload: ApplicationEventDraft) =>
+    apiRequest<ApplicationEvent>(`/jobs/${jobId}/events`, {
+      method: "POST",
+      body: JSON.stringify(payload),
     }),
 };
 

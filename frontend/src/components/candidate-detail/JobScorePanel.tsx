@@ -22,7 +22,7 @@ export function JobScorePanel({
   const { t } = useTranslation();
   return (
     <div className="rounded-lg border border-border bg-card p-5">
-      <h3 className="font-medium">{t("岗位评分")}</h3>
+      <h3 className="font-medium">{t("职位匹配")}</h3>
       <div className="mt-4 space-y-2">
         {jobs.map((job) => (
           <label key={job.id} className="flex items-center gap-2 text-sm">

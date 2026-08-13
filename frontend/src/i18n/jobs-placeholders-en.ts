@@ -1,0 +1,18 @@
+export const jobPlaceholderEnglish = {
+  "解析职位描述": "Parse job description",
+  "{{value}} / {{max}} 字符": "{{value}} / {{max}} characters",
+  "例如：星河科技": "e.g. Acme",
+  "例如：高级前端工程师": "e.g. Senior Frontend Engineer",
+  "例如：公司官网、LinkedIn": "e.g. Company website or LinkedIn",
+  "例如：初创、上市公司": "e.g. Startup or public company",
+  "输入城市后按 Enter": "Enter a city and press Enter",
+  "用几句话概括岗位目标和核心工作": "Summarize the role and its core work",
+  "输入一条岗位职责": "Enter a responsibility",
+  "输入专业后按 Enter": "Enter a major and press Enter",
+  "例如：SaaS、金融、电商": "e.g. SaaS, finance, or e-commerce",
+  "输入一条任职要求": "Enter a requirement",
+  "例如：补充医疗、年度奖金": "e.g. Health insurance or annual bonus",
+  "例如：周五前完成简历定制": "e.g. Tailor the resume by Friday",
+  "记录职位吸引力": "Record what makes this role attractive",
+  "记录需要确认的风险": "Record risks to clarify",
+} as const;

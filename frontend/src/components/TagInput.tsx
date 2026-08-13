@@ -10,6 +10,7 @@ type TagInputProps = {
   placeholder?: string;
   inputLabel?: string;
   className?: string;
+  disabled?: boolean;
 };
 
 function splitTags(value: string): string[] {
@@ -19,7 +20,7 @@ function splitTags(value: string): string[] {
     .filter(Boolean);
 }
 
-export function TagInput({ value, onChange, placeholder, inputLabel, className }: TagInputProps) {
+export function TagInput({ value, onChange, placeholder, inputLabel, className, disabled = false }: TagInputProps) {
   const { t } = useTranslation();
   const [draft, setDraft] = useState("");
 
@@ -84,6 +85,7 @@ export function TagInput({ value, onChange, placeholder, inputLabel, className }
     <div
       className={cn(
         "flex min-h-10 w-full flex-wrap items-center gap-1.5 rounded-md border border-border bg-background px-2 py-1.5 transition focus-within:ring-2 focus-within:ring-ring",
+        disabled && "cursor-not-allowed opacity-60",
         className,
       )}
     >
@@ -92,6 +94,7 @@ export function TagInput({ value, onChange, placeholder, inputLabel, className }
           <span className="truncate">{tag}</span>
           <button
             type="button"
+            disabled={disabled}
             onClick={() => removeTag(index)}
             className="grid h-4 w-4 shrink-0 place-items-center rounded-sm text-muted-foreground transition hover:bg-background hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             aria-label={t("删除 {{name}}", { name: tag })}
@@ -101,6 +104,7 @@ export function TagInput({ value, onChange, placeholder, inputLabel, className }
         </span>
       ))}
       <input
+        disabled={disabled}
         value={draft}
         onChange={(event) => handleInputChange(event.target.value)}
         onKeyDown={handleKeyDown}

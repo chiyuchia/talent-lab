@@ -16,6 +16,7 @@ import {
 
 import { axisTickProps, barGradientDefs, tooltipProps } from "../../lib/chart-theme";
 import type { ScoreResult } from "../../types/api";
+import { MatchInsights } from "./MatchInsights";
 
 interface ScorePanelProps {
   candidateScores: ScoreResult[];
@@ -77,6 +78,7 @@ export function ScorePanel({ candidateScores }: ScorePanelProps) {
               <div key={score.id} className="card-hover rounded-md border border-border bg-background p-3 text-sm">
                 <p className="font-medium">{score.job_title}：{score.total_score}</p>
                 <p className="mt-1 text-muted-foreground">{score.ai_comment}</p>
+                <MatchInsights details={score.details} />
               </div>
             ))}
           </div>

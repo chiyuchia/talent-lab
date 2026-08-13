@@ -31,7 +31,7 @@ export function CandidateDetailPage() {
     queryFn: () => candidateApi.get(numericCandidateId),
     enabled: Number.isFinite(numericCandidateId),
   });
-  const jobsQuery = useQuery({ queryKey: ["jobs"], queryFn: jobsApi.list });
+  const jobsQuery = useQuery({ queryKey: ["jobs"], queryFn: () => jobsApi.list() });
   const candidate = candidateQuery.data;
   const profile = normalizeProfile(candidate?.profile, candidate);
   const candidateScores = useMemo(() => candidate?.scores ?? [], [candidate?.scores]);

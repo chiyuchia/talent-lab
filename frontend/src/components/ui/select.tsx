@@ -22,7 +22,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     },
     ref,
   ) => (
-    <span className={cn("relative inline-block", containerClassName)}>
+    <span className={cn("relative block", containerClassName)}>
       <select
         ref={ref}
         className={cn(

@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  上传 PDF 简历 · AI 结构化提取 · 岗位匹配评分 · 候选人管理
+  管理多版简历 · 结构化职位机会 · AI 匹配分析 · 申请进度追踪
 </p>
 
 <p align="center">
@@ -19,8 +19,10 @@
 - **批量 PDF 上传** — 支持拖拽上传和点击上传，单次最多 10 份 PDF 简历
 - **SSE 流式解析** — 实时展示 PDF 文本提取和 AI 信息提取进度
 - **AI 结构化提取** — 自动提取姓名、联系方式、教育背景、工作经历、技能标签、项目经历
-- **JD 粘贴解析** — 粘贴完整职位描述，自动提取岗位名称、必备技能与加分技能并回填表单
-- **岗位匹配评分** — 基于 JD 需求对候选人进行多维度评分（综合分、技能分、经验分、教育分），附带 AI 评语
+- **职位机会管理** — 记录来源、地点、任职要求、薪酬、联系人、个人判断和下一步行动
+- **JD 粘贴解析** — 提取公司、职位、职责、经验、学历、技能和薪资，确认预览后再应用到表单
+- **多简历匹配** — 每个职位可匹配多份简历，并记录实际投递版本、技能缺口和定制建议
+- **申请时间线** — 保存状态变化，并可补录笔试、面试、Offer、备注和待办事项
 - **候选人管理** — 表格/卡片视图切换、关键字搜索、技能筛选、评分排序、分页浏览
 - **候选人对比** — 支持 2-3 人并排对比各维度评分和 AI 评语
 - **状态流转** — 待筛选 → 初筛通过 → 面试中 → 已录用 / 已淘汰
@@ -152,11 +154,13 @@ make frontend-dev
 | PATCH | `/api/candidates/:id/status` | 更新候选人状态 |
 | POST | `/api/candidates/compare` | 2-3 人对比 |
 | GET | `/api/candidates/:id/pdf` | 下载原始 PDF |
-| GET | `/api/jobs` | JD 列表 |
-| POST | `/api/jobs/parse` | 解析粘贴的 JD 文本 |
-| POST | `/api/jobs` | 创建 JD |
-| PATCH | `/api/jobs/:id` | 更新 JD |
-| DELETE | `/api/jobs/:id` | 删除 JD |
+| GET | `/api/jobs` | 职位机会列表（兼容原 JD 路径） |
+| POST | `/api/jobs/parse` | 结构化解析粘贴的 JD 文本 |
+| POST | `/api/jobs` | 创建职位机会 |
+| PATCH | `/api/jobs/:id` | 更新职位机会 |
+| DELETE | `/api/jobs/:id` | 删除职位机会 |
+| GET | `/api/jobs/:id/events` | 申请时间线 |
+| POST | `/api/jobs/:id/events` | 补录申请事件 |
 | GET | `/api/scores` | 评分结果列表 |
 | POST | `/api/scores` | 对候选人执行评分 |
 | GET | `/api/health` | 健康检查 |
@@ -207,7 +211,7 @@ SQLite 数据库和上传的 PDF 文件通过 Docker volume 持久化，容器�
 # 本地开发
 make backend-install    # 首次安装后端依赖
 make backend-init       # 首次初始化数据库
-make backend-dev        # 启动后端开发服务器
+make backend-dev        # 执行幂等数据库迁移并启动后端开发服务器
 make frontend-install   # 首次安装前端依赖
 make frontend-dev       # 启动前端开发服务器
 
@@ -226,7 +230,8 @@ Candidate          候选人（上传批次、状态、PDF 路径、解析状态
   └── ResumeProfile    简历结构化信息（姓名、联系方式、教育、工作、技能、项目）
   └── ScoreResult      岗位评分结果（综合分、各维度分、AI 评语）
 
-JobDescription     岗位需求（标题、描述、必备技能、加分技能）
+JobDescription     职位机会（JD、结构化要求、薪酬、申请状态、投递版本）
+  └── ApplicationEvent  申请时间线（状态、笔试、面试、Offer、备注、待办）
   └── ScoreResult      关联的候选人评分
 ```
 

@@ -1,11 +1,15 @@
 from flask import Blueprint, request
+from sqlalchemy import or_
 
 from ..extensions import db
-from ..models import JobDescription
+from ..models import ApplicationEvent, Candidate, JobDescription
 from ..security import require_auth
 from ..services.ai_service import make_ai_service
+from ..services.job_events import add_status_event, build_application_event
+from ..services.job_normalizers import JobValidationError
+from ..services.job_payload import build_job_values
+from ..utils.job_serializers import serialize_application_event, serialize_job
 from ..utils.responses import error_response, ok_response
-from ..utils.serializers import serialize_job
 
 jobs_bp = Blueprint("jobs", __name__)
 MAX_JOB_TEXT_LENGTH = 20_000
@@ -14,44 +18,57 @@ MAX_JOB_TEXT_LENGTH = 20_000
 @jobs_bp.get("")
 @require_auth
 def list_jobs():
-    jobs = JobDescription.query.order_by(JobDescription.updated_at.desc()).all()
+    query = JobDescription.query
+    status = (request.args.get("status") or "").strip()
+    search = (request.args.get("q") or "").strip()
+    favorite = (request.args.get("favorite") or "").lower()
+    if status:
+        query = query.filter(JobDescription.application_status == status)
+    if favorite in {"true", "1"}:
+        query = query.filter(JobDescription.is_favorite.is_(True))
+    if search:
+        pattern = f"%{search}%"
+        query = query.filter(
+            or_(
+                JobDescription.title.ilike(pattern),
+                JobDescription.company_name.ilike(pattern),
+                JobDescription.summary.ilike(pattern),
+            )
+        )
+    jobs = query.order_by(JobDescription.updated_at.desc()).all()
     return ok_response({"items": [serialize_job(job) for job in jobs]})
 
 
 @jobs_bp.post("/parse")
 @require_auth
 def parse_job():
-    payload = request.get_json(silent=True) or {}
+    payload = json_payload()
     text = str(payload.get("text") or "").strip()
     if not text:
-        return error_response("VALIDATION_ERROR", "请粘贴需要解析的 JD 文本。", status=400)
+        return error_response("VALIDATION_ERROR", "请粘贴需要解析的职位描述。", status=400)
     if len(text) > MAX_JOB_TEXT_LENGTH:
         return error_response(
             "VALIDATION_ERROR",
-            f"JD 文本不能超过 {MAX_JOB_TEXT_LENGTH} 个字符。",
+            f"职位描述不能超过 {MAX_JOB_TEXT_LENGTH} 个字符。",
             status=400,
         )
-
-    parsed_job = make_ai_service().parse_job_description(text)
-    return ok_response(parsed_job)
+    return ok_response(make_ai_service().parse_job_description(text))
 
 
 @jobs_bp.post("")
 @require_auth
 def create_job():
-    payload = request.get_json(silent=True) or {}
-    title = str(payload.get("title") or "").strip()
-    description = str(payload.get("description") or "").strip()
-    if not title or not description:
-        return error_response("VALIDATION_ERROR", "岗位名称和岗位描述不能为空。", status=400)
+    try:
+        values = build_job_values(json_payload())
+        validate_submitted_resume(values.get("submitted_resume_id"))
+    except JobValidationError as exc:
+        return error_response("VALIDATION_ERROR", str(exc), status=400)
 
-    job = JobDescription(
-        title=title,
-        description=description,
-        required_skills=ensure_list(payload.get("required_skills")),
-        bonus_skills=ensure_list(payload.get("bonus_skills")),
-    )
+    job = JobDescription()
+    assign_values(job, values)
     db.session.add(job)
+    db.session.flush()
+    db.session.add(add_status_event(job, job.application_status or "saved"))
     db.session.commit()
     return ok_response(serialize_job(job), status=201)
 
@@ -59,23 +76,19 @@ def create_job():
 @jobs_bp.patch("/<int:job_id>")
 @require_auth
 def update_job(job_id: int):
-    job = JobDescription.query.get(job_id)
+    job = db.session.get(JobDescription, job_id)
     if not job:
-        return error_response("NOT_FOUND", "岗位不存在。", status=404)
+        return error_response("NOT_FOUND", "职位机会不存在。", status=404)
+    old_status = job.application_status or "saved"
+    try:
+        values = build_job_values(json_payload(), job)
+        validate_submitted_resume(values.get("submitted_resume_id"))
+    except JobValidationError as exc:
+        return error_response("VALIDATION_ERROR", str(exc), status=400)
 
-    payload = request.get_json(silent=True) or {}
-    if "title" in payload:
-        job.title = str(payload.get("title") or "").strip()
-    if "description" in payload:
-        job.description = str(payload.get("description") or "").strip()
-    if "required_skills" in payload:
-        job.required_skills = ensure_list(payload.get("required_skills"))
-    if "bonus_skills" in payload:
-        job.bonus_skills = ensure_list(payload.get("bonus_skills"))
-
-    if not job.title or not job.description:
-        return error_response("VALIDATION_ERROR", "岗位名称和岗位描述不能为空。", status=400)
-
+    assign_values(job, values)
+    if job.application_status != old_status:
+        db.session.add(add_status_event(job, job.application_status))
     db.session.commit()
     return ok_response(serialize_job(job))
 
@@ -83,18 +96,53 @@ def update_job(job_id: int):
 @jobs_bp.delete("/<int:job_id>")
 @require_auth
 def delete_job(job_id: int):
-    job = JobDescription.query.get(job_id)
+    job = db.session.get(JobDescription, job_id)
     if not job:
-        return error_response("NOT_FOUND", "岗位不存在。", status=404)
-
+        return error_response("NOT_FOUND", "职位机会不存在。", status=404)
     db.session.delete(job)
     db.session.commit()
     return ok_response({"id": job_id, "deleted": True})
 
 
-def ensure_list(value):
-    if isinstance(value, list):
-        return [str(item).strip() for item in value if str(item).strip()]
-    if isinstance(value, str):
-        return [item.strip() for item in value.split(",") if item.strip()]
-    return []
+@jobs_bp.get("/<int:job_id>/events")
+@require_auth
+def list_application_events(job_id: int):
+    job = db.session.get(JobDescription, job_id)
+    if not job:
+        return error_response("NOT_FOUND", "职位机会不存在。", status=404)
+    events = (
+        ApplicationEvent.query.filter_by(job_id=job.id)
+        .order_by(ApplicationEvent.occurred_at.desc(), ApplicationEvent.id.desc())
+        .all()
+    )
+    return ok_response({"items": [serialize_application_event(event) for event in events]})
+
+
+@jobs_bp.post("/<int:job_id>/events")
+@require_auth
+def create_application_event(job_id: int):
+    job = db.session.get(JobDescription, job_id)
+    if not job:
+        return error_response("NOT_FOUND", "职位机会不存在。", status=404)
+    try:
+        event = build_application_event(job, json_payload())
+    except JobValidationError as exc:
+        return error_response("VALIDATION_ERROR", str(exc), status=400)
+    db.session.add(event)
+    db.session.commit()
+    return ok_response(serialize_application_event(event), status=201)
+
+
+def validate_submitted_resume(candidate_id: int | None) -> None:
+    if candidate_id and not db.session.get(Candidate, candidate_id):
+        raise JobValidationError("关联的简历版本不存在。")
+
+
+def assign_values(job: JobDescription, values: dict) -> None:
+    for field, value in values.items():
+        setattr(job, field, value)
+
+
+def json_payload() -> dict:
+    payload = request.get_json(silent=True)
+    return payload if isinstance(payload, dict) else {}

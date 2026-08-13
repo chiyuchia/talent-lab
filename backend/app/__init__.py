@@ -1,5 +1,3 @@
-import os
-
 from flask import Flask
 from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
@@ -43,7 +41,10 @@ def create_app(test_config: dict | None = None) -> Flask:
 
     @app.cli.command("init-db")
     def init_db_command() -> None:
+        from .services.schema_migrations import migrate_schema
+
         db.create_all()
+        migrate_schema()
         print("Initialized the talent-lab database.")
 
     @app.errorhandler(HTTPException)

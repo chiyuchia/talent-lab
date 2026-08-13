@@ -49,9 +49,11 @@ SSE 事件流 (GET /api/uploads/:id/events)
 | 扩展 | `app/extensions.py` | SQLAlchemy 实例等 Flask 扩展单例 |
 | 认证 | `app/security.py` | 单密钥登录校验（`hmac.compare_digest`）、`require_auth` 装饰器 |
 | 蓝图 | `app/blueprints/` | REST API：`auth`、`uploads`、`candidates`、`jobs`、`scores`、`health` |
-| 模型 | `app/models/` | `Candidate`、`ResumeProfile`、`JobDescription`、`ScoreResult` |
+| 模型 | `app/models/` | `Candidate`、`ResumeProfile`、`JobDescription`、`ApplicationEvent`、`ScoreResult` |
 | AI 服务 | `app/services/ai_service.py` | `AiService`：简历结构化提取、JD 解析与岗位评分，支持 mock/real 模式 |
-| JD 解析 | `app/services/job_parser.py` | 从粘贴的 JD 文本提取岗位名称、必备技能与加分技能 |
+| JD 解析 | `app/services/job_parser.py` | 从 JD 提取公司、职位、职责、要求、技能和薪酬等结构化字段 |
+| 职位数据 | `app/services/job_payload.py` | 新旧请求兼容、字段归一化和跨字段校验 |
+| 兼容迁移 | `app/services/schema_migrations.py` | 为既有 SQLite 数据库增量补列并迁移旧技能结构 |
 | PDF 服务 | `app/services/pdf_service.py` | `extract_pdf_text` / `clean_resume_text` |
 | Prompt | `app/services/prompts.py` | AI 提取与评分的提示词模板 |
 | 工具 | `app/utils/` | 统一响应格式（`responses.py`）、序列化（`serializers.py`）、路径（`paths.py`） |
@@ -75,7 +77,7 @@ cp backend/.env.example backend/.env
 make backend-init
 ```
 
-日常启动执行 `make backend-dev`。该命令直接使用 `backend/.venv` 中的 Flask，无需手动激活虚拟环境。可按需修改 `backend/.env` 中的 `APP_ACCESS_KEY`。
+日常启动执行 `make backend-dev`。该命令会先运行幂等的 `init-db` 增量迁移，再使用 `backend/.venv` 中的 Flask 启动服务，无需手动激活虚拟环境。可按需修改 `backend/.env` 中的 `APP_ACCESS_KEY`。
 
 数据库与上传文件默认落在 `backend/instance/` 下（相对路径基于 instance 目录解析）。
 
@@ -112,7 +114,7 @@ make backend-test   # 使用 backend/.venv 中的 pytest
 | 目录 | 职责 |
 |------|------|
 | `src/app/router.tsx` | 路由定义，受保护页面包在 `ProtectedRoute` 内 |
-| `src/pages/` | 页面：登录、仪表盘、上传、候选人列表/详情、对比、JD |
+| `src/pages/` | 页面：登录、仪表盘、上传、候选人列表/详情、对比、职位机会 |
 | `src/components/` | 共享组件：`AppShell`、`ResumeStreamViewer`、`CompareResultPanel`、状态徽标、空态、骨架屏等 |
 | `src/lib/api.ts` | 统一 API 客户端（fetch 封装、错误归一化、SSE 解析） |
 | `src/i18n/` | 国际化初始化与中英文翻译资源 |
@@ -145,12 +147,17 @@ Candidate (id, upload_batch_id, status, parse_status, pdf_path, created_at...)
   1:1  ResumeProfile (姓名、电话、邮箱、城市、教育、工作、技能、项目，JSON 字段)
   1:n  ScoreResult  (overall_score, skill/experience/education 子分, ai_comment)
 
-JobDescription (title, description, required_skills, bonus_skills)
-  1:n  ScoreResult
+JobDescription (职位来源、raw_jd、结构化要求、薪酬、申请状态、submitted_resume_id)
+  1:n  ScoreResult（同一职位可与多份简历匹配）
+  1:n  ApplicationEvent（状态、笔试、面试、Offer、备注、待办）
 ```
 
 - 状态机：待筛选 → 初筛通过 → 面试中 → 已录用 / 已淘汰，枚举值见 `app/constants.py`。
 - 结构化简历字段以 JSON 存储在 `ResumeProfile` 中，写入前经 `uploads.py` 的 `normalize_profile` 规整。
+- `JobDescription.description` 暂时作为 `raw_jd` 的存储列，API 同时输出两者以兼容旧客户端和既有评分记录。
+- `required_skills` / `bonus_skills` 继续兼容输出；新逻辑优先读取 `skill_requirements`，缺失时回退旧字段。
+- `flask init-db` 会先建表再运行幂等的增量迁移；现有职位 ID 和 `ScoreResult.job_id` 不变。
+- 职位当前申请状态保存在 `JobDescription` 以便筛选；每次状态变化同时写入 `ApplicationEvent`，历史事件不要求严格顺序。
 
 ## 5. 常用命令
 

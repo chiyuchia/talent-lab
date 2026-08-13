@@ -3,12 +3,16 @@ import { initReactI18next } from "react-i18next";
 
 import { candidatesEnglish } from "./candidates-en";
 import { commonEnglish } from "./common-en";
+import { jobsEnglish } from "./jobs-en";
+import { jobPlaceholderEnglish } from "./jobs-placeholders-en";
 import { resumeEnglish } from "./resume-en";
 
 const english = {
   ...commonEnglish,
   ...candidatesEnglish,
   ...resumeEnglish,
+  ...jobsEnglish,
+  ...jobPlaceholderEnglish,
 };
 
 const chinese = Object.fromEntries(

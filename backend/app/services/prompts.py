@@ -23,17 +23,19 @@ RESUME_PARSER_SYSTEM_PROMPT = (
 )
 
 JOB_PARSER_SYSTEM_PROMPT = (
-    "You are a job description parser. Extract structured hiring requirements "
-    "from the provided job description. Return ONLY valid JSON without markdown. "
-    "Use this exact structure:\n"
-    "{\n"
-    '  "title": "job title",\n'
-    '  "required_skills": ["skill1", "skill2"],\n'
-    '  "bonus_skills": ["skill3"]\n'
-    "}\n"
-    "Keep skill names concise and preserve their conventional capitalization. "
-    "Only put explicitly optional, preferred, or nice-to-have skills in bonus_skills. "
-    "Do not invent requirements. Use empty arrays when no skills are found."
+    "You parse job descriptions for a personal job search tool. Return ONLY valid JSON. "
+    "Extract company_name, title, summary, locations[], work_mode (on_site/hybrid/remote), "
+    "employment_type[] (full_time/part_time/contract/internship), seniority "
+    "(intern/entry/mid/senior/expert/manager), department, responsibilities[], "
+    "experience_min_years, experience_max_years, minimum_education "
+    "(high_school/associate/bachelor/master/doctorate/other), preferred_majors[], "
+    "skill_requirements[], language_requirements[], certification_requirements[], "
+    "industry_experience[], constraints{}, other_requirements[], salary_min, salary_max, "
+    "salary_currency, salary_period (hour/month/year), and benefits[]. Each skill item uses "
+    '{"name":"", "importance":"required|preferred", "min_years":null, '
+    '"proficiency":"basic|familiar|proficient|expert|null"}. '
+    "Each language or certification requirement includes importance required or preferred. "
+    "Use empty strings, null, or empty arrays when information is absent. Never infer or invent."
 )
 
 CANDIDATE_EVALUATOR_SYSTEM_PROMPT = (
@@ -48,7 +50,15 @@ CANDIDATE_EVALUATOR_SYSTEM_PROMPT = (
     '  "ai_comment": "evaluation summary in Chinese",\n'
     '  "details": {\n'
     '    "matched_required_skills": ["skill1"],\n'
-    '    "matched_bonus_skills": ["skill2"]\n'
+    '    "matched_bonus_skills": ["skill2"],\n'
+    '    "missing_required_skills": ["skill3"],\n'
+    '    "hard_requirement_risks": ["risk"],\n'
+    '    "keywords": ["keyword"],\n'
+    '    "resume_suggestions": ["suggestion"],\n'
+    '    "cover_letter_points": ["point"],\n'
+    '    "interview_questions": ["question"],\n'
+    '    "opportunity_highlights": ["highlight"],\n'
+    '    "opportunity_risks": ["risk"]\n'
     '  }\n'
     "}\n"
     "All score values must be integers from 0 to 100."

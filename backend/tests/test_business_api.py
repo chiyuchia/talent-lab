@@ -70,6 +70,178 @@ def test_parse_job_description_requires_text():
     assert response.get_json()["error"]["code"] == "VALIDATION_ERROR"
 
 
+def test_create_personal_job_opportunity_and_initial_timeline():
+    client = make_client()
+    response = client.post(
+        "/api/jobs",
+        json={
+            "company_name": "星河科技",
+            "title": "Senior Frontend Engineer",
+            "raw_jd": "Build a React platform",
+            "source_url": "https://example.com/jobs/1",
+            "locations": ["上海", "上海"],
+            "work_mode": "hybrid",
+            "employment_type": ["full_time", "contract", "full_time"],
+            "responsibilities": ["负责核心产品开发"],
+            "experience_min_years": 3,
+            "minimum_education": "bachelor",
+            "skill_requirements": [
+                {"name": "React", "importance": "required", "min_years": 3},
+                {"name": "react", "importance": "preferred"},
+                {"name": "Docker", "importance": "preferred"},
+            ],
+            "salary_min": 25000,
+            "salary_max": 35000,
+            "salary_currency": "CNY",
+            "salary_period": "month",
+            "application_status": "saved",
+            "is_favorite": True,
+        },
+    )
+
+    assert response.status_code == 201
+    job = response.get_json()["data"]
+    assert job["company_name"] == "星河科技"
+    assert job["raw_jd"] == "Build a React platform"
+    assert job["description"] == job["raw_jd"]
+    assert job["locations"] == ["上海"]
+    assert job["employment_type"] == ["full_time", "contract"]
+    assert job["required_skills"] == ["React"]
+    assert job["bonus_skills"] == ["Docker"]
+
+    events = client.get(f"/api/jobs/{job['id']}/events").get_json()["data"]["items"]
+    assert len(events) == 1
+    assert events[0]["status"] == "saved"
+
+
+def test_job_status_changes_create_timeline_and_manual_events():
+    client = make_client()
+    job_id = client.post(
+        "/api/jobs",
+        json={"company_name": "Acme", "title": "Engineer", "raw_jd": "Python role"},
+    ).get_json()["data"]["id"]
+
+    update_response = client.patch(
+        f"/api/jobs/{job_id}", json={"application_status": "applied"}
+    )
+    assert update_response.status_code == 200
+    assert update_response.get_json()["data"]["application_status"] == "applied"
+
+    event_response = client.post(
+        f"/api/jobs/{job_id}/events",
+        json={
+            "type": "interview",
+            "occurred_at": "2026-08-20T10:00:00",
+            "status": "interview",
+            "title": "技术一面",
+            "notes": "准备系统设计",
+        },
+    )
+    assert event_response.status_code == 201
+
+    events = client.get(f"/api/jobs/{job_id}/events").get_json()["data"]["items"]
+    assert [event["type"] for event in events] == ["interview", "status_change", "status_change"]
+    assert client.get("/api/jobs").get_json()["data"]["items"][0]["application_status"] == "interview"
+
+
+def test_job_favorite_can_be_toggled_and_filtered():
+    client = make_client()
+    job_id = client.post(
+        "/api/jobs",
+        json={"company_name": "Acme", "title": "Engineer", "raw_jd": "Role"},
+    ).get_json()["data"]["id"]
+
+    update_response = client.patch(
+        f"/api/jobs/{job_id}", json={"is_favorite": True}
+    )
+
+    assert update_response.status_code == 200
+    assert update_response.get_json()["data"]["is_favorite"] is True
+    favorites = client.get("/api/jobs?favorite=true").get_json()["data"]["items"]
+    assert [job["id"] for job in favorites] == [job_id]
+
+    client.patch(f"/api/jobs/{job_id}", json={"is_favorite": False})
+    assert client.get("/api/jobs?favorite=true").get_json()["data"]["items"] == []
+
+
+def test_job_opportunity_validates_ranges_and_url():
+    client = make_client()
+    base = {"company_name": "Acme", "title": "Engineer", "raw_jd": "Role"}
+
+    salary_response = client.post(
+        "/api/jobs", json={**base, "salary_min": 30000, "salary_max": 20000}
+    )
+    url_response = client.post(
+        "/api/jobs", json={**base, "source_url": "not-a-url"}
+    )
+    date_response = client.post(
+        "/api/jobs", json={**base, "application_deadline": "next Friday"}
+    )
+    resume_response = client.post(
+        "/api/jobs", json={**base, "submitted_resume_id": "not-an-id"}
+    )
+    employment_response = client.post(
+        "/api/jobs", json={**base, "employment_type": ["full_time", "temporary"]}
+    )
+
+    assert salary_response.status_code == 400
+    assert url_response.status_code == 400
+    assert date_response.status_code == 400
+    assert resume_response.status_code == 400
+    assert employment_response.status_code == 400
+
+
+def test_submitted_resume_is_protected_from_deletion():
+    client = make_client()
+    with client.application.app_context():
+        candidate = Candidate(
+            upload_batch_id="resume-version",
+            original_filename="frontend.pdf",
+            pdf_path="/tmp/frontend.pdf",
+        )
+        db.session.add(candidate)
+        db.session.commit()
+        candidate_id = candidate.id
+
+    response = client.post(
+        "/api/jobs",
+        json={
+            "company_name": "Acme",
+            "title": "Engineer",
+            "raw_jd": "Role",
+            "submitted_resume_id": candidate_id,
+        },
+    )
+
+    assert response.status_code == 201
+    delete_response = client.delete(f"/api/candidates/{candidate_id}")
+    assert delete_response.status_code == 409
+    assert delete_response.get_json()["error"]["code"] == "RESUME_IN_USE"
+
+
+def test_job_draft_without_requirements_cannot_be_scored():
+    client = make_client()
+    with client.application.app_context():
+        candidate = Candidate(
+            upload_batch_id="batch",
+            original_filename="resume.pdf",
+            pdf_path="/tmp/resume.pdf",
+        )
+        db.session.add(candidate)
+        db.session.commit()
+        candidate_id = candidate.id
+
+    job_id = client.post(
+        "/api/jobs", json={"company_name": "Acme", "title": "Draft", "raw_jd": ""}
+    ).get_json()["data"]["id"]
+    response = client.post(
+        "/api/scores", json={"candidate_id": candidate_id, "job_ids": [job_id]}
+    )
+
+    assert response.status_code == 400
+    assert response.get_json()["error"]["code"] == "JOB_NOT_READY"
+
+
 def test_upload_rejects_non_pdf():
     client = make_client()
 
@@ -239,15 +411,35 @@ def test_score_candidate_against_job():
                 skills=["React", "TypeScript"],
             )
         )
+        second_candidate = Candidate(
+            upload_batch_id="batch",
+            original_filename="resume-backend.pdf",
+            pdf_path="/tmp/resume-backend.pdf",
+        )
+        db.session.add(second_candidate)
+        db.session.flush()
+        db.session.add(
+            ResumeProfile(
+                candidate_id=second_candidate.id,
+                name="Grace Hopper",
+                skills=["Python"],
+            )
+        )
         db.session.commit()
         candidate_id = candidate.id
+        second_candidate_id = second_candidate.id
 
     job_response = client.post(
         "/api/jobs",
         json={
+            "company_name": "Acme",
             "title": "Frontend Engineer",
-            "description": "React role",
-            "required_skills": ["React", "TypeScript"],
+            "raw_jd": "React role",
+            "skill_requirements": [
+                {"name": "React", "importance": "required"},
+                {"name": "TypeScript", "importance": "required"},
+                {"name": "Docker", "importance": "required"},
+            ],
         },
     )
     job_id = job_response.get_json()["data"]["id"]
@@ -257,7 +449,23 @@ def test_score_candidate_against_job():
     )
 
     assert score_response.status_code == 201
-    assert score_response.get_json()["data"]["items"][0]["total_score"] >= 0
+    score = score_response.get_json()["data"]["items"][0]
+    assert score["total_score"] >= 0
+    assert score["details"]["matched_required_skills"] == ["React", "TypeScript"]
+    assert score["details"]["missing_required_skills"] == ["Docker"]
+    assert score["details"]["cover_letter_points"]
+    assert score["details"]["interview_questions"]
+
+    second_score_response = client.post(
+        "/api/scores",
+        json={"candidate_id": second_candidate_id, "job_ids": [job_id]},
+    )
+    assert second_score_response.status_code == 201
+    scores = client.get(f"/api/scores?job_id={job_id}").get_json()["data"]["items"]
+    assert {item["candidate_id"] for item in scores} == {
+        candidate_id,
+        second_candidate_id,
+    }
 
 
 def test_candidate_pdf_preview_uses_backend_relative_path(tmp_path):

@@ -48,6 +48,15 @@ def create_score():
     if len(jobs) != len(set(job_ids)):
         return error_response("NOT_FOUND", "岗位不存在。", status=404)
 
+    incomplete_jobs = [job for job in jobs if not is_job_scorable(job)]
+    if incomplete_jobs:
+        return error_response(
+            "JOB_NOT_READY",
+            "职位机会缺少职位描述或结构化要求，暂时无法进行匹配。",
+            status=400,
+            details={"job_ids": [job.id for job in incomplete_jobs]},
+        )
+
     ai = make_ai_service()
     profile_payload = serialize_profile(candidate.profile)
     results = []
@@ -86,3 +95,16 @@ def clamp_score(value) -> int:
     except (TypeError, ValueError):
         numeric = 0
     return max(0, min(100, numeric))
+
+
+def is_job_scorable(job: JobDescription) -> bool:
+    return bool(
+        (job.description or "").strip()
+        or job.skill_requirements
+        or job.required_skills
+        or job.responsibilities
+        or job.experience_min_years is not None
+        or job.minimum_education
+        or job.language_requirements
+        or job.certification_requirements
+    )

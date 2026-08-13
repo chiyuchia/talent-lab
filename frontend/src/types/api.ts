@@ -69,24 +69,23 @@ export type UploadResponse = {
   candidates: CandidateSummary[];
 };
 
-export type JobDescription = {
-  id: number;
-  title: string;
-  description: string;
-  required_skills: string[];
-  bonus_skills: string[];
-  created_at: string;
-  updated_at: string;
-};
-
-export type JobDraft = Pick<
+export type {
+  ApplicationEvent,
+  ApplicationEventDraft,
+  ApplicationEventListResponse,
+  ApplicationEventType,
+  ApplicationStatus,
+  EmploymentType,
+  JobContact,
   JobDescription,
-  "title" | "description" | "required_skills" | "bonus_skills"
->;
-
-export type JobListResponse = {
-  items: JobDescription[];
-};
+  JobDraft,
+  JobListResponse,
+  JobOpportunity,
+  JobOpportunityDraft,
+  JobParseResult,
+  NamedRequirement,
+  SkillRequirement,
+} from "./job";
 
 export type ScoreListResponse = {
   items: ScoreResult[];

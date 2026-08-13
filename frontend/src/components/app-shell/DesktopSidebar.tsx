@@ -27,8 +27,8 @@ export function DesktopSidebar({
       <div className={cn("mb-8 flex items-center", sidebarCollapsed ? "justify-center" : "justify-between")}>
         {!sidebarCollapsed && (
           <div>
-            <p className="text-xl font-semibold">talent-lab</p>
-            <p className="mt-1 text-sm text-muted-foreground">{t("智能简历分析平台")}</p>
+            <p className="text-xl font-semibold">Talent Lab</p>
+            <p className="mt-1 text-sm text-muted-foreground">{t("智能求职管理平台")}</p>
           </div>
         )}
         <Button

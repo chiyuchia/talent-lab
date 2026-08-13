@@ -1,5 +1,6 @@
 export const commonEnglish = {
   "智能简历分析平台": "Smart resume analysis platform",
+  "智能求职管理平台": "Smart job search platform",
   "上传 PDF 简历，AI 结构化提取，岗位匹配评分":
     "Upload PDF resumes, extract structured data with AI, and score job fit",
   "访问密钥": "Access key",
@@ -10,6 +11,7 @@ export const commonEnglish = {
   "上传": "Upload",
   "候选人": "Candidates",
   "岗位": "Jobs",
+  "职位": "Jobs",
   "候选人详情": "Candidate details",
   "展开导航": "Open navigation",
   "关闭导航": "Close navigation",
@@ -59,8 +61,8 @@ export const commonEnglish = {
   "岗位不存在。": "Job not found.",
   "岗位名称和岗位描述不能为空。":
     "Job title and description are required.",
-  "请粘贴需要解析的 JD 文本。": "Paste a job description to parse.",
-  "JD 文本不能超过 20000 个字符。":
+  "请粘贴需要解析的职位描述。": "Paste a job description to parse.",
+  "职位描述不能超过 20000 个字符。":
     "The job description cannot exceed 20,000 characters.",
   "请至少上传一个 PDF 文件。": "Upload at least one PDF file.",
   "仅支持 PDF 文件。": "Only PDF files are supported.",

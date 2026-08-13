@@ -7,7 +7,7 @@ backend-install:
 backend-init:
 	cd backend && .venv/bin/flask --app wsgi init-db
 
-backend-dev:
+backend-dev: backend-init
 	cd backend && .venv/bin/flask --app wsgi run --host 0.0.0.0 --port 8000 --debug
 
 frontend-install:

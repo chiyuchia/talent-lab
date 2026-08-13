@@ -39,11 +39,19 @@ def test_mock_resume_extraction_returns_empty_sections_when_not_found():
 
 def test_mock_job_description_parser_extracts_title_and_skills():
     jd_text = """
+公司名称：星河科技
 职位名称：高级前端工程师
+工作地点：上海
+用工类型：全职，也可接受合同工
+薪资：25k-35k
+
+岗位职责：
+- 负责核心 Web 产品的架构与开发
 
 任职要求：
-- 熟练掌握 React、TypeScript 和 CSS
+- 3 年以上经验，熟练掌握 React、TypeScript 和 CSS
 - 熟悉 REST API，能够使用 Git 协作
+- 本科及以上学历
 
 加分项：
 - 有 Node.js、Docker 或 AWS 经验者优先
@@ -51,7 +59,20 @@ def test_mock_job_description_parser_extracts_title_and_skills():
 
     job = AiService(mode="mock").parse_job_description(jd_text)
 
+    assert job["company_name"] == "星河科技"
     assert job["title"] == "高级前端工程师"
+    assert job["raw_jd"] == jd_text.strip()
     assert job["description"] == jd_text.strip()
+    assert job["locations"] == ["上海"]
+    assert job["employment_type"] == ["full_time", "contract"]
+    assert job["seniority"] == "senior"
+    assert job["responsibilities"] == ["负责核心 Web 产品的架构与开发"]
+    assert job["experience_min_years"] == 3
+    assert job["minimum_education"] == "bachelor"
+    assert job["salary_min"] == 25000
+    assert job["salary_max"] == 35000
     assert job["required_skills"] == ["TypeScript", "React", "CSS", "Git", "REST"]
     assert job["bonus_skills"] == ["Node.js", "Docker", "AWS"]
+    react = next(item for item in job["skill_requirements"] if item["name"] == "React")
+    assert react["min_years"] == 3
+    assert react["proficiency"] == "proficient"

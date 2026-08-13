@@ -18,7 +18,7 @@ export function DashboardPage() {
     queryFn: () =>
       candidateApi.list({ page: 1, page_size: 100, sort: "-uploaded_at" }),
   });
-  const jobsQuery = useQuery({ queryKey: ["jobs"], queryFn: jobsApi.list });
+  const jobsQuery = useQuery({ queryKey: ["jobs"], queryFn: () => jobsApi.list() });
   const candidates = useMemo(
     () => candidatesQuery.data?.items ?? [],
     [candidatesQuery.data?.items],
@@ -55,7 +55,7 @@ export function DashboardPage() {
       icon: TrendingUp,
     },
     {
-      label: "岗位",
+      label: "职位机会",
       value: String(jobsQuery.data?.items.length ?? 0),
       icon: BarChart3,
     },

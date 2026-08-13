@@ -2,7 +2,7 @@ from flask import Blueprint, request, send_file
 
 from ..constants import CANDIDATE_STATUSES
 from ..extensions import db
-from ..models import Candidate, ResumeProfile
+from ..models import Candidate, JobDescription, ResumeProfile
 from ..security import require_auth
 from ..services.candidate_query import (
     has_skills,
@@ -73,6 +73,14 @@ def delete_candidate(candidate_id: int):
     candidate = Candidate.query.get(candidate_id)
     if not candidate:
         return error_response("NOT_FOUND", "候选人不存在。", status=404)
+
+    submitted_job = JobDescription.query.filter_by(submitted_resume_id=candidate.id).first()
+    if submitted_job:
+        return error_response(
+            "RESUME_IN_USE",
+            "该简历版本已用于职位投递，请先解除关联。",
+            status=409,
+        )
 
     if candidate.profile:
         db.session.delete(candidate.profile)

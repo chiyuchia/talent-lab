@@ -21,9 +21,9 @@ export function MobileSidebar({ closeSidebar }: MobileSidebarProps) {
       <aside className="fixed inset-y-0 left-0 z-50 w-56 border-r border-border bg-background p-4 lg:hidden animate-fade-in-left">
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <p className="text-xl font-semibold">talent-lab</p>
+            <p className="text-xl font-semibold">Talent Lab</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              {t("智能简历分析平台")}
+              {t("智能求职管理平台")}
             </p>
           </div>
           <Button
