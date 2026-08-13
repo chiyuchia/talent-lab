@@ -8,7 +8,7 @@ import { ErrorBoundary } from "./components/ErrorBoundary";
 import { GlobalFeedback } from "./components/GlobalFeedback";
 import { queryClient } from "./lib/query-client";
 import "./i18n";
-import "@fontsource-variable/inter";
+import "./styles/fonts.css";
 import "./styles/index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
