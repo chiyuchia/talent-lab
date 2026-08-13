@@ -4,24 +4,28 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { candidateApi } from "../../lib/api";
 import type { CandidateStatus } from "../../types/api";
 import {
-  defaultPageSizeByView,
   getVisiblePages,
   normalizeSkills,
   pageSizeOptionsByView,
 } from "./candidate-list-options";
 import type { SortDirection, SortField, ViewMode } from "./candidate-list-options";
+import {
+  loadCandidateListPreferences,
+  saveCandidateListPreferences,
+} from "./candidate-list-preferences";
 
 export function useCandidateList() {
+  const [initialPreferences] = useState(loadCandidateListPreferences);
   const [q, setQ] = useState("");
   const [status, setStatus] = useState<"" | CandidateStatus>("");
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [sortField, setSortField] = useState<SortField>("uploaded_at");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [page, setPage] = useState(1);
-  const [view, setView] = useState<ViewMode>("table");
+  const [view, setView] = useState<ViewMode>(initialPreferences.view);
   const [pageSizeByView, setPageSizeByView] = useState<
     Record<ViewMode, number>
-  >(defaultPageSizeByView);
+  >(initialPreferences.pageSizeByView);
   const queryClient = useQueryClient();
   const pageSize = pageSizeByView[view];
   const pageSizeOptions = pageSizeOptionsByView[view];
@@ -85,6 +89,10 @@ export function useCandidateList() {
       setPage(totalPages);
     }
   }, [page, totalPages]);
+
+  useEffect(() => {
+    saveCandidateListPreferences({ view, pageSizeByView });
+  }, [view, pageSizeByView]);
 
   function resetToFirstPage() {
     setPage(1);
