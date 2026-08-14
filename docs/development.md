@@ -195,7 +195,7 @@ make compose-down     # 停止 Docker 服务
 
 - **前端**部署在 Cloudflare Pages，生产地址为 <https://talent-lab.440115.xyz/>；Pages 关联 `master` 分支，执行 `cd frontend && npm ci && npm run build`，并发布 `frontend/dist`。
 - Cloudflare Pages 的 `VITE_API_BASE_URL` 当前指向 `https://talentlensapi.440115.xyz:8443/api`；后端的 `FRONTEND_ORIGIN` 应设置为 `https://talent-lab.440115.xyz`，以允许携带 Cookie 的跨域请求。
-- **后端**通过 `deploy/docker-compose.yml` 运行 GHCR 不可变镜像，`deploy/deploy.sh` 负责备份、迁移和健康检查；涉及后端构建输入的 `master` 改动会在构建成功后由 GitHub Actions 通过 SSH 自动部署，`main` 只发布镜像。纯前端或文档改动不会触发后端工作流，必要时可通过 `workflow_dispatch` 手动运行。部署目录必须由 root 控制，完整初始化步骤见 `deploy/README.md`。服务默认仅绑定宿主机 `127.0.0.1:8000`，当前生产前端不由该 Compose 文件托管。
+- **后端**通过 `deploy/docker-compose.yml` 运行 GHCR 不可变镜像，`deploy/deploy.sh` 负责备份、迁移、健康检查，并在部署成功后清理该仓库的旧镜像；涉及后端构建输入的 `master` 改动会在构建成功后由 GitHub Actions 通过 SSH 自动部署，`main` 只发布镜像。纯前端或文档改动不会触发后端工作流，必要时可通过 `workflow_dispatch` 手动运行。部署目录必须由 root 控制，完整初始化步骤见 `deploy/README.md`。服务默认仅绑定宿主机 `127.0.0.1:8000`，当前生产前端不由该 Compose 文件托管。
 - 宿主机 OpenResty 应将生产 API 域名的 `/api/` 请求转发到 `http://127.0.0.1:8000`。配置时注意：
   - SSE 必须 `proxy_buffering off`，并配置较长超时；
   - `client_max_body_size 50m` 支持批量上传；

@@ -41,8 +41,10 @@ sudo /opt/talent-lab/deploy/deploy.sh \
 
 The script validates the image repository, pulls it, creates an online SQLite
 backup in the data volume, runs the idempotent migration, starts the service,
-waits for the health check, and records the active image in `.env.release`.
-Local volume backups do not replace an encrypted off-site backup.
+waits for the health check, records the active image in `.env.release`, and
+removes older `talent-lab-backend` image digests. Images from other repositories
+are not pruned, and an old image still used by a container is retained with a
+warning. Local volume backups do not replace an encrypted off-site backup.
 
 ## GitHub Actions deployment
 

@@ -5,6 +5,7 @@ readonly DEPLOY_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 readonly COMPOSE_FILE="${DEPLOY_DIR}/docker-compose.yml"
 readonly PROD_ENV_FILE="${DEPLOY_DIR}/.env.production"
 readonly RELEASE_ENV_FILE="${DEPLOY_DIR}/.env.release"
+readonly IMAGE_REPOSITORY="ghcr.io/chiyuchia/talent-lab-backend"
 readonly HEALTH_TIMEOUT="90"
 release_temp=""
 
@@ -70,6 +71,29 @@ rollback() {
     --wait-timeout "$HEALTH_TIMEOUT" backend || true
 }
 
+remove_old_backend_images() {
+  local active_image_ref="$1"
+  local image_ref
+  local image_refs
+
+  if ! image_refs="$(
+    docker image ls "$IMAGE_REPOSITORY" --digests \
+      --format '{{.Repository}}@{{.Digest}}'
+  )"; then
+    echo "Warning: unable to list old backend images." >&2
+    return
+  fi
+
+  while IFS= read -r image_ref; do
+    [[ "$image_ref" =~ ^ghcr\.io/chiyuchia/talent-lab-backend@sha256:[[:xdigit:]]{64}$ ]] || continue
+    [[ "$image_ref" == "$active_image_ref" ]] && continue
+
+    if ! docker image rm "$image_ref"; then
+      echo "Warning: unable to remove old backend image: $image_ref" >&2
+    fi
+  done <<< "$image_refs"
+}
+
 main() {
   [[ $# -eq 1 ]] || usage
   local image_ref="$1"
@@ -103,6 +127,7 @@ main() {
 
   mv "$release_temp" "$RELEASE_ENV_FILE"
   release_temp=""
+  remove_old_backend_images "$image_ref"
   echo "Deployment complete: $image_ref"
 }
 

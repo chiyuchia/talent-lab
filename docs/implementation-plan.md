@@ -236,7 +236,7 @@ Docker Compose 服务：
 - 将 root-owned 部署包安装到 `/opt/talent-lab/deploy`。
 - 配置 `.env.production`、root 的 GHCR 登录和专用 SSH deploy 用户。
 - 配置 GitHub `production` Environment Secrets 与严格的 SSH host key 校验。
-- 使用不可变镜像 digest 调用 `deploy.sh`，并等待容器健康检查。
+- 使用不可变镜像 digest 调用 `deploy.sh`，等待容器健康检查，并在成功后清理旧的后端镜像。
 - 查看日志、验证 `/api/health`、重启服务和更新版本。
 - 备份和恢复 SQLite 数据与上传文件。
 

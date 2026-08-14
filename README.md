@@ -243,7 +243,7 @@ sudo /opt/talent-lab/deploy/deploy.sh \
   ghcr.io/chiyuchia/talent-lab-backend@sha256:<64-hex-digest>
 ```
 
-脚本会验证镜像来源、拉取镜像、备份 SQLite、执行幂等迁移、等待健康检查，并将当前镜像写入 `.env.release`。Compose 默认将后端服务绑定到宿主机 `127.0.0.1:8000`。
+脚本会验证镜像来源、拉取镜像、备份 SQLite、执行幂等迁移、等待健康检查，将当前镜像写入 `.env.release`，然后清理该后端仓库中不再使用的旧镜像。Compose 默认将后端服务绑定到宿主机 `127.0.0.1:8000`。
 
 #### 3. 配置宿主机反向代理
 
