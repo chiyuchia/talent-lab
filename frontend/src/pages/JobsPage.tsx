@@ -28,6 +28,7 @@ export function JobsPage() {
       status: statusFilter || undefined,
       favorite: favoriteOnly ? "true" : undefined,
     }),
+    placeholderData: (previousData) => previousData,
   });
   const resumesQuery = useQuery({
     queryKey: ["resume-versions", "jobs"],
@@ -136,14 +137,14 @@ export function JobsPage() {
   return (
     <AnimatedPage>
       <section className="space-y-6">
-        <div className="flex items-start justify-between gap-4 animate-fade-in-down">
+        <div className="flex items-start justify-between gap-4">
           <div>
             <h2 className="text-2xl font-semibold">{t("职位机会")}</h2>
             <p className="mt-1 text-sm text-muted-foreground">{t("集中保存职位描述、比较匹配度并跟踪求职进度")}</p>
           </div>
           <Button onClick={createJob}><Plus className="h-4 w-4" />{t("添加职位机会")}</Button>
         </div>
-        <div className="rounded-lg border border-border bg-card p-5 animate-fade-in-up animation-delay-50">
+        <div className="rounded-lg border border-border bg-card p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h3 className="font-medium">{t("我的职位机会")}</h3>
             <div className="flex flex-1 flex-wrap justify-end gap-2">
@@ -158,7 +159,7 @@ export function JobsPage() {
               </label>
             </div>
           </div>
-          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3 stagger-children">
+          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             {jobsQuery.isLoading ? <div className="h-56 rounded-md bg-muted skeleton-shimmer" /> : null}
             {jobs.map((job) => (
               <JobOpportunityCard

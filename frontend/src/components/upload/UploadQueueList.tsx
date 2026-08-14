@@ -17,9 +17,9 @@ interface UploadQueueListProps {
 export function UploadQueueList({ queue, streams }: UploadQueueListProps) {
   const { t } = useTranslation();
   return (
-    <div className="rounded-lg border border-border bg-card animate-fade-in-up animation-delay-100">
+    <div className="view-transition-enter rounded-lg border border-border bg-card">
       <div className="border-b border-border px-4 py-3 font-medium">{t("解析队列")}</div>
-      <div className="divide-y divide-border stagger-children">
+      <div className="divide-y divide-border">
         {queue.map((item) => (
           <div
             key={item.id}

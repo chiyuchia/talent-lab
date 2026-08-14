@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import { useTranslation } from "react-i18next";
 
+import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { axisTickProps, barGradientDefs, tooltipProps } from "../../lib/chart-theme";
 
 interface ScoreBarChartProps {
@@ -17,6 +18,7 @@ interface ScoreBarChartProps {
 
 export function ScoreBarChart({ scoreData }: ScoreBarChartProps) {
   const { t } = useTranslation();
+  const reducedMotion = useReducedMotion();
   return (
     <div className="h-80">
       <h4 className="mb-2 text-sm font-medium text-muted-foreground">
@@ -33,7 +35,14 @@ export function ScoreBarChart({ scoreData }: ScoreBarChartProps) {
             formatter={(value) => [value, t("评分")]}
             labelFormatter={(label) => t("候选人：{{name}}", { name: label })}
           />
-          <Bar dataKey="score" fill="url(#barGradient)" radius={[4, 4, 0, 0]} />
+          <Bar
+            dataKey="score"
+            fill="url(#barGradient)"
+            radius={[4, 4, 0, 0]}
+            isAnimationActive={!reducedMotion}
+            animationDuration={320}
+            animationEasing="ease-out"
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>

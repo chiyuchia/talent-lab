@@ -41,7 +41,7 @@ export function LoginPage() {
       {/* Brand panel: the one place the primary color gets full stage */}
       <div className="brand-panel hidden lg:flex lg:flex-col lg:justify-between lg:p-12">
         <p className="text-sm font-medium opacity-90">Talent Lab</p>
-        <div className="animate-fade-in-up">
+        <div className="animate-login-hero-enter">
           <p className="text-5xl font-semibold leading-tight">Talent Lab</p>
           <p className="mt-4 max-w-sm text-lg opacity-90">
             {t("智能求职管理平台")}
@@ -51,7 +51,7 @@ export function LoginPage() {
       </div>
 
       <div className="grid place-items-center px-4 py-12">
-        <form onSubmit={handleSubmit} className="w-full max-w-sm animate-scale-in">
+        <form onSubmit={handleSubmit} className="w-full max-w-sm animate-login-form-enter">
           <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <KeyRound className="h-5 w-5" />
           </div>

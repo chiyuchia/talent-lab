@@ -5,12 +5,12 @@ import { cn } from "../../lib/utils";
 export function UploadQueueSkeleton() {
   const { t } = useTranslation();
   return (
-    <div className="rounded-lg border border-border animate-fade-in" role="status" aria-live="polite" aria-label={t("正在创建解析队列")}>
+    <div className="rounded-lg border border-border" role="status" aria-live="polite" aria-label={t("正在创建解析队列")}>
       <span className="sr-only">{t("正在创建解析队列")}</span>
       <div className="border-b border-border px-4 py-3">
         <Skeleton className="h-5 w-24 skeleton-shimmer" />
       </div>
-      <div className="divide-y divide-border stagger-children">
+      <div className="divide-y divide-border">
         {Array.from({ length: 3 }).map((_, index) => (
           <div key={index} className="flex flex-col gap-4 p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

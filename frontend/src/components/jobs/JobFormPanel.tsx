@@ -62,7 +62,7 @@ export function JobFormPanel({
       <Button variant="ghost" className="-ml-3" onClick={onCancel} disabled={busy}>
         <ArrowLeft className="h-4 w-4" /> {t("返回职位机会")}
       </Button>
-      <div className="animate-fade-in-down">
+      <div>
         <h2 className="text-2xl font-semibold">{t(jobId ? "编辑职位机会" : "添加职位机会")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t("结构化职位描述、比较匹配度并跟踪完整申请进度")}</p>
       </div>
@@ -72,7 +72,7 @@ export function JobFormPanel({
         onPendingChange={setParsing}
         onApply={(parsed) => updateForm(mergeParsedJob(form, parsed))}
       />
-      <form onSubmit={handleSubmit} className="w-full space-y-6 rounded-lg border border-border bg-card p-5 animate-fade-in-up">
+      <form onSubmit={handleSubmit} className="w-full space-y-6 rounded-lg border border-border bg-card p-5">
         <fieldset disabled={busy} className="space-y-7 disabled:opacity-60">
           <JobBasicFields form={form} onChange={updateForm} errors={errors} />
           <JobContentFields form={form} onChange={updateForm} />

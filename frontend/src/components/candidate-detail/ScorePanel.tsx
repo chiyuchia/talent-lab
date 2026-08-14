@@ -14,6 +14,7 @@ import {
   YAxis,
 } from "recharts";
 
+import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { axisTickProps, barGradientDefs, tooltipProps } from "../../lib/chart-theme";
 import type { ScoreResult } from "../../types/api";
 import { MatchInsights } from "./MatchInsights";
@@ -24,6 +25,7 @@ interface ScorePanelProps {
 
 export function ScorePanel({ candidateScores }: ScorePanelProps) {
   const { t } = useTranslation();
+  const reducedMotion = useReducedMotion();
   const chartData = useMemo(() => {
     const score = candidateScores[0];
     if (!score) return [];
@@ -56,6 +58,9 @@ export function ScorePanel({ candidateScores }: ScorePanelProps) {
                   stroke="hsl(var(--primary))"
                   strokeWidth={2}
                   dot={{ r: 3, fill: "hsl(var(--primary))", strokeWidth: 0 }}
+                  isAnimationActive={!reducedMotion}
+                  animationDuration={320}
+                  animationEasing="ease-out"
                 />
                 <Tooltip {...tooltipProps} formatter={(value) => [value, t("评分")]} />
               </RadarChart>
@@ -69,7 +74,14 @@ export function ScorePanel({ candidateScores }: ScorePanelProps) {
                 <XAxis dataKey="job_title" {...axisTickProps} />
                 <YAxis domain={[0, 100]} {...axisTickProps} />
                 <Tooltip {...tooltipProps} formatter={(value) => [value, t("总分")]} labelFormatter={(label) => t("岗位：{{name}}", { name: label })} />
-                <Bar dataKey="total_score" fill="url(#barGradient)" radius={[4, 4, 0, 0]} />
+                <Bar
+                  dataKey="total_score"
+                  fill="url(#barGradient)"
+                  radius={[4, 4, 0, 0]}
+                  isAnimationActive={!reducedMotion}
+                  animationDuration={320}
+                  animationEasing="ease-out"
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

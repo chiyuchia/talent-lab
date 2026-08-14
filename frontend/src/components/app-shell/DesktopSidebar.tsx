@@ -45,7 +45,7 @@ export function DesktopSidebar({
           )}
         </Button>
       </div>
-      <nav className="space-y-1 stagger-children">
+      <nav className="space-y-1">
         {navItems.map((item) => (
           <NavLink
             key={item.to}

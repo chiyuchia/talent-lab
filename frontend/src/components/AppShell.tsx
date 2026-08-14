@@ -79,6 +79,13 @@ export function AppShell() {
     return () => window.removeEventListener("keydown", handleShortcut);
   }, [navigate]);
 
+  useEffect(() => {
+    if (drawerOpen) return;
+
+    const timer = window.setTimeout(clearSelected, 240);
+    return () => window.clearTimeout(timer);
+  }, [clearSelected, drawerOpen]);
+
   return (
     <div className="min-h-dvh bg-background text-foreground">
       <DesktopSidebar
@@ -86,7 +93,7 @@ export function AppShell() {
         setSidebarCollapsed={setSidebarCollapsed}
       />
 
-      {sidebarOpen && <MobileSidebar closeSidebar={closeSidebar} />}
+      <MobileSidebar open={sidebarOpen} closeSidebar={closeSidebar} />
 
       <div className={sidebarCollapsed ? "lg:pl-16" : "lg:pl-56"}>
         <AppHeader
@@ -105,10 +112,7 @@ export function AppShell() {
 
       <ResizableDrawer
         open={drawerOpen}
-        onClose={() => {
-          closeDrawer();
-          clearSelected();
-        }}
+        onClose={closeDrawer}
         title={t("候选人对比")}
         defaultWidth={Math.min(
           1200,

@@ -39,7 +39,7 @@ export function CandidateTable({
   return (
     <Table
       className="min-w-[64rem]"
-      containerClassName="animate-fade-in-up animation-delay-100"
+      containerClassName="view-transition-enter"
     >
       <TableHeader>
         <TableRow>
@@ -76,7 +76,7 @@ export function CandidateTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {candidates.map((candidate, index) => {
+        {candidates.map((candidate) => {
           const isSelected = selectedIds.includes(candidate.id);
           const isMaxReached = selectedIds.length >= 3 && !isSelected;
           return (
@@ -86,9 +86,6 @@ export function CandidateTable({
                 "table-row-hover hover:bg-muted/30",
                 isSelected && "bg-primary/5",
               )}
-              style={{
-                animation: `fade-in-up 0.4s ease-out ${0.04 * Math.min(index, 12)}s both`,
-              }}
             >
               <TableCell>
                 <Checkbox

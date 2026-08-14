@@ -37,7 +37,7 @@ export function ProfilePreview({
 }: ProfilePreviewProps) {
   const { t } = useTranslation();
   return (
-    <div className="space-y-4 rounded-lg border border-border bg-card p-5 animate-fade-in-up animation-delay-50">
+    <div className="space-y-4 rounded-lg border border-border bg-card p-5">
       <div className="flex items-center justify-between">
         <h3 className="font-semibold">{t("简历画像预览")}</h3>
         <Button

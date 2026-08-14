@@ -144,29 +144,12 @@ textarea {
 
 /* Smooth view-switch transition */
 .view-transition-enter {
-  animation: fade-in-up 0.3s ease-out both;
+  animation: fade-in-up 0.16s ease-out both;
 }
-
-/* Stagger children animation via CSS variables */
-.stagger-children > * {
-  opacity: 0;
-  animation: fade-in-up 0.45s ease-out both;
-}
-.stagger-children > *:nth-child(1) { animation-delay: 0.03s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.06s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.09s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.12s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.15s; }
-.stagger-children > *:nth-child(6) { animation-delay: 0.18s; }
-.stagger-children > *:nth-child(7) { animation-delay: 0.21s; }
-.stagger-children > *:nth-child(8) { animation-delay: 0.24s; }
-.stagger-children > *:nth-child(9) { animation-delay: 0.27s; }
-.stagger-children > *:nth-child(10) { animation-delay: 0.30s; }
-.stagger-children > *:nth-child(n+11) { animation-delay: 0.33s; }
 
 /* Page enter animation */
 .page-enter {
-  animation: fade-in-up 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: fade-in-up 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 /* Skeleton shimmer enhancement */
@@ -212,8 +195,8 @@ textarea {
 
 @keyframes fade-in-up {
   from {
-    opacity: 0;
-    transform: translateY(16px);
+    opacity: 0.88;
+    transform: translateY(6px);
   }
   to {
     opacity: 1;

@@ -8,6 +8,7 @@ import {
 } from "recharts";
 import { useTranslation } from "react-i18next";
 
+import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { statusChartColors, tooltipProps } from "../../lib/chart-theme";
 import type { CandidateStatus } from "../../types/api";
 
@@ -17,6 +18,7 @@ interface StatusDistributionChartProps {
 
 export function StatusDistributionChart({ statusData }: StatusDistributionChartProps) {
   const { t } = useTranslation();
+  const reducedMotion = useReducedMotion();
   return (
     <div className="h-80">
       <h4 className="mb-2 text-sm font-medium text-muted-foreground">
@@ -31,6 +33,9 @@ export function StatusDistributionChart({ statusData }: StatusDistributionChartP
             outerRadius={80}
             stroke="hsl(var(--card))"
             strokeWidth={2}
+            isAnimationActive={!reducedMotion}
+            animationDuration={320}
+            animationEasing="ease-out"
             label={({ label, value, percent }) =>
               `${label}: ${value} (${(percent * 100).toFixed(0)}%)`
             }

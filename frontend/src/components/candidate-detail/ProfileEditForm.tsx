@@ -25,7 +25,7 @@ export function ProfileEditForm({
 }: ProfileEditFormProps) {
   const { t } = useTranslation();
   return (
-    <form onSubmit={onSubmit} className="space-y-4 rounded-lg border border-border bg-card p-5 animate-fade-in-up animation-delay-50">
+    <form onSubmit={onSubmit} className="view-transition-enter space-y-4 rounded-lg border border-border bg-card p-5">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <h3 className="font-medium">{t("简历编辑修正")}</h3>

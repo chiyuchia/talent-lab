@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   darkMode: ["class"],
@@ -39,37 +38,37 @@ const config: Config = {
         md: "0.375rem",
         sm: "0.25rem",
       },
-      animationDelay: {
-        50: "0.05s",
-        100: "0.1s",
-        150: "0.15s",
-        200: "0.2s",
-        250: "0.25s",
-        300: "0.3s",
-      },
       keyframes: {
         "fade-in": {
-          from: { opacity: "0" },
+          from: { opacity: "0.88" },
           to: { opacity: "1" },
         },
         "fade-in-up": {
-          from: { opacity: "0", transform: "translateY(16px)" },
+          from: { opacity: "0.88", transform: "translateY(6px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
         "fade-in-down": {
-          from: { opacity: "0", transform: "translateY(-12px)" },
+          from: { opacity: "0.88", transform: "translateY(-6px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
         "fade-in-left": {
-          from: { opacity: "0", transform: "translateX(-16px)" },
+          from: { opacity: "0.9", transform: "translateX(-12px)" },
           to: { opacity: "1", transform: "translateX(0)" },
         },
         "fade-in-right": {
-          from: { opacity: "0", transform: "translateX(16px)" },
+          from: { opacity: "0.9", transform: "translateX(12px)" },
           to: { opacity: "1", transform: "translateX(0)" },
         },
+        "login-hero-enter": {
+          from: { opacity: "0", transform: "translateY(16px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "login-form-enter": {
+          from: { opacity: "0.88", transform: "scale(0.98)" },
+          to: { opacity: "1", transform: "scale(1)" },
+        },
         "scale-in": {
-          from: { opacity: "0", transform: "scale(0.95)" },
+          from: { opacity: "0.88", transform: "scale(0.98)" },
           to: { opacity: "1", transform: "scale(1)" },
         },
         "slide-up": {
@@ -82,31 +81,21 @@ const config: Config = {
         },
       },
       animation: {
-        "fade-in": "fade-in 0.4s ease-out both",
-        "fade-in-up": "fade-in-up 0.5s ease-out both",
-        "fade-in-down": "fade-in-down 0.4s ease-out both",
-        "fade-in-left": "fade-in-left 0.4s ease-out both",
-        "fade-in-right": "fade-in-right 0.4s ease-out both",
-        "scale-in": "scale-in 0.35s ease-out both",
+        "fade-in": "fade-in 0.2s ease-out both",
+        "fade-in-up": "fade-in-up 0.22s ease-out both",
+        "fade-in-down": "fade-in-down 0.2s ease-out both",
+        "fade-in-left": "fade-in-left 0.22s ease-out both",
+        "fade-in-right": "fade-in-right 0.22s ease-out both",
+        "login-hero-enter": "login-hero-enter 0.48s ease-out both",
+        "login-form-enter": "login-form-enter 0.28s ease-out both",
+        "scale-in": "scale-in 0.22s ease-out both",
         "slide-up": "slide-up 0.4s ease-out both",
         "shimmer": "shimmer 2s linear infinite",
         // Alias that CandidateDetailPage already uses
-        fadeIn: "fade-in 0.35s ease-out both",
+        fadeIn: "fade-in 0.18s ease-out both",
       },
     },
   },
-  plugins: [
-    plugin(({ matchUtilities, theme }) => {
-      matchUtilities(
-        {
-          "animation-delay": (value) => ({
-            animationDelay: value as string,
-          }),
-        },
-        { values: theme("animationDelay") },
-      );
-    }),
-  ],
 };
 
 export default config;

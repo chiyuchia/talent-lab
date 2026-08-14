@@ -61,7 +61,7 @@ export function CandidatesPage() {
   return (
     <AnimatedPage>
       <section className="space-y-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between animate-fade-in-down">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-2xl font-semibold">{t("候选人")}</h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -94,7 +94,7 @@ export function CandidatesPage() {
             ) : null}
           </div>
         </div>
-        <div className="rounded-lg border border-border bg-card p-4 animate-fade-in-up animation-delay-50">
+        <div className="rounded-lg border border-border bg-card p-4">
           <CandidateFilterPanel
             status={status}
             setStatus={setStatus}
@@ -166,7 +166,7 @@ export function CandidatesPage() {
         ) : null}
 
         {selectedIds.length > 0 ? (
-          <div className="sticky bottom-4 z-20 flex items-center justify-between gap-3 rounded-lg border border-border bg-background/95 px-4 py-3 shadow-lg backdrop-blur animate-fade-in-up">
+          <div className="view-transition-enter sticky bottom-4 z-20 flex items-center justify-between gap-3 rounded-lg border border-border bg-background/95 px-4 py-3 shadow-lg backdrop-blur">
             <div className="flex items-center gap-3">
               <span className="text-sm font-medium">
                 {t("已选 {{value}} 人", { value: selectedIds.length })}

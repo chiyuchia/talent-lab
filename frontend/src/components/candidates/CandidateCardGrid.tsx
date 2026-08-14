@@ -25,7 +25,7 @@ export function CandidateCardGrid({
 }: CandidateCardGridProps) {
   const { t } = useTranslation();
   return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 stagger-children">
+    <div className="view-transition-enter grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       {candidates.map((candidate) => {
         const isSelected = selectedIds.includes(candidate.id);
         const isMaxReached = selectedIds.length >= 3 && !isSelected;

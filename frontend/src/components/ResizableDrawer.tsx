@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
+import { usePresence } from "../hooks/usePresence";
+import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
 
 interface ResizableDrawerProps {
@@ -29,6 +31,8 @@ export function ResizableDrawer({
   const startXRef = useRef(0);
   const startWidthRef = useRef(defaultWidth);
   const prevOpenRef = useRef(open);
+  const drawerRef = useRef<HTMLElement | null>(null);
+  const { rendered, visible } = usePresence(open, 240);
 
   useEffect(() => {
     if (open && !prevOpenRef.current) {
@@ -86,17 +90,30 @@ export function ResizableDrawer({
     }
   }, [open, onClose]);
 
-  if (!open) return null;
+  useEffect(() => {
+    drawerRef.current?.toggleAttribute("inert", !open);
+  }, [open, rendered]);
+
+  if (!rendered) return null;
 
   return (
     <>
       <div
-        className="fixed inset-0 z-40 bg-[hsl(var(--scrim)/0.45)] transition-opacity"
+        className={cn(
+          "fixed inset-0 z-40 bg-[hsl(var(--scrim)/0.45)] transition-opacity duration-200",
+          visible ? "opacity-100" : "pointer-events-none opacity-0",
+        )}
         onClick={onClose}
+        aria-hidden="true"
       />
       <aside
-        className="fixed inset-y-0 right-0 z-50 flex animate-fade-in-right"
+        ref={drawerRef}
+        className={cn(
+          "fixed inset-y-0 right-0 z-50 flex transition-[transform,opacity] duration-[240ms] ease-[cubic-bezier(0.2,0.8,0.2,1)]",
+          visible ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0",
+        )}
         style={{ width }}
+        aria-hidden={!open}
       >
         {/* Resize handle */}
         <div

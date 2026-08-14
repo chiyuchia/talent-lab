@@ -113,7 +113,7 @@ export function CandidateDetailPage() {
   return (
     <AnimatedPage>
     <section className="space-y-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between animate-fade-in-down">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h2 className="text-2xl font-semibold">{profile.name || candidate.original_filename}</h2>
           <p className="mt-1 text-sm text-muted-foreground">{t("结构化简历、评分详情与原始 PDF")}</p>
@@ -154,12 +154,12 @@ export function CandidateDetailPage() {
               setActiveTab={setActiveTab}
             />
           )}
-          <div className="rounded-lg border border-border bg-card p-5 animate-fade-in-up animation-delay-150">
+          <div className="rounded-lg border border-border bg-card p-5">
             <h3 className="font-medium">{t("原始 PDF")}</h3>
             <iframe title={t("原始 PDF")} src={`${API_PREFIX}${candidate.pdf_url}`} className="mt-4 h-[34rem] w-full rounded-md border border-border bg-background" />
           </div>
         </div>
-        <div className="space-y-4 animate-fade-in-up animation-delay-100">
+        <div className="space-y-4">
           <div className="rounded-lg border border-border bg-card p-5">
             <h3 className="font-medium">{t("状态流转")}</h3>
             <Select

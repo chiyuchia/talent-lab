@@ -23,7 +23,7 @@ export function ProfileEducationTab({ education }: ProfileEducationTabProps) {
 
             return (
               <div key={index} className="relative group">
-                <div className="absolute -left-[32px] top-1 h-4 w-4 rounded-full border-2 border-background bg-primary shadow-sm group-hover:scale-110 transition-transform animate-fadeIn" />
+                <div className="absolute -left-[32px] top-1 h-4 w-4 rounded-full border-2 border-background bg-primary shadow-sm transition-transform group-hover:scale-110" />
                 <div className="p-3.5 bg-muted/50 rounded-lg border border-border hover:bg-background hover:shadow-sm transition-all duration-300">
                   <div className="flex justify-between items-start gap-2 flex-wrap sm:flex-nowrap">
                     <div className="flex items-start gap-2">

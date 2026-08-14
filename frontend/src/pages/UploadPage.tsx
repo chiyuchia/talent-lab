@@ -102,12 +102,12 @@ export function UploadPage() {
   return (
     <AnimatedPage>
       <section className="space-y-6">
-        <div className="animate-fade-in-down">
+        <div>
           <h2 className="text-2xl font-semibold">{t("上传简历")}</h2>
           <p className="mt-1 text-sm text-muted-foreground">{t("PDF 批量上传与解析队列")}</p>
         </div>
         <div
-          className="grid min-h-72 place-items-center rounded-lg border border-dashed border-border bg-card p-8 text-center transition-colors duration-300 hover:bg-muted/50 hover:border-primary/40 animate-fade-in-up animation-delay-50"
+          className="grid min-h-72 place-items-center rounded-lg border border-dashed border-border bg-card p-8 text-center transition-colors duration-200 hover:border-primary/40 hover:bg-muted/50"
           onDragOver={(event) => event.preventDefault()}
           onDrop={handleDrop}
         >

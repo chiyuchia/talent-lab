@@ -89,7 +89,7 @@ export function DashboardPage() {
             {t("候选人解析和评分概况")}
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border stagger-children md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-4">
           {metrics.map((metric) => (
             <div
               key={metric.label}
@@ -112,7 +112,7 @@ export function DashboardPage() {
         </div>
         <div>
           <h3 className="border-b border-border pb-3 text-lg font-medium">{t("最近上传")}</h3>
-          <div className="divide-y divide-border stagger-children">
+          <div className="divide-y divide-border">
             {candidates.slice(0, 6).map((candidate) => (
               <div
                 key={candidate.id}

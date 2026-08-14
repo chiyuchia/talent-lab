@@ -42,7 +42,7 @@ export function StreamExperienceTab({ workExperience, isCompleted }: StreamExper
           {workExperience.map((work, index) => (
             <div key={index} className="relative group">
               {/* Timeline dot */}
-              <div className="absolute -left-[32px] top-1.5 h-4 w-4 rounded-full border-2 border-card bg-primary shadow-sm group-hover:scale-110 transition-transform animate-fadeIn" />
+              <div className="absolute -left-[32px] top-1.5 h-4 w-4 rounded-full border-2 border-card bg-primary shadow-sm transition-transform group-hover:scale-110" />
               <div className="p-3.5 bg-muted/40 rounded-lg border border-border/60 hover:bg-card transition-colors duration-300">
                 <div className="flex justify-between items-start gap-2 flex-wrap sm:flex-nowrap">
                   <div className="flex items-start gap-2">

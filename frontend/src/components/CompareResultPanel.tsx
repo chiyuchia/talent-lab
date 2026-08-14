@@ -28,7 +28,7 @@ export function CompareResultPanel({
 
   return (
     <div
-      className="grid gap-3 w-full stagger-children"
+      className="view-transition-enter grid w-full gap-3"
       style={{
         gridTemplateColumns: `repeat(${colCount}, minmax(260px, 1fr))`,
       }}

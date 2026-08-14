@@ -36,7 +36,7 @@ function GlobalErrorToast({ error }: { error: GlobalErrorNotice }) {
   return (
     <div
       role="alert"
-      className="pointer-events-auto flex w-full max-w-md items-start gap-3 rounded-lg border border-destructive/30 bg-card p-4 text-sm text-card-foreground shadow-lg"
+      className="pointer-events-auto flex w-full max-w-md animate-fade-in-right items-start gap-3 rounded-lg border border-destructive/30 bg-card p-4 text-sm text-card-foreground shadow-lg"
     >
       <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
       <div className="min-w-0 flex-1">
@@ -109,7 +109,7 @@ export function GlobalFeedback() {
 
       {showLoading ? (
         <div
-          className="pointer-events-none fixed right-4 top-20 z-50 hidden items-center gap-2 rounded-md border border-border bg-background/95 px-3 py-2 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur sm:flex"
+          className="pointer-events-none fixed right-4 top-20 z-50 hidden animate-fade-in items-center gap-2 rounded-md border border-border bg-background/95 px-3 py-2 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur sm:flex"
           role="status"
           aria-live="polite"
         >
