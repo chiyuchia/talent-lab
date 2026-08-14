@@ -5,6 +5,12 @@ on:
     branches:
       - main
       - master
+    paths:
+      - .dockerignore
+      - .github/workflows/backend-image.yml
+      - Makefile
+      - backend/**
+      - scripts/check_bad_chars.py
   workflow_dispatch:
 
 permissions:

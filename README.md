@@ -228,7 +228,7 @@ VITE_API_BASE_URL: https://talentlensapi.440115.xyz:8443/api
 
 ### 后端（Docker Compose）
 
-推送到 `master` 或 `main` 后，GitHub Actions 会先运行后端测试与字符检查，再构建并发布带提交 SHA 标签的后端镜像到 GitHub Container Registry：`ghcr.io/chiyuchia/talent-lab-backend`。`master` 构建成功后会通过 SSH 自动部署镜像摘要；`main` 只构建镜像。VPS 仅拉取并运行通过测试的不可变镜像，不再从源码构建。
+推送到 `master` 或 `main` 且改动涉及后端构建输入时，GitHub Actions 会先运行后端测试与字符检查，再构建并发布带提交 SHA 标签的后端镜像到 GitHub Container Registry：`ghcr.io/chiyuchia/talent-lab-backend`。`master` 构建成功后会通过 SSH 自动部署镜像摘要；`main` 只构建镜像。纯前端或文档改动不会触发该工作流，也可通过 `workflow_dispatch` 手动运行。VPS 仅拉取并运行通过测试的不可变镜像，不再从源码构建。
 
 #### 1. 配置生产环境变量
 

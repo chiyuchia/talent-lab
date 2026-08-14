@@ -54,6 +54,8 @@ The `production` GitHub Environment must provide these secrets:
 - `VPS_PORT`
 - `VPS_USER`
 
-Pushes to `main` and `master` build immutable images. Only `master` deploys to
-the production VPS. Deployment configuration changes in this directory still
-require a deliberate root-owned installation on the VPS.
+Pushes to `main` and `master` that modify backend build inputs build immutable
+images. Only `master` deploys to the production VPS. Frontend-only and
+documentation-only changes do not trigger this workflow; `workflow_dispatch`
+remains available for manual runs. Deployment configuration changes in this
+directory still require a deliberate root-owned installation on the VPS.

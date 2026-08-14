@@ -187,7 +187,7 @@ SSE 事件：
 当前部署方案：
 
 - 前端由 Cloudflare Pages 从 `master` 构建，命令为 `cd frontend && npm ci && npm run build`，发布目录为 `frontend/dist`。
-- 推送到 `main` 或 `master` 时，GitHub Actions 运行后端测试与字符检查，并将后端镜像发布到 GHCR。
+- 推送到 `main` 或 `master` 且改动涉及后端构建输入时，GitHub Actions 运行后端测试与字符检查，并将后端镜像发布到 GHCR；纯前端或文档改动不触发后端工作流。
 - `master` 构建成功后，GitHub Actions 通过专用 SSH 用户调用 VPS 上的 root-owned `deploy.sh`，按镜像 digest 部署。
 - Docker Compose 只运行后端，不在 VPS 托管前端静态资源。
 - 不使用 PM2。
