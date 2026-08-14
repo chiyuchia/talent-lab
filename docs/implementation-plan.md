@@ -49,13 +49,11 @@ talent-lab/
       pages/
       styles/
       types/
-    Dockerfile
     package.json
   deploy/
     docker-compose.yml
-    nginx/
-      app.conf
-      nginx-host.conf.example
+    deploy.sh
+    README.md
     .env.production.example
   docs/
     implementation-plan.md

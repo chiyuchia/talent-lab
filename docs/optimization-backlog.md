@@ -23,17 +23,15 @@
 - 证据：`backend/app/blueprints/auth.py:9-21`。单密钥登录接口无任何限流 / 锁定 / 退避，`compare_digest` 只防时序侧信道，不防在线穷举。这是系统唯一认证防线。
 - 建议：加 IP 维度限流或指数退避（如 Flask-Limiter，或简单的内存计数器）。
 
-### 4. 缺 `.dockerignore`，frontend 镜像构建存在实际 bug
+### 4. [已完成] 后端镜像构建上下文缺少 `.dockerignore`
 
-- 证据：`deploy/docker-compose.yml:4`（`context: ..`），仓库根与 `backend/` 下均无 `.dockerignore`；`frontend/Dockerfile:6-8` 先 `RUN npm install` 再 `COPY frontend/ ./`，宿主机 `node_modules/`（macOS 平台二进制，如 esbuild/rollup）会覆盖容器内刚装好的依赖，Linux 镜像内可能直接构建失败或产生隐性错误。
-- 影响：构建上下文是整个仓库（含 `.git/`、`node_modules/`、`dist/`），构建慢且缓存易失效。
-- 建议：仓库根添加 `.dockerignore`（排除 `node_modules`、`.git`、`dist`、`instance`、`*.sqlite3`、`.env*` 等）；`npm install` 改为 `npm ci`（`frontend/package-lock.json` 已存在）。
+- 原问题：后端构建上下文包含整个仓库，构建慢且缓存易失效。
+- 进展：仓库根 `.dockerignore` 仅允许后端生产文件进入构建上下文；前端统一由 Cloudflare Pages 构建，不再保留 Docker 镜像链路。
 
-### 5. 端口文档与实际配置矛盾
+### 5. [已完成] 端口文档与实际配置矛盾
 
-- 证据：`README.md:186` 称"Compose 默认绑定宿主机 `127.0.0.1:8080`"，`deploy/nginx/nginx-host.conf.example:8` 反代到 `http://127.0.0.1:8080`；但 `deploy/docker-compose.yml:15` 实际映射 `127.0.0.1:8000:8000`。
-- 影响：按 README + 示例配置宿主机 Nginx 会得到 502。
-- 建议：统一为 8000（改 README 与 example），或反向调整 compose 并同步 gunicorn 绑定。
+- 原问题：部署文档与旧 Nginx 示例使用 `8080`，Compose 实际绑定 `127.0.0.1:8000`。
+- 进展：部署文档与 Compose 已统一为 `8000`，旧 Nginx 示例已移除。
 
 ### 6. 候选人列表全表加载 + 内存过滤分页
 
@@ -151,33 +149,28 @@
 
 **2. 容器以 root 运行**
 
-- 证据：`backend/Dockerfile` 无 `USER` 指令；`frontend/Dockerfile` 用默认 `nginx:1.27-alpine`（root 启动）。
-- 建议：后端建非 root 用户（注意 `/data`、`/uploads` volume 属主）；前端可评估 `nginxinc/nginx-unprivileged`。
+- 证据：`backend/Dockerfile` 无 `USER` 指令。
+- 建议：后端建非 root 用户，并处理 `/data`、`/uploads` volume 属主。
 
-**3. 无健康检查**
+**3. [已完成] 无健康检查**
 
-- 证据：`deploy/docker-compose.yml` 的 backend 服务无 `healthcheck` 段，`backend/Dockerfile` 无 `HEALTHCHECK`；后端已有现成的 `GET /api/health`。
-- 建议：compose 加 `healthcheck`（`curl -f http://localhost:8000/api/health` 或 python 发起）。
+- 进展：Compose 已使用 Python 标准库请求 `GET /api/health`，部署脚本会等待容器进入 healthy 状态。
 
-**4. "完整 Docker 自托管"链路断裂**
+**4. [已完成] "完整 Docker 自托管"链路断裂**
 
-- 证据：`frontend/Dockerfile:13` 使用的 `deploy/nginx/app.conf:11` 反代到 `http://backend:8000`（依赖 compose 网络内的 `backend` 服务名），但 `deploy/docker-compose.yml` 只定义了 `backend` 一个服务，没有 `frontend` 服务；`docs/development.md:169` 却称该配置"仍可用于完整的 Docker 自托管部署"。
-- 建议：compose 补 `frontend` 服务，或明确标注该自托管路径已废弃。
+- 进展：前端部署方式已统一为 Cloudflare Pages，未使用的前端 Dockerfile 和 Nginx 配置已移除；Compose 明确只负责后端。
 
-**5. `vps-backend.conf.example` 的 443 server 缺证书指令**
+**5. [已完成] 旧 VPS Nginx 示例不完整**
 
-- 证据：`deploy/nginx/vps-backend.conf.example:6` 写了 `listen 443 ssl http2;` 但全文没有 `ssl_certificate`/`ssl_certificate_key`，照抄该配置 nginx 直接启动失败。
-- 建议：补证书路径占位行与注释。
+- 进展：不完整的通用示例已移除；生产文档要求在现有反向代理或 1Panel 中将 API 请求转发到 `127.0.0.1:8000`。
 
-**6. README 引用的 `deploy/.env.production.example` 不存在**
+**6. [已完成] README 引用的 `deploy/.env.production.example` 不存在**
 
-- 证据：`README.md:175` 指示 `cp deploy/.env.production.example deploy/.env.production`，`.gitignore:176` 也为它保留了跟踪例外，但 `deploy/` 下实际只有 `.env.production`、`docker-compose.yml`、`nginx/`。compose 的 `env_file` 缺失时 `compose up` 直接报错，首次部署会卡在这里。
-- 建议：补建 `deploy/.env.production.example`（含 `FLASK_ENV=production`、`APP_ACCESS_KEY`、`FLASK_SECRET_KEY`、`AI_MODE` 等占位），同时解决"二、后端 7"的 `FLASK_ENV` 问题。
+- 进展：已补充不含真实密钥的 `deploy/.env.production.example`，并在部署文档中说明初始化步骤。
 
-**7. 完全没有 CI 流水线**
+**7. [已完成] 完全没有 CI 流水线**
 
-- 证据：仓库无 `.github/` 目录，也无其他 CI 配置。AGENTS.md 要求"改后端跑 `make backend-test`、改前端跑 `typecheck`/`lint`"，目前全靠人工执行。
-- 建议：加最小 GitHub Actions 工作流：后端 pytest + 前端 `npm run typecheck` / `npm run lint`。
+- 进展：GitHub Actions 已覆盖后端测试、字符检查、GHCR 镜像发布和 `master` 生产部署。
 
 ## 三、低优先级（顺手清理）
 
@@ -223,7 +216,7 @@
 - 无 SQL 注入风险（全部走 ORM 参数化）；无硬编码密钥。
 - `.env`、`deploy/.env.production` 均正确 gitignore 且未被 git 跟踪（`git ls-files` 验证）。
 - 前端无裸 `fetch`（统一封装在 `lib/api.ts:41`）、无 `any` 滥用、无 console 残留（`ErrorBoundary.tsx:30` 的 `console.error` 属合理）。
-- nginx SSE 关键配置正确：`deploy/nginx/app.conf:17-19` 等三处均有 `proxy_buffering off` + 300s 读写超时。
+- 生产反向代理仍需为 SSE 关闭缓冲并配置长超时。
 - 端口绑定 `127.0.0.1:8000` 不直接暴露公网；`restart: unless-stopped` 已配置。
 - README/development.md 中的 make 命令、开发端口、`/api/health`、环境变量表与 `backend/app/config.py` 实际读取的变量一致。
 - 骨架屏、空态、`aria-label`、上传数量前端校验、删除确认均已覆盖。

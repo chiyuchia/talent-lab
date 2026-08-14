@@ -216,23 +216,26 @@ Cloudflare Pages 关联本仓库的 `master` 分支；`master` 更新后会自�
 
 ### 后端（Docker Compose）
 
-推送到 `master` 或 `main` 后，GitHub Actions 会先运行后端测试与字符检查，再构建并发布带提交 SHA 标签的后端镜像到 GitHub Container Registry：`ghcr.io/chiyuchia/talent-lab-backend`。该工作流当前只产出镜像，不会自动发布到 VPS；VPS 自动拉取镜像将在后续部署步骤中接入。
+推送到 `master` 或 `main` 后，GitHub Actions 会先运行后端测试与字符检查，再构建并发布带提交 SHA 标签的后端镜像到 GitHub Container Registry：`ghcr.io/chiyuchia/talent-lab-backend`。`master` 构建成功后会通过 SSH 自动部署镜像摘要；`main` 只构建镜像。VPS 仅拉取并运行通过测试的不可变镜像，不再从源码构建。
 
 #### 1. 配置生产环境变量
 
-创建不入库的 `deploy/.env.production`，设置 `FLASK_ENV=production`，并至少提供 `APP_ACCESS_KEY`、`FLASK_SECRET_KEY` 和 `AI_MODE`；真实 AI 模式还需配置对应服务商的 API Key 与模型。
+将 `deploy/` 目录安装到 VPS 的 `/opt/talent-lab/deploy`，并从 `.env.production.example` 创建不入库的 `.env.production`。至少设置 `APP_ACCESS_KEY`、`FLASK_SECRET_KEY` 和 `AI_MODE`；真实 AI 模式还需配置对应服务商的 API Key 与模型。
 
-#### 2. 启动服务
+部署目录及其中的脚本、Compose 和环境文件必须由 root 所有，不得放在 `deploy` 用户可改写的路径后再通过 sudo 执行。完整初始化步骤见 [`deploy/README.md`](deploy/README.md)。
+
+#### 2. 部署镜像
 
 ```bash
-docker compose -f deploy/docker-compose.yml up -d --build
+sudo /opt/talent-lab/deploy/deploy.sh \
+  ghcr.io/chiyuchia/talent-lab-backend@sha256:<64-hex-digest>
 ```
 
-Compose 默认将后端服务绑定到宿主机 `127.0.0.1:8000`。
+脚本会验证镜像来源、拉取镜像、备份 SQLite、执行幂等迁移、等待健康检查，并将当前镜像写入 `.env.release`。Compose 默认将后端服务绑定到宿主机 `127.0.0.1:8000`。
 
 #### 3. 配置宿主机 Nginx
 
-参考 `deploy/nginx/vps-backend.conf.example` 配置后端 API 反向代理。注意：
+在宿主机现有反向代理或 1Panel 中，将生产 API 域名的 `/api/` 请求转发到 `http://127.0.0.1:8000`。注意：
 
 - 为 SSE 配置 `proxy_buffering off`
 - 配置较长代理超时，避免 AI 提取期间连接被关闭
@@ -259,7 +262,7 @@ make backend-test       # 运行后端测试
 make check-badchars     # 检查禁用字符清单
 
 # Docker
-make compose-up         # 构建并启动 Docker 服务
+make compose-up         # 使用 deploy/.env.release 中的镜像启动服务
 make compose-down       # 停止 Docker 服务
 ```
 

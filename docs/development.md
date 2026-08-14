@@ -183,7 +183,7 @@ make frontend-install # 首次安装前端依赖
 make frontend-dev     # 前端开发服务器 :5173
 make backend-test     # 后端测试
 make check-badchars   # 检查禁用字符清单
-make compose-up       # Docker 构建并启动
+make compose-up       # 使用 deploy/.env.release 中的镜像启动
 make compose-down     # 停止 Docker 服务
 ```
 
@@ -191,8 +191,8 @@ make compose-down     # 停止 Docker 服务
 
 - **前端**部署在 Cloudflare Pages，生产地址为 <https://talent-lab.440115.xyz/>；Pages 关联 `master` 分支，分支更新后自动构建并发布。
 - Cloudflare Pages 构建时通过 `VITE_API_BASE_URL` 指向生产后端 API；后端的 `FRONTEND_ORIGIN` 应设置为 `https://talent-lab.440115.xyz`，以允许携带 Cookie 的跨域请求。
-- **后端**通过 `deploy/docker-compose.yml` 部署，默认仅绑定宿主机 `127.0.0.1:8000`；当前生产前端不由该 Compose 文件托管。
-- 宿主机后端反代参考 `deploy/nginx/vps-backend.conf.example`；`app.conf` 与 `nginx-host.conf.example` 属于早期同源自托管方案，当前 Compose 未启用对应前端服务。配置时注意：
+- **后端**通过 `deploy/docker-compose.yml` 运行 GHCR 不可变镜像，`deploy/deploy.sh` 负责备份、迁移和健康检查；`master` 构建成功后由 GitHub Actions 通过 SSH 自动部署，`main` 只发布镜像。部署目录必须由 root 控制，完整初始化步骤见 `deploy/README.md`。服务默认仅绑定宿主机 `127.0.0.1:8000`，当前生产前端不由该 Compose 文件托管。
+- 宿主机现有反向代理或 1Panel 应将生产 API 域名的 `/api/` 请求转发到 `http://127.0.0.1:8000`。配置时注意：
   - SSE 必须 `proxy_buffering off`，并配置较长超时；
   - `client_max_body_size 50m` 支持批量上传；
   - 有域名时启用 HTTPS 并设 `SESSION_COOKIE_SECURE=true`。

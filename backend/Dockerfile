@@ -19,4 +19,4 @@ RUN mkdir -p /data /uploads
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "flask --app wsgi init-db && gunicorn -c gunicorn.conf.py wsgi:app"]
+CMD ["gunicorn", "-c", "gunicorn.conf.py", "wsgi:app"]

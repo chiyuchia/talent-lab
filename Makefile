@@ -23,7 +23,7 @@ check-badchars:
 	python3 scripts/check_bad_chars.py
 
 compose-up:
-	docker compose -f deploy/docker-compose.yml up -d --build
+	docker compose --env-file deploy/.env.release -f deploy/docker-compose.yml up -d --no-build
 
 compose-down:
-	docker compose -f deploy/docker-compose.yml down
+	docker compose --env-file deploy/.env.release -f deploy/docker-compose.yml down
