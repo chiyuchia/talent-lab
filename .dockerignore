@@ -1,0 +1,17 @@
+# The backend Dockerfile needs only backend source files from the repository root.
+*
+!backend/
+!backend/**
+
+# Never copy local configuration, runtime data, or CI-created virtual environments.
+backend/.env
+backend/.env.*
+backend/.venv/
+backend/instance/
+
+# Tests and Python caches are not needed by the production image.
+backend/tests/
+backend/.pytest_cache/
+backend/.ruff_cache/
+backend/**/__pycache__/
+backend/**/*.py[cod]
