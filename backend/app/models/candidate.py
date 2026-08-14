@@ -9,6 +9,7 @@ class Candidate(db.Model):
     status = db.Column(db.String(32), nullable=False, default="pending")
     original_filename = db.Column(db.String(255), nullable=False)
     pdf_path = db.Column(db.String(512), nullable=False)
+    storage_backend = db.Column(db.String(16), nullable=False, default="local")
     raw_text = db.Column(db.Text, nullable=True)
     parse_status = db.Column(db.String(32), nullable=False, default="uploaded")
     error_message = db.Column(db.Text, nullable=True)

@@ -130,6 +130,12 @@ make frontend-dev
 | `APP_ACCESS_KEY` | 访问密钥（生产环境必填） | 未设置 |
 | `DATABASE_URL` | 数据库地址 | `sqlite:///talent-lab.sqlite3` |
 | `UPLOAD_DIR` | PDF 上传目录 | `instance/uploads` |
+| `RESUME_STORAGE_BACKEND` | 简历文件存储：`local` 或 `r2` | `local` |
+| `R2_ACCOUNT_ID` | Cloudflare Account ID（R2 模式必填） | 未设置 |
+| `R2_ACCESS_KEY_ID` | R2 S3 API Access Key ID（R2 模式必填） | 未设置 |
+| `R2_SECRET_ACCESS_KEY` | R2 S3 API Secret Access Key（R2 模式必填） | 未设置 |
+| `R2_BUCKET_NAME` | 私有 R2 bucket 名称（R2 模式必填） | 未设置 |
+| `R2_OBJECT_PREFIX` | R2 内简历对象前缀 | `resumes` |
 | `AI_MODE` | AI 模式：`mock` 或 `real` | `mock` |
 | `AI_PROVIDER` | AI 提供商：`openai` / `moonshot` / `deepseek` | `openai` |
 | `OPENAI_API_KEY` | OpenAI API Key | 未设置 |
@@ -144,6 +150,29 @@ make frontend-dev
 | `FRONTEND_ORIGIN` | 前端域名（CORS 用） | 未设置 |
 | `SESSION_COOKIE_SAMESITE` | 会话 Cookie 的 SameSite 策略 | `Lax` |
 | `SESSION_COOKIE_SECURE` | Cookie 仅 HTTPS 传输 | `false` |
+
+### Cloudflare R2 简历存储
+
+R2 模式下，后端通过 S3 兼容 API 将简历保存到**私有** bucket；浏览器仍通过已鉴权的
+`GET /api/candidates/:id/pdf` 获取预览，不需要设置公开 bucket、公开域名或 R2 CORS。
+
+1. 在 Cloudflare R2 创建一个 Standard bucket，例如 `talent-lab-resumes`。
+2. 创建仅针对该 bucket 的 R2 API token，权限设为 `Object Read & Write`；不要使用账户级
+   管理 token。
+3. 将 Account ID、Access Key ID 和 Secret Access Key 写入部署环境，设置：
+
+   ```dotenv
+   RESUME_STORAGE_BACKEND=r2
+   R2_ACCOUNT_ID=your-account-id
+   R2_ACCESS_KEY_ID=your-access-key-id
+   R2_SECRET_ACCESS_KEY=your-secret-access-key
+   R2_BUCKET_NAME=talent-lab-resumes
+   R2_OBJECT_PREFIX=resumes
+   ```
+
+4. 重启后端。新上传的简历会写入 R2；已有记录保留其原本的 `local` 存储标记，仍从本地读取。
+
+R2 凭据只能放在后端环境变量中，不能写入前端代码、提交到仓库，或通过公开 URL 暴露简历。
 
 ### 前端
 
@@ -186,6 +215,8 @@ make frontend-dev
 Cloudflare Pages 关联本仓库的 `master` 分支；`master` 更新后会自动执行前端构建并发布。构建时需配置 `VITE_API_BASE_URL`，使前端请求指向生产环境后端 API。
 
 ### 后端（Docker Compose）
+
+推送到 `master` 或 `main` 后，GitHub Actions 会先运行后端测试与字符检查，再构建并发布带提交 SHA 标签的后端镜像到 GitHub Container Registry：`ghcr.io/chiyuchia/talent-lab-backend`。该工作流当前只产出镜像，不会自动发布到 VPS；VPS 自动拉取镜像将在后续部署步骤中接入。
 
 #### 1. 配置生产环境变量
 

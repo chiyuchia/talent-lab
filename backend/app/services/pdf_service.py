@@ -1,11 +1,14 @@
 from pathlib import Path
 
 
-def extract_pdf_text(pdf_path: str | Path) -> str:
+def extract_pdf_text(pdf_source: str | Path | bytes) -> str:
     import fitz
 
-    path = Path(pdf_path)
-    with fitz.open(path) as document:
+    if isinstance(pdf_source, bytes):
+        document = fitz.open(stream=pdf_source, filetype="pdf")
+    else:
+        document = fitz.open(pdf_source)
+    with document:
         pages = [page.get_text("text") for page in document]
     return clean_resume_text("\n".join(pages))
 

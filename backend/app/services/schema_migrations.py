@@ -52,10 +52,15 @@ JOB_COLUMN_DDL = {
     "submitted_resume_id": "INTEGER",
 }
 
+CANDIDATE_COLUMN_DDL = {"storage_backend": "VARCHAR(16) NOT NULL DEFAULT 'local'"}
+
 
 def migrate_schema() -> None:
     inspector = inspect(db.engine)
-    if "job_description" not in inspector.get_table_names():
+    tables = inspector.get_table_names()
+    if "candidate" in tables:
+        migrate_candidate_storage(inspector)
+    if "job_description" not in tables:
         return
 
     existing = {column["name"] for column in inspector.get_columns("job_description")}
@@ -90,6 +95,14 @@ def migrate_schema() -> None:
             migrated = True
     if migrated:
         db.session.commit()
+
+
+def migrate_candidate_storage(inspector) -> None:
+    existing = {column["name"] for column in inspector.get_columns("candidate")}
+    for name, ddl in CANDIDATE_COLUMN_DDL.items():
+        if name not in existing:
+            db.session.execute(text(f"ALTER TABLE candidate ADD COLUMN {name} {ddl}"))
+    db.session.commit()
 
 
 def migrate_employment_types() -> None:

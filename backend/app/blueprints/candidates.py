@@ -1,3 +1,5 @@
+from io import BytesIO
+
 from flask import Blueprint, request, send_file
 
 from ..constants import CANDIDATE_STATUSES
@@ -10,7 +12,7 @@ from ..services.candidate_query import (
     parse_skill_filters,
     sort_candidates,
 )
-from ..utils.paths import resolve_storage_path
+from ..services.resume_storage import make_resume_storage
 from ..utils.payloads import ensure_list
 from ..utils.responses import error_response, ok_response
 from ..utils.serializers import serialize_candidate_detail, serialize_candidate_summary
@@ -85,6 +87,7 @@ def delete_candidate(candidate_id: int):
     if candidate.profile:
         db.session.delete(candidate.profile)
 
+    make_resume_storage(candidate.storage_backend).delete(candidate.pdf_path)
     db.session.delete(candidate)
     db.session.commit()
     return ok_response({"id": candidate_id, "deleted": True})
@@ -156,12 +159,13 @@ def get_candidate_pdf(candidate_id: int):
     if not candidate:
         return error_response("NOT_FOUND", "候选人不存在。", status=404)
 
-    pdf_path = resolve_storage_path(candidate.pdf_path)
-    if not pdf_path.exists():
+    try:
+        pdf_content = make_resume_storage(candidate.storage_backend).read(candidate.pdf_path)
+    except FileNotFoundError:
         return error_response("PDF_NOT_FOUND", "原始 PDF 文件不存在。", status=404)
 
     return send_file(
-        pdf_path.resolve(),
+        BytesIO(pdf_content),
         mimetype="application/pdf",
         download_name=candidate.original_filename,
     )

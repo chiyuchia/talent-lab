@@ -10,6 +10,12 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///talent-lab.sqlite3")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_DIR = os.getenv("UPLOAD_DIR", "instance/uploads")
+    RESUME_STORAGE_BACKEND = os.getenv("RESUME_STORAGE_BACKEND", "local").lower()
+    R2_ACCOUNT_ID = os.getenv("R2_ACCOUNT_ID", "")
+    R2_ACCESS_KEY_ID = os.getenv("R2_ACCESS_KEY_ID", "")
+    R2_SECRET_ACCESS_KEY = os.getenv("R2_SECRET_ACCESS_KEY", "")
+    R2_BUCKET_NAME = os.getenv("R2_BUCKET_NAME", "")
+    R2_OBJECT_PREFIX = os.getenv("R2_OBJECT_PREFIX", "resumes")
     AI_MODE = os.getenv("AI_MODE", "mock")
     AI_PROVIDER = os.getenv("AI_PROVIDER", "openai")
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
@@ -30,6 +36,19 @@ class Config:
 
     @staticmethod
     def validate(config: dict) -> None:
+        storage_backend = config.get("RESUME_STORAGE_BACKEND", "local")
+        if storage_backend not in {"local", "r2"}:
+            raise RuntimeError("RESUME_STORAGE_BACKEND must be local or r2")
+        if storage_backend == "r2":
+            required = (
+                "R2_ACCOUNT_ID",
+                "R2_ACCESS_KEY_ID",
+                "R2_SECRET_ACCESS_KEY",
+                "R2_BUCKET_NAME",
+            )
+            missing = [name for name in required if not config.get(name)]
+            if missing:
+                raise RuntimeError(f"Missing required R2 settings: {', '.join(missing)}")
         if config.get("ENV") == "production":
             missing = [
                 name
@@ -54,7 +73,8 @@ class Config:
                     (Path(app.instance_path) / path).parent.mkdir(parents=True, exist_ok=True)
                     path.parent.mkdir(parents=True, exist_ok=True)
 
-        upload_dir = Path(app.config.get("UPLOAD_DIR", "instance/uploads"))
-        if not upload_dir.is_absolute():
-            upload_dir = Path(app.root_path).parent / upload_dir
-        upload_dir.mkdir(parents=True, exist_ok=True)
+        if app.config.get("RESUME_STORAGE_BACKEND") == "local":
+            upload_dir = Path(app.config.get("UPLOAD_DIR", "instance/uploads"))
+            if not upload_dir.is_absolute():
+                upload_dir = Path(app.root_path).parent / upload_dir
+            upload_dir.mkdir(parents=True, exist_ok=True)

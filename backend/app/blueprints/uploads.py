@@ -11,7 +11,7 @@ from ..security import require_auth
 from ..services.ai_service import make_ai_service
 from ..services.pdf_service import extract_pdf_text
 from ..services.profile_service import normalize_profile, upsert_profile
-from ..utils.paths import resolve_storage_path, upload_dir_path
+from ..services.resume_storage import make_resume_storage
 from ..utils.responses import error_response, ok_response
 from ..utils.serializers import serialize_candidate_detail, serialize_candidate_summary
 from ..utils.sse import sse_event
@@ -33,29 +33,33 @@ def upload_resumes():
         )
 
     batch_id = uuid.uuid4().hex
-    upload_dir = upload_dir_path()
+    validation_errors = [validate_pdf_upload(file) for file in files]
+    if any(validation_errors):
+        return next(error for error in validation_errors if error)
 
     candidates: list[Candidate] = []
-    for file in files:
-        validation_error = validate_pdf_upload(file)
-        if validation_error:
-            return validation_error
+    storage = make_resume_storage()
+    try:
+        for file in files:
+            original_filename = file.filename or "resume.pdf"
+            storage_name = f"{uuid.uuid4().hex}-{secure_filename(original_filename)}"
+            pdf_path = storage.save(file, storage_name)
 
-        original_filename = file.filename or "resume.pdf"
-        storage_name = f"{uuid.uuid4().hex}-{secure_filename(original_filename)}"
-        pdf_path = upload_dir / storage_name
-        file.save(pdf_path)
-
-        candidate = Candidate(
-            upload_batch_id=batch_id,
-            original_filename=original_filename,
-            pdf_path=str(pdf_path),
-            parse_status="uploaded",
-        )
-        db.session.add(candidate)
-        candidates.append(candidate)
-
-    db.session.commit()
+            candidate = Candidate(
+                upload_batch_id=batch_id,
+                original_filename=original_filename,
+                pdf_path=pdf_path,
+                storage_backend=storage.backend,
+                parse_status="uploaded",
+            )
+            db.session.add(candidate)
+            candidates.append(candidate)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        for candidate in candidates:
+            storage.delete(candidate.pdf_path)
+        raise
 
     return ok_response(
         {
@@ -101,7 +105,8 @@ def upload_events(upload_id: str):
                     {"upload_id": upload_id, "candidate": serialize_candidate_summary(candidate)},
                 )
 
-                text = extract_pdf_text(resolve_storage_path(candidate.pdf_path))
+                storage = make_resume_storage(candidate.storage_backend)
+                text = extract_pdf_text(storage.read(candidate.pdf_path))
                 if not text:
                     raise ValueError("未能从 PDF 中提取文本，扫描版 PDF 暂不支持 OCR。")
 

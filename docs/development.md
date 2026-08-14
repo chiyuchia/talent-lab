@@ -64,6 +64,7 @@ SSE 事件流 (GET /api/uploads/:id/events)
 | 职位数据 | `app/services/job_payload.py` | 新旧请求兼容、字段归一化和跨字段校验 |
 | 兼容迁移 | `app/services/schema_migrations.py` | 为既有 SQLite 数据库增量补列并迁移旧技能结构 |
 | PDF 服务 | `app/services/pdf_service.py` | `extract_pdf_text` / `clean_resume_text` |
+| 简历存储 | `app/services/resume_storage.py` | 可切换本地目录或私有 Cloudflare R2；统一上传、读取、删除 |
 | Prompt | `app/services/prompts.py` | AI 提取与评分的提示词模板 |
 | 工具 | `app/utils/` | 统一响应格式（`responses.py`）、序列化（`serializers.py`）、路径（`paths.py`） |
 
@@ -155,7 +156,7 @@ make frontend-install
 ## 4. 数据模型
 
 ```text
-Candidate (id, upload_batch_id, status, parse_status, pdf_path, created_at...)
+Candidate (id, upload_batch_id, status, parse_status, pdf_path, storage_backend, created_at...)
   1:1  ResumeProfile (姓名、电话、邮箱、城市、教育、工作、技能、项目，JSON 字段)
   1:n  ScoreResult  (overall_score, skill/experience/education 子分, ai_comment, details)
 
@@ -166,6 +167,7 @@ JobDescription (职位来源、raw_jd、结构化要求、薪酬、申请状态�
 
 - 状态机：待筛选 → 初筛通过 → 面试中 → 已录用 / 已淘汰，枚举值见 `app/constants.py`。
 - 结构化简历字段以 JSON 存储在 `ResumeProfile` 中，写入前经 `uploads.py` 的 `normalize_profile` 规整。
+- `pdf_path` 保存当前存储后端的文件引用；`storage_backend` 保存 `local` 或 `r2`，因此切换默认后端不会影响既有简历读取。
 - `JobDescription.description` 暂时作为 `raw_jd` 的存储列，API 同时输出两者以兼容旧客户端和既有评分记录。
 - `required_skills` / `bonus_skills` 继续兼容输出；新逻辑优先读取 `skill_requirements`，缺失时回退旧字段。
 - `flask init-db` 会先建表再运行幂等的增量迁移；现有职位 ID 和 `ScoreResult.job_id` 不变。
