@@ -50,9 +50,6 @@ The `production` GitHub Environment must provide these secrets:
 
 - `TALENT_LAB_VPS_SSH_KEY`
 - `VPS_SSH_KNOWN_HOSTS`
-
-It must also provide these variables:
-
 - `VPS_HOST`
 - `VPS_PORT`
 - `VPS_USER`
