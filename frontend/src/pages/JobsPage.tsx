@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { AnimatedPage } from "../components/AnimatedPage";
 import { JobFormPanel, type JobForm } from "../components/jobs/JobFormPanel";
 import { JobsList } from "../components/jobs/JobsList";
-import { JobWorkspace } from "../components/jobs/JobWorkspace";
+import { JobWorkspaceView } from "../components/jobs/JobWorkspaceView";
 import { cloneJobForm, emptyJobForm, jobToForm } from "../components/jobs/job-form";
 import { candidateApi, jobsApi } from "../lib/api";
 import { getErrorMessage } from "../lib/errors";
@@ -154,8 +154,7 @@ export function JobsPage() {
 
   if (selectedJob) {
     return (
-      <AnimatedPage>
-        <JobWorkspace
+      <JobWorkspaceView
           job={selectedJob}
           resumeVersions={resumesQuery.data?.items ?? []}
           favoriting={favoriteMutation.isPending}
@@ -163,8 +162,7 @@ export function JobsPage() {
           onEdit={() => editJob(selectedJob)}
           onToggleFavorite={() => favoriteMutation.mutate({ id: selectedJob.id, isFavorite: !selectedJob.is_favorite })}
           onStatusChange={updatePersistedStatus}
-        />
-      </AnimatedPage>
+      />
     );
   }
 

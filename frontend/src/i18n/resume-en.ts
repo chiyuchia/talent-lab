@@ -1,5 +1,18 @@
 export const resumeEnglish = {
+  "简历": "Resumes",
+  "简历详情": "Resume details",
+  "简历库": "Resume library",
+  "简历视图": "Resume view",
+  "简历对比": "Resume comparison",
+  "上传、解析与管理你的简历版本":
+    "Upload, parse, and manage your resume versions",
+  "选择 2-3 份简历后点击「开始对比」":
+    "Select 2-3 resumes, then click Compare",
   "上传简历": "Upload resumes",
+  "添加简历": "Add resumes",
+  "返回简历列表": "Back to resume list",
+  "添加 PDF 简历并查看实时解析进度":
+    "Add PDF resumes and follow parsing progress in real time",
   "PDF 批量上传与解析队列": "Batch PDF upload and parsing queue",
   "拖拽 PDF 到此处": "Drop PDFs here",
   "支持批量上传，单次最多 {{value}} 份 PDF 简历":
@@ -11,6 +24,22 @@ export const resumeEnglish = {
   "暂无上传任务": "No upload tasks",
   "上传后会在这里展示每份简历的解析状态":
     "Each resume’s parsing status will appear here after upload",
+  "暂无简历": "No resumes",
+  "暂无简历，前往上传": "No resumes. Upload one",
+  "暂无简历，前往添加": "No resumes. Add one",
+  "简历加载失败，请稍后重试。": "Resumes could not be loaded. Try again later.",
+  "已选 {{value}} 份": "{{value}} selected",
+  "当前结果：{{value}} 份": "{{value}} results",
+  "共 {{value}} 份": "{{value}} resumes",
+  "{{value}} 份 ({{percent}}%)": "{{value}} ({{percent}}%)",
+  "简历解析和评分概况": "Resume parsing and scoring overview",
+  "简历评分": "Resume scores",
+  "简历：{{name}}": "Resume: {{name}}",
+  "简历状态": "Resume status",
+  "简历状态分布": "Resume status distribution",
+  "简历不存在": "Resume not found",
+  "确定要删除简历「{{name}}」吗？": "Delete resume '{{name}}'?",
+  "删除简历": "Delete resume",
   "解析队列": "Parsing queue",
   "等待处理": "Waiting",
   "正在创建解析队列": "Creating parsing queue",

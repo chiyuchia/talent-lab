@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -32,7 +32,14 @@ export function ResizableDrawer({
   const startWidthRef = useRef(defaultWidth);
   const prevOpenRef = useRef(open);
   const drawerRef = useRef<HTMLElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const onCloseRef = useRef(onClose);
+  const titleId = useId();
   const { rendered, visible } = usePresence(open, 240);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     if (open && !prevOpenRef.current) {
@@ -81,14 +88,45 @@ export function ResizableDrawer({
   }, [isDragging, minWidth, maxWidth]);
 
   useEffect(() => {
-    function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
+    if (!open) return;
+    const previousFocus = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onCloseRef.current();
+        return;
+      }
+      if (event.key !== "Tab" || !drawerRef.current) return;
+      const focusable = Array.from(drawerRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      )).filter((element) => !element.hasAttribute("inert"));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
-    if (open) {
-      document.addEventListener("keydown", handleEscape);
-      return () => document.removeEventListener("keydown", handleEscape);
-    }
-  }, [open, onClose]);
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (open && rendered) closeButtonRef.current?.focus();
+  }, [open, rendered]);
 
   useEffect(() => {
     drawerRef.current?.toggleAttribute("inert", !open);
@@ -112,12 +150,15 @@ export function ResizableDrawer({
           "fixed inset-y-0 right-0 z-50 flex transition-[transform,opacity] duration-[240ms] ease-[cubic-bezier(0.2,0.8,0.2,1)]",
           visible ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0",
         )}
-        style={{ width }}
+        style={{ width, maxWidth: "100vw" }}
         aria-hidden={!open}
+        aria-labelledby={titleId}
+        aria-modal="true"
+        role="dialog"
       >
         {/* Resize handle */}
         <div
-          className="relative z-10 w-4 -ml-2 cursor-col-resize flex items-center justify-center group"
+          className="relative z-10 -ml-2 hidden w-4 cursor-col-resize items-center justify-center sm:flex group"
           onMouseDown={handleMouseDown}
           role="separator"
           aria-label={t("调整抽屉宽度")}
@@ -128,8 +169,9 @@ export function ResizableDrawer({
         {/* Content */}
         <div className="flex-1 flex flex-col bg-background border-l border-border shadow-xl">
           <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-            <h3 className="text-lg font-semibold">{title}</h3>
+            <h3 id={titleId} className="text-lg font-semibold">{title}</h3>
             <Button
+              ref={closeButtonRef}
               variant="outline"
               size="icon"
               onClick={onClose}

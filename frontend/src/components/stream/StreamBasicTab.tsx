@@ -21,7 +21,7 @@ export function StreamBasicTab({ name, email, phone, city, skills, isCompleted }
           <User className="h-6 w-6" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t("候选人姓名")}</p>
+          <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t("姓名")}</p>
           {name ? (
             <p className="text-base font-bold text-foreground mt-0.5">{name}</p>
           ) : (

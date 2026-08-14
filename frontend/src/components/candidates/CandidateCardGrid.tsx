@@ -1,5 +1,5 @@
 import { Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { CandidateStatusBadge } from "../StatusBadge";
@@ -24,6 +24,7 @@ export function CandidateCardGrid({
   deleteMutation,
 }: CandidateCardGridProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <div className="view-transition-enter grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       {candidates.map((candidate) => {
@@ -32,14 +33,19 @@ export function CandidateCardGrid({
         return (
           <div
             key={candidate.id}
+            onClick={(event) => {
+              const target = event.target;
+              if (target instanceof Element && target.closest("a, button, input, label, select, textarea, [role='checkbox']")) return;
+              navigate(`/resumes/${candidate.id}`);
+            }}
             className={cn(
-              "card-hover relative rounded-lg border p-4 transition-colors",
+              "card-hover relative cursor-pointer rounded-lg border p-4 transition-colors",
               isSelected
                 ? "border-primary/50 bg-primary/5"
                 : "border-border bg-card hover:bg-muted/50",
             )}
           >
-            <div className="absolute right-3 top-3">
+            <div className="absolute right-3 top-3" onClick={(event) => event.stopPropagation()}>
               <Checkbox
                 checked={isSelected}
                 disabled={isMaxReached}
@@ -47,7 +53,7 @@ export function CandidateCardGrid({
                 aria-label={t("选择 {{name}}", { name: candidate.name || candidate.original_filename })}
               />
             </div>
-            <Link to={`/candidates/${candidate.id}`} className="block">
+            <Link to={`/resumes/${candidate.id}`} className="block">
               <div className="flex items-start justify-between gap-3 pr-6">
                 <div>
                   <p className="font-medium">
@@ -72,14 +78,15 @@ export function CandidateCardGrid({
               <Button
                 variant="destructive"
                 size="icon"
-                onClick={() => {
-                  if (window.confirm(t("确定要删除候选人「{{name}}」吗？", { name: candidate.name || candidate.original_filename }))) {
+                onClick={(event) => {
+                  event.stopPropagation();
+                  if (window.confirm(t("确定要删除简历「{{name}}」吗？", { name: candidate.name || candidate.original_filename }))) {
                     deleteMutation.mutate(candidate.id);
                   }
                 }}
                 disabled={deleteMutation.isPending}
                 className="h-8 w-8"
-                aria-label={t("删除候选人")}
+                aria-label={t("删除简历")}
               >
                 <Trash2 className="h-4 w-4" />
               </Button>

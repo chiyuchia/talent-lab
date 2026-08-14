@@ -72,6 +72,8 @@ export const candidatesEnglish = {
   "结构化简历、评分详情与原始 PDF":
     "Structured resume, score details, and original PDF",
   "原始 PDF": "Original PDF",
+  "原始简历": "Original resume",
+  "在新窗口打开原始简历": "Open original resume in a new window",
   "状态流转": "Status",
   "综合评分": "Overall score",
   "岗位匹配 ({{value}})": "Job matches ({{value}})",

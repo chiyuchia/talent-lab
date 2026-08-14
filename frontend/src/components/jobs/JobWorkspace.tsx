@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, CalendarClock, Edit3, Heart, MapPin } from "lucide-react";
+import { ArrowLeft, CalendarClock, Edit3, Heart, MapPin, PanelRightOpen } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { applicationStatusLabel } from "../../lib/job-options";
@@ -21,6 +21,7 @@ type Props = {
   favoriting: boolean;
   onBack: () => void;
   onEdit: () => void;
+  onOpenSource: () => void;
   onToggleFavorite: () => void;
   onStatusChange: (status: ApplicationStatus) => void;
 };
@@ -38,6 +39,7 @@ export function JobWorkspace({
   favoriting,
   onBack,
   onEdit,
+  onOpenSource,
   onToggleFavorite,
   onStatusChange,
 }: Props) {
@@ -73,6 +75,9 @@ export function JobWorkspace({
             </div>
           </div>
           <div className="flex shrink-0 gap-2">
+            <Button variant="outline" onClick={onOpenSource} aria-haspopup="dialog">
+              <PanelRightOpen className="h-4 w-4" />{t("原始职位信息")}
+            </Button>
             <Button variant="outline" size="icon" onClick={onToggleFavorite} disabled={favoriting} aria-pressed={job.is_favorite} aria-label={t(job.is_favorite ? "取消收藏 {{name}}" : "收藏 {{name}}", { name: job.title })}>
               <Heart className={`h-4 w-4 ${job.is_favorite ? "fill-warning text-warning" : ""}`} />
             </Button>

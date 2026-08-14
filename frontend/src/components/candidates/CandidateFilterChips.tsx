@@ -30,7 +30,7 @@ export function CandidateFilterChips({
   return (
     <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-border pt-3">
       <span className="text-xs font-medium text-muted-foreground">
-        {t("当前结果：{{value}} 人", { value: total })}
+        {t("当前结果：{{value}} 份", { value: total })}
       </span>
       {total > 0 ? (
         <span className="text-xs text-muted-foreground">

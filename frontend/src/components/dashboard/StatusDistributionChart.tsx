@@ -22,7 +22,7 @@ export function StatusDistributionChart({ statusData }: StatusDistributionChartP
   return (
     <div className="h-80">
       <h4 className="mb-2 text-sm font-medium text-muted-foreground">
-        {t("候选人状态分布")}
+        {t("简历状态分布")}
       </h4>
       <ResponsiveContainer width="100%" height="90%">
         <PieChart>
@@ -48,7 +48,7 @@ export function StatusDistributionChart({ statusData }: StatusDistributionChartP
           <Tooltip
             {...tooltipProps}
             formatter={(value, _name, props) => [
-              t("{{value}} 人 ({{percent}}%)", {
+              t("{{value}} 份 ({{percent}}%)", {
                 value,
                 percent: ((props?.payload?.percent ?? 0) * 100).toFixed(0),
               }),

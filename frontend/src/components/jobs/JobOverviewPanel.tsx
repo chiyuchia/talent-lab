@@ -48,13 +48,6 @@ export function JobOverviewPanel({ job }: Props) {
             <p className="mt-3 text-sm text-muted-foreground">{t("尚未整理岗位职责")}</p>
           )}
         </section>
-
-        {job.raw_jd && job.summary ? (
-          <details className="rounded-lg border border-border bg-card p-5">
-            <summary className="cursor-pointer font-medium">{t("查看职位描述原文")}</summary>
-            <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-muted-foreground">{job.raw_jd}</p>
-          </details>
-        ) : null}
       </div>
 
       <aside className="h-fit rounded-lg border border-border bg-card p-5">

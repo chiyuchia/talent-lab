@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { BarChart3, FileText, TrendingUp, Users } from "lucide-react";
+import { BarChart3, Files, FileText, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -37,9 +37,9 @@ export function DashboardPage() {
 
   const metrics = [
     {
-      label: "候选人",
+      label: "简历",
       value: String(candidatesQuery.data?.total ?? 0),
-      icon: Users,
+      icon: Files,
     },
     {
       label: "已解析",
@@ -86,7 +86,7 @@ export function DashboardPage() {
         <div>
           <h2 className="text-2xl font-semibold">{t("总览")}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            {t("候选人解析和评分概况")}
+            {t("简历解析和评分概况")}
           </p>
         </div>
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-4">
@@ -120,7 +120,7 @@ export function DashboardPage() {
               >
                 <Link
                   className="hover:text-primary transition-colors"
-                  to={`/candidates/${candidate.id}`}
+                  to={`/resumes/${candidate.id}`}
                 >
                   {candidate.name || candidate.original_filename}
                 </Link>
@@ -131,7 +131,7 @@ export function DashboardPage() {
             ))}
             {!candidates.length ? (
               <div className="p-6 text-sm text-muted-foreground">
-                {t("暂无候选人")}
+                {t("暂无简历")}
               </div>
             ) : null}
           </div>

@@ -48,7 +48,7 @@ export function CandidateFilterPanel({
       <div className="grid flex-1 gap-4 md:grid-cols-2 xl:grid-cols-[minmax(14rem,18rem)_minmax(18rem,1fr)]">
         <label className="block text-sm">
           <span className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
-            <SlidersHorizontal className="h-3.5 w-3.5" /> {t("候选状态")}
+            <SlidersHorizontal className="h-3.5 w-3.5" /> {t("简历状态")}
           </span>
           <Select
             value={status}

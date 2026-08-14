@@ -3,14 +3,15 @@
 > 调研日期：2026-08-12
 > 范围：`backend/`（Flask）、`frontend/`（React/Vite）、`deploy/` + 工程化配置
 > 说明：所有条目均已在代码中逐条核实，附文件与行号证据。优先级分高 / 中 / 低三档。
-> 后续进展：路由懒加载、Inter Latin 子集加载、候选人列表偏好持久化及上传数量文档对齐已于 2026-08-13 至 2026-08-14 完成；其余条目及行号以再次核查为准。
+> 后续进展：路由懒加载、Inter Latin 子集加载、简历列表偏好持久化及上传数量文档对齐已于 2026-08-13 至 2026-08-14 完成。2026-08-14 上传与候选人入口整合为简历工作区，并修复前端 SSE 生命周期和事件风暴问题；其余条目及行号以再次核查为准。
 
 ## 一、高优先级（正确性 / 数据安全问题）
 
-### 1. 前端 SSE error 处理器是过期闭包，单个候选人失败会掐断整批流
+### 1. [已完成] 前端 SSE error 处理器是过期闭包，单个候选人失败会掐断整批流
 
 - 证据：`frontend/src/pages/UploadPage.tsx:94`。`queue.every(...)` 引用的是订阅时捕获的旧 `queue`（首次上传为 `[]`，`[].every()` 恒为 `true`），任一候选人失败的 server `error` 事件、甚至一次连接级抖动都会立即 `source.close()`，其余候选人的进度事件全部丢失，UI 永远停在"解析中"。
 - 建议：error 处理器内读取最新状态（ref 或函数式更新），并按候选人维度隔离失败，不应关闭整批流。
+- 进展：统一简历工作区使用终态候选人 ID 集合跟踪批次完成情况，不再读取过期队列闭包。
 
 ### 2. 简历编辑的 JSON 字段静默丢数据
 
@@ -106,10 +107,11 @@
 
 ### 前端
 
-**1. EventSource 生命周期管理缺失**
+**1. [已完成] EventSource 生命周期管理缺失**
 
 - 流正常结束后不主动 close：后端生成器处理完即结束响应（`uploads.py:161`），EventSource 默认重连，后端对已 completed 候选人会重发 `uploaded`/`completed`（`uploads.py:82-93`），形成重连-重放循环。应在 `completed` 计数达标后关闭。
 - 无卸载清理：`source` 未存 ref、无 `useEffect` cleanup，上传中途 SPA 路由跳走后连接悬挂。
+- 进展：当前组件会在批次全部进入终态或页面卸载时主动关闭连接；工作区内部切换视图不会卸载上传面板。
 
 **2. 性能三连：代码分割 / 字体子集 / 搜索防抖**
 
@@ -117,10 +119,11 @@
 - 字体全量引入：`src/main.tsx:10` `import "@fontsource-variable/inter"` 引入全部子集，dist 产出 7 个 woff2 共约 250KB，中文站点只需 latin，可改 `@fontsource-variable/inter/latin.css`。
 - 搜索无防抖：`CandidatesPage.tsx:73-76` 每个击键直接改 `q` 进入 queryKey 即发请求，全库无 `debounce`/`useDeferredValue`。
 
-**3. SSE 事件风暴式 invalidate**
+**3. [已完成] SSE 事件风暴式 invalidate**
 
 - 证据：`UploadPage.tsx:65`。每个进度事件（5 种事件 × N 个候选人）都 `invalidateQueries(["candidates"])`，一次 5 份上传可触发二十余次列表 refetch。
 - 建议：只在 `completed`/`error` 终态事件刷新。
+- 进展：当前仅在批次建立和单份简历进入终态时刷新简历查询。
 
 **4. 状态管理约定偏离**
 

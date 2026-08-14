@@ -22,7 +22,7 @@ export function ScoreBarChart({ scoreData }: ScoreBarChartProps) {
   return (
     <div className="h-80">
       <h4 className="mb-2 text-sm font-medium text-muted-foreground">
-        {t("候选人评分")}
+        {t("简历评分")}
       </h4>
       <ResponsiveContainer width="100%" height="90%">
         <BarChart data={scoreData}>
@@ -33,7 +33,7 @@ export function ScoreBarChart({ scoreData }: ScoreBarChartProps) {
           <Tooltip
             {...tooltipProps}
             formatter={(value) => [value, t("评分")]}
-            labelFormatter={(label) => t("候选人：{{name}}", { name: label })}
+            labelFormatter={(label) => t("简历：{{name}}", { name: label })}
           />
           <Bar
             dataKey="score"

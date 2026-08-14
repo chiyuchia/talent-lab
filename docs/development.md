@@ -124,7 +124,7 @@ make backend-test   # 使用 backend/.venv 中的 pytest
 | 目录 | 职责 |
 |------|------|
 | `src/app/router.tsx` | 路由定义；页面按路由懒加载，受保护页面包在 `ProtectedRoute` 内 |
-| `src/pages/` | 页面：登录、仪表盘、上传、候选人列表/详情、对比、职位机会 |
+| `src/pages/` | 页面：登录、仪表盘、简历工作区/详情、职位机会 |
 | `src/components/` | 共享组件：`AppShell`、`ResumeStreamViewer`、`CompareResultPanel`、状态徽标、空态、骨架屏等 |
 | `src/lib/api.ts` | 统一 API 客户端（fetch 封装、错误归一化、SSE 解析） |
 | `src/i18n/` | 国际化初始化与中英文翻译资源 |
@@ -137,6 +137,7 @@ make backend-test   # 使用 backend/.venv 中的 pytest
 - **数据获取走 TanStack Query**：不要在组件里裸用 `fetch`；mutation 后按需 `invalidateQueries`。
 - **UI 状态与服务器状态分离**：主题使用 Zustand/localStorage；语言、简历库视图模式及不同视图的分页大小保存在 localStorage；后端数据一律进 Query 缓存。
 - **路由加载**：页面组件使用 `React.lazy` 按路由拆包，并统一由 `RouteLoadingBoundary` 提供加载反馈。
+- **简历路由**：上传和简历库统一使用 `/resumes`；`/upload` 与 `/candidates` 仅作为兼容重定向保留。
 - **类型对齐**：接口字段变更时同时更新后端序列化器与 `src/types/api.ts`。
 - **登录态处理**：401 统一由 API 客户端归一化错误，配合 `ProtectedRoute` 跳转登录页；登录成功后立即刷新 session 缓存（见提交 `40ff0a2`）。
 - **SSE**：上传解析进度通过 `GET /api/uploads/:id/events` 订阅，组件需处理流中断与错误事件。

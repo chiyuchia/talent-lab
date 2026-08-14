@@ -1,4 +1,5 @@
 export const jobsWorkspaceEnglish = {
+  "原始职位信息": "Original job information",
   "概览": "Overview",
   "简历匹配": "Resume matches",
   "申请进度": "Application",

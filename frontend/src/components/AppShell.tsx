@@ -63,7 +63,7 @@ export function AppShell() {
       if (editing) return;
       if (event.key === "/") {
         event.preventDefault();
-        navigate("/candidates");
+        navigate("/resumes");
         window.setTimeout(
           () =>
             document
@@ -72,7 +72,7 @@ export function AppShell() {
           0,
         );
       }
-      if (event.key === "u") navigate("/upload");
+      if (event.key === "u") navigate("/resumes/new");
       if (event.key === "j") navigate("/jobs");
     }
     window.addEventListener("keydown", handleShortcut);
@@ -113,7 +113,7 @@ export function AppShell() {
       <ResizableDrawer
         open={drawerOpen}
         onClose={closeDrawer}
-        title={t("候选人对比")}
+        title={t("简历对比")}
         defaultWidth={Math.min(
           1200,
           Math.max(
@@ -135,7 +135,7 @@ export function AppShell() {
                 ? t("对比中...")
                 : compareError
                   ? compareError.message
-                  : t("选择 2-3 名候选人后点击「开始对比」")}
+                  : t("选择 2-3 份简历后点击「开始对比」")}
             </p>
           }
         />

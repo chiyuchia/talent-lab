@@ -41,7 +41,7 @@ export function CandidatePagination({
         <span>
           {t("第 {{page}} / {{total}} 页", { page, total: totalPages })}
         </span>
-        <span>{t("共 {{value}} 人", { value: total })}</span>
+        <span>{t("共 {{value}} 份", { value: total })}</span>
         {isFetching ? (
           <span className="text-primary">{t("更新中...")}</span>
         ) : null}
