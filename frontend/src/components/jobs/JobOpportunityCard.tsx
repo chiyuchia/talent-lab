@@ -5,29 +5,21 @@ import { applicationStatusLabel } from "../../lib/job-options";
 import type { JobOpportunity } from "../../types/api";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { jobSalaryLabel } from "./job-display";
 
 type Props = {
   job: JobOpportunity;
   highlighted: boolean;
   deleting: boolean;
   favoriting: boolean;
-  onEdit: () => void;
+  onOpen: () => void;
   onDelete: () => void;
   onToggleFavorite: () => void;
 };
 
-function salaryLabel(job: JobOpportunity): string | null {
-  if (job.salary_min === null && job.salary_max === null) return null;
-  const range = [job.salary_min, job.salary_max]
-    .filter((value) => value !== null)
-    .map((value) => Number(value).toLocaleString())
-    .join(" - ");
-  return `${job.salary_currency || ""} ${range}/${job.salary_period || "?"}`.trim();
-}
-
-export function JobOpportunityCard({ job, highlighted, deleting, favoriting, onEdit, onDelete, onToggleFavorite }: Props) {
+export function JobOpportunityCard({ job, highlighted, deleting, favoriting, onOpen, onDelete, onToggleFavorite }: Props) {
   const { t } = useTranslation();
-  const salary = salaryLabel(job);
+  const salary = jobSalaryLabel(job);
   const hasMetadata = job.locations.length > 0 || Boolean(salary) || Boolean(job.next_action);
   return (
     <article
@@ -36,7 +28,7 @@ export function JobOpportunityCard({ job, highlighted, deleting, favoriting, onE
       }`}
     >
       <div className="flex items-start justify-between gap-3">
-        <button type="button" onClick={onEdit} className="min-w-0 flex-1 text-left">
+        <button type="button" onClick={onOpen} className="min-w-0 flex-1 text-left">
           <span className="block truncate font-medium transition-colors hover:text-primary">{job.title}</span>
         </button>
         <Button
@@ -58,7 +50,7 @@ export function JobOpportunityCard({ job, highlighted, deleting, favoriting, onE
           {job.priority === "high" ? <Badge className="px-1.5 py-0" variant="warning">{t("高优先级")}</Badge> : null}
         </span>
       </div>
-      <p className={`mt-3 text-sm leading-5 text-muted-foreground ${hasMetadata ? "line-clamp-3 min-h-15" : "line-clamp-4 min-h-20"}`}>
+      <p className="mt-3 line-clamp-2 min-h-10 text-sm leading-5 text-muted-foreground">
         {job.summary || job.raw_jd || t("尚未添加职位描述")}
       </p>
       {hasMetadata ? (
@@ -74,20 +66,23 @@ export function JobOpportunityCard({ job, highlighted, deleting, favoriting, onE
         </div>
       ) : null}
       <div className="mt-auto pt-3">
-        <div className="flex items-center justify-between border-t border-border pt-2">
+        <div className="flex items-center justify-between gap-2 border-t border-border pt-2">
           <span className="text-xs text-muted-foreground">
             {t("{{value}} 项技能要求", { value: job.skill_requirements.length })}
           </span>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8"
-            disabled={deleting}
-            onClick={onDelete}
-            aria-label={t("删除职位机会 {{name}}", { name: job.title })}
-          >
-            <Trash2 className="h-4 w-4 text-destructive" />
-          </Button>
+          <span className="flex items-center gap-1">
+            <Button variant="outline" size="sm" onClick={onOpen}>{t("打开工作台")}</Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              disabled={deleting}
+              onClick={onDelete}
+              aria-label={t("删除职位机会 {{name}}", { name: job.title })}
+            >
+              <Trash2 className="h-4 w-4 text-destructive" />
+            </Button>
+          </span>
         </div>
       </div>
     </article>

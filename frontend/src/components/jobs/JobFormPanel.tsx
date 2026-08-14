@@ -2,16 +2,14 @@ import { type FormEvent, useState } from "react";
 import { ArrowLeft, Loader2, Save } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import type { ApplicationStatus, CandidateSummary, JobOpportunityDraft } from "../../types/api";
+import type { CandidateSummary, JobOpportunityDraft } from "../../types/api";
 import { Button } from "../ui/button";
 import { JobApplicationFields } from "./JobApplicationFields";
 import { JobBasicFields } from "./JobBasicFields";
 import { JobCompensationFields } from "./JobCompensationFields";
 import { JobContentFields } from "./JobContentFields";
-import { JobMatchesPanel } from "./JobMatchesPanel";
 import { JobRequirementsFields } from "./JobRequirementsFields";
 import { JobTextParser } from "./JobTextParser";
-import { JobTimeline } from "./JobTimeline";
 import { mergeParsedJob, validateJobForm } from "./job-form";
 
 export type JobForm = JobOpportunityDraft;
@@ -25,7 +23,6 @@ type Props = {
   onChange: (form: JobOpportunityDraft) => void;
   onCancel: () => void;
   onSubmit: () => void;
-  onPersistedStatusChange: (status: ApplicationStatus) => void;
 };
 
 export function JobFormPanel({
@@ -37,7 +34,6 @@ export function JobFormPanel({
   onChange,
   onCancel,
   onSubmit,
-  onPersistedStatusChange,
 }: Props) {
   const { t } = useTranslation();
   const [parsing, setParsing] = useState(false);
@@ -89,15 +85,6 @@ export function JobFormPanel({
           </Button>
         </div>
       </form>
-      {jobId ? (
-        <>
-          <JobMatchesPanel jobId={jobId} resumeVersions={resumeVersions} />
-          <JobTimeline
-            jobId={jobId}
-            onStatusChange={onPersistedStatusChange}
-          />
-        </>
-      ) : null}
     </section>
   );
 }

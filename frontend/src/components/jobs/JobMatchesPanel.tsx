@@ -8,6 +8,7 @@ import { getErrorMessage } from "../../lib/errors";
 import type { CandidateSummary } from "../../types/api";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 type Props = { jobId: number; resumeVersions: CandidateSummary[] };
 
@@ -15,6 +16,7 @@ export function JobMatchesPanel({ jobId, resumeVersions }: Props) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [search, setSearch] = useState("");
   const scoresQuery = useQuery({
     queryKey: ["scores", "job", jobId],
     queryFn: () => scoresApi.list({ job_id: jobId }),
@@ -23,6 +25,14 @@ export function JobMatchesPanel({ jobId, resumeVersions }: Props) {
     () => new Map((scoresQuery.data?.items ?? []).map((score) => [score.candidate_id, score])),
     [scoresQuery.data?.items],
   );
+  const visibleResumes = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    if (!term) return resumeVersions;
+    return resumeVersions.filter((resume) =>
+      [resume.name, resume.original_filename, resume.email]
+        .some((value) => value?.toLowerCase().includes(term)),
+    );
+  }, [resumeVersions, search]);
   const matchMutation = useMutation({
     mutationFn: () => Promise.all(selectedIds.map((candidateId) => scoresApi.create(candidateId, [jobId]))),
     onSuccess: async () => {
@@ -51,8 +61,16 @@ export function JobMatchesPanel({ jobId, resumeVersions }: Props) {
         </Button>
       </div>
       {matchMutation.isError ? <p className="text-sm text-destructive">{getErrorMessage(matchMutation.error)}</p> : null}
+      {resumeVersions.length ? (
+        <Input
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          placeholder={t("搜索简历姓名或文件名")}
+          aria-label={t("搜索简历姓名或文件名")}
+        />
+      ) : null}
       <div className="grid gap-2 md:grid-cols-2">
-        {resumeVersions.map((resume) => {
+        {visibleResumes.map((resume) => {
           const score = scoreByResume.get(resume.id);
           return (
             <label key={resume.id} className="flex cursor-pointer items-center gap-3 rounded-md border border-border bg-background p-3 text-sm">
@@ -70,6 +88,7 @@ export function JobMatchesPanel({ jobId, resumeVersions }: Props) {
           );
         })}
       </div>
+      {resumeVersions.length && !visibleResumes.length ? <p className="rounded-md border border-dashed border-border p-6 text-center text-sm text-muted-foreground">{t("没有匹配的简历")}</p> : null}
       {!resumeVersions.length ? <p className="rounded-md border border-dashed border-border p-6 text-center text-sm text-muted-foreground">{t("请先上传一份简历")}</p> : null}
     </section>
   );

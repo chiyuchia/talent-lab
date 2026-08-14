@@ -5,6 +5,7 @@ import { candidatesEnglish } from "./candidates-en";
 import { commonEnglish } from "./common-en";
 import { jobsEnglish } from "./jobs-en";
 import { jobPlaceholderEnglish } from "./jobs-placeholders-en";
+import { jobsWorkspaceEnglish } from "./jobs-workspace-en";
 import { resumeEnglish } from "./resume-en";
 
 const english = {
@@ -13,6 +14,7 @@ const english = {
   ...resumeEnglish,
   ...jobsEnglish,
   ...jobPlaceholderEnglish,
+  ...jobsWorkspaceEnglish,
 };
 
 const chinese = Object.fromEntries(

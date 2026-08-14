@@ -22,24 +22,31 @@ export function JobTimeline({ jobId, onStatusChange }: Props) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [draft, setDraft] = useState(initialDraft);
+  const [showComposer, setShowComposer] = useState(false);
   const eventsQuery = useQuery({ queryKey: ["jobs", jobId, "events"], queryFn: () => jobsApi.listEvents(jobId) });
   const eventMutation = useMutation({
     mutationFn: () => jobsApi.createEvent(jobId, draft),
     onSuccess: async (event) => {
       if (event.status) onStatusChange(event.status);
       setDraft(initialDraft());
+      setShowComposer(false);
       await queryClient.invalidateQueries({ queryKey: ["jobs", jobId, "events"] });
       await queryClient.invalidateQueries({ queryKey: ["jobs"] });
     },
   });
   return (
     <section className="space-y-4 rounded-lg border border-border bg-card p-5">
-      <div>
-        <h3 className="font-medium">{t("申请时间线")}</h3>
-        <p className="mt-1 text-xs text-muted-foreground">{t("补录面试、测评、Offer、备注或待办事项。")}</p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h3 className="font-medium">{t("申请时间线")}</h3>
+          <p className="mt-1 text-xs text-muted-foreground">{t("补录面试、测评、Offer、备注或待办事项。")}</p>
+        </div>
+        <Button size="sm" variant="outline" onClick={() => setShowComposer((current) => !current)}>
+          <Plus className="h-4 w-4" />{t(showComposer ? "收起记录表单" : "记录进展")}
+        </Button>
       </div>
-      <div className="grid gap-3 rounded-md border border-border bg-background p-3 md:grid-cols-2">
-        <Select value={draft.type} onChange={(e) => setDraft({ ...draft, type: e.target.value as ApplicationEventDraft["type"] })}>
+      {showComposer ? <div className="grid gap-3 rounded-md border border-border bg-background p-3 md:grid-cols-2">
+        <Select aria-label={t("事件类型")} value={draft.type} onChange={(e) => setDraft({ ...draft, type: e.target.value as ApplicationEventDraft["type"] })}>
           <option value="note">{t("备注")}</option>
           <option value="task">{t("待办")}</option>
           <option value="assessment">{t("笔试或测评")}</option>
@@ -47,9 +54,9 @@ export function JobTimeline({ jobId, onStatusChange }: Props) {
           <option value="offer">{t("Offer")}</option>
           <option value="status_change">{t("状态变更")}</option>
         </Select>
-        <Input type="datetime-local" value={draft.occurred_at} onChange={(e) => setDraft({ ...draft, occurred_at: e.target.value })} />
+        <Input aria-label={t("事件时间")} type="datetime-local" value={draft.occurred_at} onChange={(e) => setDraft({ ...draft, occurred_at: e.target.value })} />
         {draft.type === "status_change" ? (
-          <Select value={draft.status ?? ""} onChange={(e) => setDraft({ ...draft, status: e.target.value as ApplicationStatus })}>
+          <Select aria-label={t("选择申请状态")} value={draft.status ?? ""} onChange={(e) => setDraft({ ...draft, status: e.target.value as ApplicationStatus })}>
             <option value="">{t("选择申请状态")}</option>
             {applicationStatusOptions.map(({ value, label }) => (
               <option key={value} value={value}>{t(label)}</option>
@@ -62,7 +69,7 @@ export function JobTimeline({ jobId, onStatusChange }: Props) {
           <span className="text-xs text-destructive">{eventMutation.isError ? getErrorMessage(eventMutation.error) : ""}</span>
           <Button size="sm" disabled={eventMutation.isPending || (draft.type === "status_change" && !draft.status)} onClick={() => eventMutation.mutate()}><Plus className="h-4 w-4" /> {t("添加事件")}</Button>
         </div>
-      </div>
+      </div> : null}
       <div className="relative space-y-4 border-l border-border pl-5">
         {(eventsQuery.data?.items ?? []).map((event) => (
           <article key={event.id} className="relative">
