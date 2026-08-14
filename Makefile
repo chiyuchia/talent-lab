@@ -1,4 +1,4 @@
-.PHONY: backend-install backend-init backend-dev frontend-install frontend-dev backend-test compose-up compose-down
+.PHONY: backend-install backend-init backend-dev frontend-install frontend-dev backend-test check-badchars compose-up compose-down
 
 backend-install:
 	python3 -m venv backend/.venv
@@ -18,6 +18,9 @@ frontend-dev:
 
 backend-test:
 	cd backend && .venv/bin/pytest
+
+check-badchars:
+	python3 scripts/check_bad_chars.py
 
 compose-up:
 	docker compose -f deploy/docker-compose.yml up -d --build

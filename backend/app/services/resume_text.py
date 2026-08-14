@@ -2,7 +2,7 @@ import re
 
 DATE_TOKEN_PATTERN = r"(?:19|20)\d{2}(?:[./\-年](?:0?[1-9]|1[0-2])月?)?|至今|现在|Present|Current|Now"
 PERIOD_PATTERN = re.compile(
-    rf"({DATE_TOKEN_PATTERN})\s*(?:[-~—–至到]|to)\s*({DATE_TOKEN_PATTERN})",
+    rf"({DATE_TOKEN_PATTERN})\s*(?:[-~\u2014\u2013至到]|to)\s*({DATE_TOKEN_PATTERN})",
     re.IGNORECASE,
 )
 SINGLE_DATE_PATTERN = re.compile(DATE_TOKEN_PATTERN, re.IGNORECASE)

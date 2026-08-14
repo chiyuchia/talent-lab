@@ -1,7 +1,7 @@
 # talent-lab
 
 <p align="center">
-  <b>AI 赋能的智能简历分析平台</b>
+  <b>AI 赋能的简历分析与求职机会管理平台</b>
 </p>
 
 <p align="center">
@@ -14,32 +14,36 @@
 
 ---
 
+talent-lab 是一个带单密钥访问控制的个人求职工作台：集中管理多版 PDF 简历与职位机会，利用 AI 完成结构化提取、匹配评分和改写建议，并通过申请时间线持续跟踪后续进展。
+
 ## 特性
 
-- **批量 PDF 上传** — 支持拖拽上传和点击上传，单次最多 10 份 PDF 简历
-- **SSE 流式解析** — 实时展示 PDF 文本提取和 AI 信息提取进度
-- **AI 结构化提取** — 自动提取姓名、联系方式、教育背景、工作经历、技能标签、项目经历
-- **职位机会管理** — 记录来源、地点、任职要求、薪酬、联系人、个人判断和下一步行动
-- **JD 粘贴解析** — 提取公司、职位、职责、经验、学历、技能和薪资，确认预览后再应用到表单
-- **多简历匹配** — 每个职位可匹配多份简历，并记录实际投递版本、技能缺口和定制建议
-- **申请时间线** — 保存状态变化，并可补录笔试、面试、Offer、备注和待办事项
-- **候选人管理** — 表格/卡片视图切换、关键字搜索、技能筛选、评分排序、分页浏览
-- **候选人对比** — 支持 2-3 人并排对比各维度评分和 AI 评语
-- **状态流转** — 待筛选 → 初筛通过 → 面试中 → 已录用 / 已淘汰
-- **主题切换** — 支持暗色/亮色主题，偏好持久化到 localStorage
+- **批量 PDF 上传**：支持拖拽上传和点击上传，单次最多 5 份 PDF 简历
+- **SSE 流式解析**：实时展示 PDF 文本提取和 AI 信息提取进度
+- **AI 结构化提取**：自动提取姓名、联系方式、教育背景、工作经历、技能标签、项目经历
+- **职位机会管理**：记录来源、地点、任职要求、薪酬、联系人、个人判断和下一步行动，并支持搜索、状态筛选、收藏和优先级
+- **JD 粘贴解析**：提取公司、职位、职责、经验、学历、技能和薪资，确认预览后再应用到表单
+- **多简历匹配**：每个职位可匹配多份简历并保留结果，展示匹配优势、技能缺口和简历定制建议
+- **申请时间线**：跟踪未申请、准备、已投递、笔试、面试、Offer 等状态，并可补录备注和待办事项
+- **简历库管理**：表格/卡片视图切换、关键字搜索、技能筛选、评分排序、分页浏览，视图与分页偏好自动保存
+- **候选人对比**：支持 2-3 人并排对比各维度评分和 AI 评语
+- **状态流转**：待筛选 → 初筛通过 → 面试中 → 已录用 / 已淘汰
+- **中英双语**：根据浏览器语言自动选择中文或英文，也可手动切换并保存偏好
+- **主题切换**：支持暗色/亮色主题并保存偏好
 
 ## 技术栈
 
 | 层级 | 技术 |
 |------|------|
-| 前端 | Vite + React 18 + TypeScript + Tailwind CSS |
+| 前端 | Vite + React 18 + TypeScript + React Router + Tailwind CSS |
 | 状态管理 | TanStack Query (服务端状态) + Zustand (UI 状态) |
+| 国际化 | i18next + react-i18next |
 | 数据可视化 | Recharts |
 | 后端 | Python + Flask + Gunicorn |
 | ORM | Flask-SQLAlchemy |
 | 数据库 | SQLite |
 | PDF 解析 | PyMuPDF |
-| AI 接口 | DeepSeek |
+| AI 接口 | OpenAI 兼容 API（OpenAI / Moonshot / DeepSeek）+ 本地 Mock |
 | 部署 | Cloudflare Pages（前端）+ Docker Compose / Nginx（后端） |
 
 ## 项目结构
@@ -50,8 +54,8 @@ talent-lab/
 │   ├── app/
 │   │   ├── blueprints/   # API 路由 (auth, uploads, candidates, jobs, scores)
 │   │   ├── models/       # SQLAlchemy 数据模型
-│   │   ├── services/     # 业务服务 (AI 服务、PDF 解析)
-│   │   ├── utils/        # 工具函数
+│   │   ├── services/     # AI、PDF、JD 解析、职位数据与数据库迁移服务
+│   │   ├── utils/        # 统一响应、序列化与通用工具
 │   │   ├── config.py     # 应用配置
 │   │   └── security.py   # 认证装饰器
 │   ├── tests/            # 后端测试
@@ -63,6 +67,7 @@ talent-lab/
 │   │   ├── app/          # 路由配置
 │   │   ├── components/   # 共享组件
 │   │   ├── pages/        # 页面组件
+│   │   ├── i18n/         # 中英文翻译资源
 │   │   ├── lib/          # API 客户端、工具函数、状态管理
 │   │   └── types/        # TypeScript 类型定义
 │   ├── Dockerfile
@@ -119,18 +124,24 @@ make frontend-dev
 
 | 变量 | 说明 | 默认值 |
 |------|------|--------|
+| `FLASK_ENV` | 运行环境；生产部署设为 `production` | `development` |
 | `FLASK_SECRET_KEY` | Cookie 签名密钥（生产环境必填） | `dev-secret-change-me` |
-| `APP_ACCESS_KEY` | 访问密钥（生产环境必填） | — |
+| `APP_ACCESS_KEY` | 访问密钥（生产环境必填） | 未设置 |
 | `DATABASE_URL` | 数据库地址 | `sqlite:///talent-lab.sqlite3` |
 | `UPLOAD_DIR` | PDF 上传目录 | `instance/uploads` |
 | `AI_MODE` | AI 模式：`mock` 或 `real` | `mock` |
 | `AI_PROVIDER` | AI 提供商：`openai` / `moonshot` / `deepseek` | `openai` |
-| `OPENAI_API_KEY` | OpenAI API Key | — |
-| `OPENAI_BASE_URL` | OpenAI 兼容接口地址 | — |
-| `OPENAI_MODEL` | OpenAI 模型名称 | — |
-| `MOONSHOT_API_KEY` | Moonshot API Key | — |
-| `DEEPSEEK_API_KEY` | DeepSeek API Key | — |
-| `FRONTEND_ORIGIN` | 前端域名（CORS 用） | — |
+| `OPENAI_API_KEY` | OpenAI API Key | 未设置 |
+| `OPENAI_BASE_URL` | OpenAI 兼容接口地址 | 未设置 |
+| `OPENAI_MODEL` | OpenAI 模型名称 | 未设置 |
+| `MOONSHOT_API_KEY` | Moonshot API Key | 未设置 |
+| `MOONSHOT_BASE_URL` | Moonshot 兼容接口地址 | `https://api.moonshot.cn/v1` |
+| `MOONSHOT_MODEL` | Moonshot 模型名称 | `moonshot-v1-8k` |
+| `DEEPSEEK_API_KEY` | DeepSeek API Key | 未设置 |
+| `DEEPSEEK_BASE_URL` | DeepSeek 兼容接口地址 | `https://api.deepseek.com` |
+| `DEEPSEEK_MODEL` | DeepSeek 模型名称 | `deepseek-chat` |
+| `FRONTEND_ORIGIN` | 前端域名（CORS 用） | 未设置 |
+| `SESSION_COOKIE_SAMESITE` | 会话 Cookie 的 SameSite 策略 | `Lax` |
 | `SESSION_COOKIE_SECURE` | Cookie 仅 HTTPS 传输 | `false` |
 
 ### 前端
@@ -154,7 +165,7 @@ make frontend-dev
 | PATCH | `/api/candidates/:id/status` | 更新候选人状态 |
 | POST | `/api/candidates/compare` | 2-3 人对比 |
 | GET | `/api/candidates/:id/pdf` | 下载原始 PDF |
-| GET | `/api/jobs` | 职位机会列表（兼容原 JD 路径） |
+| GET | `/api/jobs` | 职位机会列表（支持关键字、状态与收藏筛选） |
 | POST | `/api/jobs/parse` | 结构化解析粘贴的 JD 文本 |
 | POST | `/api/jobs` | 创建职位机会 |
 | PATCH | `/api/jobs/:id` | 更新职位机会 |
@@ -162,7 +173,7 @@ make frontend-dev
 | GET | `/api/jobs/:id/events` | 申请时间线 |
 | POST | `/api/jobs/:id/events` | 补录申请事件 |
 | GET | `/api/scores` | 评分结果列表 |
-| POST | `/api/scores` | 对候选人执行评分 |
+| POST | `/api/scores` | 对一份简历与一个或多个职位执行匹配评分 |
 | GET | `/api/health` | 健康检查 |
 
 ## 生产部署
@@ -177,11 +188,7 @@ Cloudflare Pages 关联本仓库的 `master` 分支；`master` 更新后会自�
 
 #### 1. 配置生产环境变量
 
-```bash
-cp deploy/.env.production.example deploy/.env.production
-# 编辑 deploy/.env.production，设置以下必填项：
-# APP_ACCESS_KEY、FLASK_SECRET_KEY、AI_MODE 等
-```
+创建不入库的 `deploy/.env.production`，设置 `FLASK_ENV=production`，并至少提供 `APP_ACCESS_KEY`、`FLASK_SECRET_KEY` 和 `AI_MODE`；真实 AI 模式还需配置对应服务商的 API Key 与模型。
 
 #### 2. 启动服务
 
@@ -189,11 +196,11 @@ cp deploy/.env.production.example deploy/.env.production
 docker compose -f deploy/docker-compose.yml up -d --build
 ```
 
-Compose 默认将容器内 Web 服务绑定到宿主机 `127.0.0.1:8080`。
+Compose 默认将后端服务绑定到宿主机 `127.0.0.1:8000`。
 
 #### 3. 配置宿主机 Nginx
 
-参考 `deploy/nginx/nginx-host.conf.example` 配置反向代理。注意：
+参考 `deploy/nginx/vps-backend.conf.example` 配置后端 API 反向代理。注意：
 
 - 为 SSE 配置 `proxy_buffering off`
 - 配置较长代理超时，避免 AI 提取期间连接被关闭
@@ -217,6 +224,7 @@ make frontend-dev       # 启动前端开发服务器
 
 # 测试
 make backend-test       # 运行后端测试
+make check-badchars     # 检查禁用字符清单
 
 # Docker
 make compose-up         # 构建并启动 Docker 服务
@@ -228,7 +236,7 @@ make compose-down       # 停止 Docker 服务
 ```text
 Candidate          候选人（上传批次、状态、PDF 路径、解析状态）
   └── ResumeProfile    简历结构化信息（姓名、联系方式、教育、工作、技能、项目）
-  └── ScoreResult      岗位评分结果（综合分、各维度分、AI 评语）
+  └── ScoreResult      职位匹配结果（综合分、各维度分、AI 评语、匹配洞察）
 
 JobDescription     职位机会（JD、结构化要求、薪酬、申请状态、投递版本）
   └── ApplicationEvent  申请时间线（状态、笔试、面试、Offer、备注、待办）

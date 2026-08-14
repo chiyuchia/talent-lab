@@ -20,7 +20,7 @@ Before graduating from high school, I was involved in a traffic accident. I had 
 
 ## A Fresh Start
 
-Even though I started later than others, I chose to keep moving forward and pursue my university education, steadily making up for lost time. In a way, the timing of my fresh start allowed me to catch up with one of the most transformative technologies of our era—**Artificial Intelligence**. AI has become a powerful tool that helps people significantly reduce the time spent on learning and repetitive tasks.
+Even though I started later than others, I chose to keep moving forward and pursue my university education, steadily making up for lost time. In a way, the timing of my fresh start allowed me to catch up with one of the most transformative technologies of our era - **Artificial Intelligence**. AI has become a powerful tool that helps people significantly reduce the time spent on learning and repetitive tasks.
 
 ## Turning Knowledge into Results
 

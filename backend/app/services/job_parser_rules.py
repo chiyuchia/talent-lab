@@ -86,7 +86,10 @@ def extract_responsibilities(text: str) -> list[str]:
 
 
 def extract_experience_range(text: str) -> tuple[float | None, float | None]:
-    match = re.search(r"(\d+(?:\.\d+)?)\s*[-–~至]\s*(\d+(?:\.\d+)?)\s*年", text)
+    match = re.search(
+        r"(\d+(?:\.\d+)?)\s*[-\u2013\u2014~至]\s*(\d+(?:\.\d+)?)\s*年",
+        text,
+    )
     if match:
         return float(match.group(1)), float(match.group(2))
     match = re.search(r"(\d+(?:\.\d+)?)\s*年(?:以上|及以上|\+)", text)
@@ -108,7 +111,10 @@ def extract_education(text: str) -> str:
 
 
 def extract_salary(text: str) -> tuple[float | None, float | None, str, str]:
-    match = re.search(r"(\d+(?:\.\d+)?)\s*[kK千]\s*[-–~至]\s*(\d+(?:\.\d+)?)\s*[kK千]", text)
+    match = re.search(
+        r"(\d+(?:\.\d+)?)\s*[kK千]\s*[-\u2013\u2014~至]\s*(\d+(?:\.\d+)?)\s*[kK千]",
+        text,
+    )
     if match:
         return float(match.group(1)) * 1000, float(match.group(2)) * 1000, "CNY", "month"
     return None, None, "", ""

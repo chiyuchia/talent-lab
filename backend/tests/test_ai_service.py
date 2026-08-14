@@ -1,4 +1,5 @@
 from app.services.ai_service import AiService
+from app.services.resume_text import PERIOD_PATTERN
 
 
 def test_mock_resume_extraction_uses_resume_text_for_experience_sections():
@@ -35,6 +36,25 @@ def test_mock_resume_extraction_returns_empty_sections_when_not_found():
     assert profile["education"] == []
     assert profile["work_experience"] == []
     assert profile["projects"] == []
+
+
+def test_period_pattern_accepts_escaped_unicode_dashes():
+    for separator in ("\u2013", "\u2014"):
+        match = PERIOD_PATTERN.search(f"2020{separator}Present")
+
+        assert match
+        assert match.groups() == ("2020", "Present")
+
+
+def test_mock_job_parser_accepts_escaped_unicode_dashes():
+    job = AiService(mode="mock").parse_job_description(
+        "职位名称：后端工程师\n经验要求：3\u20135 年\n薪资：25k\u201435k"
+    )
+
+    assert job["experience_min_years"] == 3
+    assert job["experience_max_years"] == 5
+    assert job["salary_min"] == 25000
+    assert job["salary_max"] == 35000
 
 
 def test_mock_job_description_parser_extracts_title_and_skills():

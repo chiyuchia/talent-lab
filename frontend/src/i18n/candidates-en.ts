@@ -43,7 +43,7 @@ export const candidatesEnglish = {
   "表格视图": "Table view",
   "卡片视图": "Card view",
   "当前结果：{{value}} 人": "{{value}} results",
-  "当前显示 {{start}}-{{end}}": "Showing {{start}}–{{end}}",
+  "当前显示 {{start}}-{{end}}": "Showing {{start}}-{{end}}",
   "关键字：{{value}}": "Keyword: {{value}}",
   "技能：{{value}}": "Skill: {{value}}",
   "常见技能": "Popular skills",

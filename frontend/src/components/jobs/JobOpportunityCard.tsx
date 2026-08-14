@@ -21,7 +21,7 @@ function salaryLabel(job: JobOpportunity): string | null {
   const range = [job.salary_min, job.salary_max]
     .filter((value) => value !== null)
     .map((value) => Number(value).toLocaleString())
-    .join(" – ");
+    .join(" - ");
   return `${job.salary_currency || ""} ${range}/${job.salary_period || "?"}`.trim();
 }
 

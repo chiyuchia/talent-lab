@@ -56,11 +56,11 @@ class MockResumeEducationMixin:
                 continue
             without_period = self._remove_period(line, self._extract_period(line))
             parts = re.split(r"\s{2,}|[|｜]", without_period)
-            candidate = parts[0].strip(" -—–,，;；")
+            candidate = parts[0].strip(" -\u2014\u2013,，;；")
             if re.search(r"[\u4e00-\u9fff]", candidate) and re.search(r"\s", candidate):
                 sub_parts = re.split(r"\s+|[,，;；]", candidate)
                 for part in sub_parts:
-                    part_stripped = part.strip(" -—–,，;；")
+                    part_stripped = part.strip(" -\u2014\u2013,，;；")
                     if self._contains_school(part_stripped):
                         return part_stripped
             match = re.search(
@@ -69,7 +69,7 @@ class MockResumeEducationMixin:
                 re.IGNORECASE,
             )
             if match:
-                return match.group(1).strip(" -—–,，;；")
+                return match.group(1).strip(" -\u2014\u2013,，;；")
             return candidate[:80]
         return ""
 
@@ -96,8 +96,8 @@ class MockResumeEducationMixin:
                 cleaned = cleaned.replace(value, "")
         cleaned = re.sub(r"毕业|学历|专业|major|degree", "", cleaned, flags=re.IGNORECASE)
         parts = [
-            part.strip(" -—–,，;；")
+            part.strip(" -\u2014\u2013,，;；")
             for part in re.split(r"\s{2,}|[|｜/]", cleaned)
-            if part.strip(" -—–,，;；")
+            if part.strip(" -\u2014\u2013,，;；")
         ]
         return parts[0][:80] if parts else ""

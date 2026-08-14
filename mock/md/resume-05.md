@@ -19,7 +19,7 @@ My research addresses the overarching question:
 
 I develop methods that link simulation and data-rich experiments so that engineering models can be validated and used to support real-world design and qualification decisions. My work centres on **simulation-driven experimental design, validation and uncertainty quantification, scientific software, image-based measurement and data-rich experiments**, with a particular focus on extracting maximum information from limited and expensive fusion-engineering test campaigns.
 
-I currently lead a **£3.2M integrated experimental–computational research programme** through a UKRI Future Leaders Fellowship, developing new methodologies and open-source tools for digital design qualification.
+I currently lead a **£3.2M integrated experimental-computational research programme** through a UKRI Future Leaders Fellowship, developing new methodologies and open-source tools for digital design qualification.
 
 ---
 
@@ -27,15 +27,15 @@ I currently lead a **£3.2M integrated experimental–computational research pro
 
 ### Principal Research Engineer & UKRI Future Leaders Fellow
 **Applied Materials Technology Group, Fusion Technology Division, UKAEA**  
-February 2024–present
+February 2024-present
 
 ### Visiting Lecturer
 **Department of Materials Science & Engineering, University of Sheffield**  
-August 2024–present
+August 2024-present
 
 ### Senior Research Engineer
 **Applied Materials Technology Group, Fusion Technology Division, UKAEA**  
-August 2021–February 2024
+August 2021-February 2024
 
 ---
 
@@ -43,12 +43,12 @@ August 2021–February 2024
 
 - **Principal Investigator of a £3.2M UKRI Future Leaders Fellowship programme**, *A Computer Aided Validation (CAV) Framework for Digital Design Qualification*, comprising £1.6M UKRI funding and £1.6M matched UKAEA support.
 - **Built UKAEA South Yorkshire's component-validation and simulation-driven experimental-design capability from the ground up**, establishing an integrated experimental and computational research group focused on qualification of components for extreme fusion environments.
-- Established a multidisciplinary FLF programme spanning approximately **8–9 FTE of researchers and engineers**, four co-funded doctoral studentships and annual Year in Industry placements, integrating experimental mechanics, scientific computing, machine learning and statistics.
+- Established a multidisciplinary FLF programme spanning approximately **8-9 FTE of researchers and engineers**, four co-funded doctoral studentships and annual Year in Industry placements, integrating experimental mechanics, scientific computing, machine learning and statistics.
 - Founded and lead development of **[Pyvale](https://github.com/Computer-Aided-Validation-Laboratory/pyvale)**, an open-source virtual engineering laboratory for simulation-driven experimental design, virtual sensor deployment, measurement uncertainty and model validation.
 - Founded and lead development of **[Riley](https://github.com/Computer-Aided-Validation-Laboratory/riley-raster)**, a high-performance scientific rasterisation and camera-simulation framework for virtual imaging, higher-order finite elements and Digital Image Correlation uncertainty quantification.
 - Embedded component-validation capability into major cross-divisional UKAEA programmes including **Virtual Qualification for Fusion** and **FUJUKEN**, including international collaboration with QST, Japan.
 - Helped establish **simulation-driven experimental design as a core capability within UKAEA**, contributing to the division's digital-first strategy. Pyvale was subsequently ranked highly in an internal technology review as a distinctive technology for further strategic investment.
-- Built and developed a hybrid experimental–computational team whose members now provide core experimental-design and validation capability to cross-divisional fusion programmes.
+- Built and developed a hybrid experimental-computational team whose members now provide core experimental-design and validation capability to cross-divisional fusion programmes.
 - Developed a strong record of **staff mentoring and career development**, including successful promotion-in-post cases, professional registration, fellowship and grant development, graduate development and progression of placement students into doctoral research.
 
 ---
@@ -57,12 +57,12 @@ August 2021–February 2024
 
 ### A Computer Aided Validation (CAV) Framework for Digital Design Qualification
 
-**Principal Investigator — UKRI Future Leaders Fellowship**  
-September 2024–August 2028  
+**Principal Investigator - UKRI Future Leaders Fellowship**<br>
+September 2024-August 2028<br>
 **UKRI award:** £1.6M  
 **Matched UKAEA contribution:** £1.6M  
 **Combined programme value:** **£3.2M**  
-[UKRI Gateway to Research — MR/Y015916/1](https://gtr.ukri.org/projects?ref=MR%2FY015916%2F1)
+[UKRI Gateway to Research - MR/Y015916/1](https://gtr.ukri.org/projects?ref=MR%2FY015916%2F1)
 
 The fellowship develops a new **Computer Aided Validation (CAV)** methodology for determining when engineering simulations are sufficiently credible to support design and qualification decisions, while maximising the information obtained from limited, costly experiments.
 
@@ -76,17 +76,17 @@ As stated in the original proposal:
 - Optimise experiments to maximise information for simulation validation.
 - Quantify and minimise measurement and experimental uncertainty.
 - Develop rigorous workflows connecting engineering simulations, experimental measurements and model-validation metrics.
-- Create a validated **virtual engineering laboratory — Pyvale —** allowing engineers to optimise validation experiments digitally before entering the physical laboratory.
+- Create a validated **virtual engineering laboratory: Pyvale** allowing engineers to optimise validation experiments digitally before entering the physical laboratory.
 - Demonstrate the methodology on increasingly complex fusion-engineering validation problems.
 
 ### Research team and training
 
-Technical leadership of an integrated experimental–computational programme including:
+Technical leadership of an integrated experimental-computational programme including:
 
 - 1 FTE Principal Research Engineer / Fellow
 - 2.6 FTE computational research engineers
-- 1 FTE Lead Research Engineer — experimental
-- 1 FTE Specialist Research Engineer — experimental
+- 1 FTE Lead Research Engineer - experimental
+- 1 FTE Specialist Research Engineer - experimental
 - 2 FTE graduate research engineers
 - 4 co-funded PhD studentships
 - 1 Year in Industry student per year over the programme
@@ -113,9 +113,9 @@ The programme deliberately integrates experimental and computational researchers
 
 ---
 
-## Component Validation Capability — UKAEA South Yorkshire
+## Component Validation Capability - UKAEA South Yorkshire
 
-Established UKAEA's component-validation capability at the South Yorkshire site, developing a hybrid experimental–computational group focused on data-rich experiments, simulation validation and experimental design.
+Established UKAEA's component-validation capability at the South Yorkshire site, developing a hybrid experimental-computational group focused on data-rich experiments, simulation validation and experimental design.
 
 ### Capability development
 
@@ -228,9 +228,9 @@ L. Fletcher, J. Hirst and W. Bielajewa, **"Riley: A Computational Framework for 
 
 Current line-management responsibility spans staff from early-career engineers through to Lead Research Engineers:
 
-- 2 × Lead Research Engineers — Grade H
-- 1 × Senior Research Engineer — Grade G
-- 3 × Research Engineers — Grade E
+- 2 × Lead Research Engineers - Grade H
+- 1 × Senior Research Engineer - Grade G
+- 3 × Research Engineers - Grade E
 
 In addition to formal line management, I provide technical leadership and research mentorship across the full multidisciplinary Future Leaders Fellowship team.
 
@@ -245,7 +245,7 @@ In addition to formal line management, I provide technical leadership and resear
 - Supervised summer interns who subsequently progressed into doctoral research or graduate engineering roles, including at Airbus.
 - Mentored a Year in Industry student who subsequently completed her degree and secured a doctoral position at the University of Oxford; I now co-fund and co-supervise her PhD.
 - Currently supervise two further Year in Industry students receiving integrated experimental/computational research training.
-- Developing new **Experimental Design Engineer** job descriptions and progression routes to provide an appropriate career pathway for computational and hybrid experimental–computational researchers.
+- Developing new **Experimental Design Engineer** job descriptions and progression routes to provide an appropriate career pathway for computational and hybrid experimental-computational researchers.
 
 ---
 
@@ -283,7 +283,7 @@ Role: Industrial co-supervisor / co-funder
 Lorna previously completed a Year in Industry placement within my UKAEA research group.
 
 #### Swansea University
-**Ray-Tracing Simulations for DIC Uncertainty Quantification for Immersed Fluid–Structure Interaction Problems in Fusion Components**  
+**Ray-Tracing Simulations for DIC Uncertainty Quantification for Immersed Fluid-Structure Interaction Problems in Fusion Components**<br>
 Academic lead: Prof. Hari Arora  
 Completed: August 2026  
 Role: Industrial co-supervisor
@@ -298,34 +298,34 @@ Role: Industrial co-supervisor
 
 #### University of Southampton
 
-**Panagiota Tavianatou** — Primary supervision  
+**Panagiota Tavianatou** - Primary supervision<br>
 Inverse identification methods for extracting multiple mechanical properties of bone from data-rich experiments.
 
-**Jared Van Blitterswyk** — Co-supervision  
+**Jared Van Blitterswyk** - Co-supervision<br>
 High-strain-rate testing and image-based identification of composite properties.
 
-**Sam Parry** — Co-supervision  
+**Sam Parry** - Co-supervision<br>
 High-strain-rate testing of composite materials using image-based inertial methods.
 
 #### Colorado School of Mines
 
-**Andrew Matejunas** — Co-supervision with Dr Leslie Lamberson  
+**Andrew Matejunas** - Co-supervision with Dr Leslie Lamberson<br>
 High-strain-rate experimental methods for viscoelastic constitutive identification.
 
 ---
 
 ## Teaching & Academic Contributions
 
-### Visiting Lecturer — University of Sheffield
+### Visiting Lecturer - University of Sheffield
 **Materials Science & Engineering**  
-August 2024–present
+August 2024-present
 
 Develop and deliver teaching in fusion materials, structural integrity, engineering validation, verification, validation and uncertainty quantification, and experimental design.
 
 ### Current recurring teaching
 
 #### University of Liverpool
-**4th-Year Engineering — Structural Integrity**  
+**4th-Year Engineering - Structural Integrity**<br>
 One 2-hour invited lecture annually.
 
 #### University of Sheffield
@@ -342,7 +342,7 @@ One 2-hour lecture/workshop annually.
 
 All teaching material is developed independently.
 
-### Swansea University — Fusion Engineering MSc
+### Swansea University - Fusion Engineering MSc
 
 Currently developing a four-lecture sequence covering:
 
@@ -353,16 +353,16 @@ Currently developing a four-lecture sequence covering:
 
 ### Previous university teaching
 
-#### Lecturer in Aerostructures — University of Southampton
-2020–2021
+#### Lecturer in Aerostructures - University of Southampton
+2020-2021
 
 - Lecturer for second-year Structural Analysis, teaching approximately 400 mechanical and aerospace engineering students.
 - Developed a new laboratory format enabling individual interaction with experimental equipment under COVID restrictions.
 - Tutor in first-year engineering statics.
 - Supervised undergraduate and Master's research projects.
 
-#### Assistant Lecturer and Tutor — University of Adelaide
-2012–2015
+#### Assistant Lecturer and Tutor - University of Adelaide
+2012-2015
 
 **Lecturing:** Materials; Aerospace Structural Analysis and Design.
 
@@ -375,7 +375,7 @@ Student evaluation scores for Aerospace Structural Analysis and Design improved 
 ## Academic & Industrial Advisory Activities
 
 ### University of Sheffield
-**Industrial Advisory Board Member — Materials Engineering**
+**Industrial Advisory Board Member - Materials Engineering**
 
 Provide industrial input into curriculum development and alignment of undergraduate materials-engineering education with emerging engineering and research needs.
 
@@ -383,32 +383,32 @@ Provide industrial input into curriculum development and alignment of undergradu
 
 ## Research Funding & Fellowships
 
-### 2024–2028 — Principal Investigator
+### 2024-2028 - Principal Investigator
 **UKRI Future Leaders Fellowship**  
 *A Computer Aided Validation Framework for Digital Design Qualification*  
 UKRI: £1.6M  
 Matched UKAEA support: £1.6M  
 Combined programme: **£3.2M**  
-[UKRI Gateway to Research](https://gtr.ukri.org/projects?ref=MR%2FY015916%2F1) — MR/Y015916/1
+[UKRI Gateway to Research](https://gtr.ukri.org/projects?ref=MR%2FY015916%2F1) - MR/Y015916/1
 
-### 2023 — Principal Investigator
-**UKAEA Internal Funding — Technologies for Component Qualification**  
+### 2023 - Principal Investigator
+**UKAEA Internal Funding - Technologies for Component Qualification**<br>
 4.2 FTE staff resource plus £53k capital/consumables.
 
-### 2022 — Principal Investigator
-**UKAEA Internal Funding — Image-Based Component Validation of In-Vessel Components**  
+### 2022 - Principal Investigator
+**UKAEA Internal Funding - Image-Based Component Validation of In-Vessel Components**<br>
 2 FTE staff resource plus £20k capital/consumables.
 
-### 2019 — Principal Investigator
+### 2019 - Principal Investigator
 **EPSRC Vacation Bursary**  
 £3,000 stipend plus £300 consumables for an undergraduate research project.
 
-### 2018–2021 — Principal Investigator
+### 2018-2021 - Principal Investigator
 **Leverhulme Early Career Research Fellowship**  
 *Imaging Impact: Image-Based Methods for Dynamically Testing Bone*  
 £82k.
 
-### 2017–2019 — Co-Investigator
+### 2017-2019 - Co-Investigator
 **US Air Force Office of Scientific Research / EOARD**  
 *Novel photomechanics approaches to determine the intra- and inter-laminar properties of composites at high rates of strain*  
 US$125k.
@@ -443,11 +443,11 @@ Approximately **1 FTE/year of UKAEA staff effort** is additionally leveraged fro
 ## Selected Invited Lectures & Research Seminars
 
 ### 2026
-**Invited Research Seminar — Department of Engineering Science, University of Oxford**  
+**Invited Research Seminar - Department of Engineering Science, University of Oxford**<br>
 Invited by Dr Aaron Graham.
 
 ### 2025
-**Invited Presentation — Henry Royce Institute CDT Student Conference**
+**Invited Presentation - Henry Royce Institute CDT Student Conference**
 
 ### Recurring
 Invited teaching at the University of Sheffield, University of Liverpool, Fusion Power CDT and Fusion Engineering CDT.
@@ -481,14 +481,14 @@ L. Fletcher, J. Hirst and W. Bielajewa,
 
 A. Tayeb, L. Fletcher, M. Gorley, A. Harte and C. Hamelin,  
 **"Image-Based Deformation Measurements of Fusion Divertor Armour Under High Heat Flux Loading."**  
-*The Journal of Strain Analysis for Engineering Design*, **61**(4), 267–283, 2026.  
+*The Journal of Strain Analysis for Engineering Design*, **61**(4), 267-283, 2026.<br>
 [DOI: 10.1177/03093247251414309](https://doi.org/10.1177/03093247251414309)
 
 #### 2025
 
 L. Fletcher and F. Pierron,  
 **"Analysing the High Strain Rate Behaviour of Cortical Bone with the Image-Based Inertial Impact (IBII) Test."**  
-*Journal of Dynamic Behavior of Materials*, **11**, 562–583, 2025.  
+*Journal of Dynamic Behavior of Materials*, **11**, 562-583, 2025.<br>
 [DOI: 10.1007/s40870-025-00478-6](https://doi.org/10.1007/s40870-025-00478-6)
 
 ---
@@ -526,18 +526,18 @@ T. R. Barrett, M. Bamford, B. Chuilon, T. Deighan, P. Efthymiou, L. Fletcher, M.
 #### 2021
 
 L. Fletcher, F. Davis, S. Dreuilhe, A. Marek and F. Pierron,  
-**"High strain rate elasto-plasticity identification using the image-based inertial impact test (IBII) — Part 1: Error quantification."**  
+**"High strain rate elasto-plasticity identification using the image-based inertial impact test (IBII) - Part 1: Error quantification."**<br>
 *Strain*, **57**, e12374, 2021.  
 [DOI: 10.1111/str.12374](https://doi.org/10.1111/str.12374)
 
 L. Fletcher, F. Davis, S. Dreuilhe, A. Marek and F. Pierron,  
-**"High strain rate elasto-plasticity identification using the image-based inertial impact test (IBII) — Part 2: Experimental validation."**  
+**"High strain rate elasto-plasticity identification using the image-based inertial impact test (IBII) - Part 2: Experimental validation."**<br>
 *Strain*, **57**, e12375, 2021.  
 [DOI: 10.1111/str.12375](https://doi.org/10.1111/str.12375)
 
 S. Parry, L. Fletcher and F. Pierron,  
 **"The Off-Axis IBII Test for Composites."**  
-*Journal of Dynamic Behavior of Materials*, **7**, 127–155, 2021.  
+*Journal of Dynamic Behavior of Materials*, **7**, 127-155, 2021.<br>
 [DOI: 10.1007/s40870-020-00271-7](https://doi.org/10.1007/s40870-020-00271-7)
 
 J. Van Blitterswyk, L. Fletcher and F. Pierron,  
@@ -549,53 +549,53 @@ J. Van Blitterswyk, L. Fletcher and F. Pierron,
 
 J. Van Blitterswyk, L. Fletcher and F. Pierron,  
 **"Image-Based Inertial Impact Tests for Measuring the Interlaminar Shear Moduli of Composites."**  
-*Journal of Dynamic Behavior of Materials*, **6**, 373–398, 2020.  
+*Journal of Dynamic Behavior of Materials*, **6**, 373-398, 2020.<br>
 [DOI: 10.1007/s40870-020-00258-4](https://doi.org/10.1007/s40870-020-00258-4)
 
 L. Fletcher and F. Pierron,  
 **"The Image-Based Inertial Release (IBIR) Test: A New High Strain Rate Test for Stiffness Strain-Rate Sensitivity Identification."**  
-*Experimental Mechanics*, **60**, 493–508, 2020.  
+*Experimental Mechanics*, **60**, 493-508, 2020.<br>
 [DOI: 10.1007/s11340-019-00580-6](https://doi.org/10.1007/s11340-019-00580-6)
 
 T. Fourest, P. Bouda, L. Fletcher, D. Notta-Cuvier, E. Markiewicz, F. Pierron and B. Langrand,  
 **"Image-Based Inertial Impact Test for Characterisation of Strain Rate Dependency of Ti6Al4V Titanium Alloy."**  
-*Experimental Mechanics*, **60**, 235–248, 2020.  
+*Experimental Mechanics*, **60**, 235-248, 2020.<br>
 [DOI: 10.1007/s11340-019-00559-3](https://doi.org/10.1007/s11340-019-00559-3)
 
 #### 2019
 
 F. Pierron and L. Fletcher,  
-**"Generalized stress–strain curves for IBII tests on isotropic and orthotropic materials."**  
-*Journal of Dynamic Behavior of Materials*, **5**, 180–193, 2019.  
+**"Generalized stress-strain curves for IBII tests on isotropic and orthotropic materials."**<br>
+*Journal of Dynamic Behavior of Materials*, **5**, 180-193, 2019.<br>
 [DOI: 10.1007/s40870-019-00197-9](https://doi.org/10.1007/s40870-019-00197-9)
 
 L. Fletcher, J. Van-Blitterswyk and F. Pierron,  
 **"A novel image-based inertial impact test (IBII) for the transverse properties of composites at high strain rates."**  
-*Journal of Dynamic Behavior of Materials*, **5**, 65–92, 2019.  
+*Journal of Dynamic Behavior of Materials*, **5**, 65-92, 2019.<br>
 [DOI: 10.1007/s40870-019-00186-y](https://doi.org/10.1007/s40870-019-00186-y)
 
 #### 2018
 
 L. Fletcher and F. Pierron,  
 **"An image-based inertial impact (IBII) test for tungsten carbide cermets."**  
-*Journal of Dynamic Behavior of Materials*, **4**, 481–504, 2018.  
+*Journal of Dynamic Behavior of Materials*, **4**, 481-504, 2018.<br>
 [DOI: 10.1007/s40870-018-0172-4](https://doi.org/10.1007/s40870-018-0172-4)
 
 J. Van-Blitterswyk, L. Fletcher and F. Pierron,  
 **"Image-based inertial impact test for composite interlaminar tensile properties."**  
-*Journal of Dynamic Behavior of Materials*, **4**, 543–572, 2018.  
+*Journal of Dynamic Behavior of Materials*, **4**, 543-572, 2018.<br>
 [DOI: 10.1007/s40870-018-0175-1](https://doi.org/10.1007/s40870-018-0175-1)
 
 #### 2017
 
 J. Van-Blitterswyk, L. Fletcher and F. Pierron,  
 **"Characterisation of the Interlaminar Properties of Composites at High Strain Rates: A Review."**  
-*Advanced Experimental Mechanics*, **2**, 3–28, 2017.  
+*Advanced Experimental Mechanics*, **2**, 3-28, 2017.<br>
 [DOI: 10.11395/aem.2.0_3](https://doi.org/10.11395/aem.2.0_3)
 
 M. V. Nguyen, J. Codrington, L. Fletcher, C. W. Dreyer and W. J. Sampson,  
 **"Influence of cortical bone thickness on miniscrew microcrack formation."**  
-*American Journal of Orthodontics and Dentofacial Orthopedics*, **152**, 301–311, 2017.  
+*American Journal of Orthodontics and Dentofacial Orthopedics*, **152**, 301-311, 2017.<br>
 [DOI: 10.1016/j.ajodo.2016.12.028](https://doi.org/10.1016/j.ajodo.2016.12.028)
 
 M. V. Nguyen, J. Codrington, L. Fletcher, C. W. Dreyer and W. J. Sampson,  
@@ -607,7 +607,7 @@ M. V. Nguyen, J. Codrington, L. Fletcher, C. W. Dreyer and W. J. Sampson,
 
 L. Fletcher, J. Codrington and I. Parkinson,  
 **"Effects of fatigue induced damage on the longitudinal fracture resistance of cortical bone."**  
-*Journal of Materials Science: Materials in Medicine*, **25**, 1661–1670, 2014.  
+*Journal of Materials Science: Materials in Medicine*, **25**, 1661-1670, 2014.<br>
 [DOI: 10.1007/s10856-014-5213-5](https://doi.org/10.1007/s10856-014-5213-5)
 
 ---
@@ -619,11 +619,11 @@ L. Fletcher, J. Van-Blitterswyk and F. Pierron,
 University of Southampton, 2019.  
 [DOI: 10.5258/SOTON/P0015](https://doi.org/10.5258/SOTON/P0015)
 
-**[Pyvale](https://github.com/Computer-Aided-Validation-Laboratory/pyvale)** — open-source virtual engineering laboratory for simulation-driven experimental design and validation.
+**[Pyvale](https://github.com/Computer-Aided-Validation-Laboratory/pyvale)** - open-source virtual engineering laboratory for simulation-driven experimental design and validation.
 
-**[Pyvale DIC](https://github.com/Computer-Aided-Validation-Laboratory/pyvale)** — scalable open-source Digital Image Correlation implementation.
+**[Pyvale DIC](https://github.com/Computer-Aided-Validation-Laboratory/pyvale)** - scalable open-source Digital Image Correlation implementation.
 
-**[Riley](https://github.com/Computer-Aided-Validation-Laboratory/riley-raster)** — open-source high-performance scientific rasterisation and camera-simulation software.
+**[Riley](https://github.com/Computer-Aided-Validation-Laboratory/riley-raster)** - open-source high-performance scientific rasterisation and camera-simulation software.
 
 ---
 
@@ -631,7 +631,7 @@ University of Southampton, 2019.
 
 ### Lecturer in Aerostructures
 **University of Southampton**  
-July 2020–August 2021
+July 2020-August 2021
 
 - Research and teaching in structural mechanics and experimental mechanics.
 - Primary and co-supervision of doctoral and undergraduate researchers.
@@ -639,15 +639,15 @@ July 2020–August 2021
 
 ### Leverhulme Early Career Research Fellow
 **University of Southampton**  
-August 2018–September 2021
+August 2018-September 2021
 
 **Project:** *Imaging Impact: Image-Based Methods for Dynamically Testing Bone*
 
 Awarded an independent ~£82k fellowship developing image-based mechanical tests for identifying the dynamic properties of bone.
 
-### Research Fellow — PhotoDyn
+### Research Fellow - PhotoDyn
 **University of Southampton**  
-February 2016–August 2018
+February 2016-August 2018
 
 Developed new high-strain-rate materials-testing methods using ultra-high-speed imaging and inverse identification.
 
@@ -658,13 +658,13 @@ Developed new high-strain-rate materials-testing methods using ultra-high-speed 
 
 ### Visiting Scientist
 **Royal College of Surgeons in Ireland**  
-July–August 2015
+July-August 2015
 
 International collaborative project investigating fracture mechanisms in an ovine osteoporosis model.
 
 ### Research Assistant
 **University of Adelaide**  
-June–July 2015
+June-July 2015
 
 Experimental characterisation of a bio-adhesive derived from frog protein.
 
@@ -673,16 +673,16 @@ Experimental characterisation of a bio-adhesive derived from frog protein.
 ## Education
 
 ### Doctor of Philosophy
-**University of Adelaide — School of Mechanical Engineering**  
-2012–2015
+**University of Adelaide - School of Mechanical Engineering**<br>
+2012-2015
 
 **Thesis:** *Fatigue-Fracture Interaction Mechanisms in Cortical Bone*
 
 Experimental and numerical investigation of fatigue-induced degradation of cortical-bone fracture resistance and associated hierarchical toughening mechanisms.
 
-### Bachelor of Engineering — First Class Honours
+### Bachelor of Engineering - First Class Honours
 **Mechanical and Aerospace Engineering, University of Adelaide**  
-2008–2011
+2008-2011
 
 **Honours project:** *Contribution of the Organic and Inorganic Constituents to the Fracture Resistance of Cortical Bone*
 
@@ -690,7 +690,7 @@ Experimental and numerical investigation of fatigue-induced degradation of corti
 
 ## Professional Qualifications & Memberships
 
-**Chartered Engineer — CEng**  
-**Member of the Institution of Mechanical Engineers — MIMechE**
+**Chartered Engineer - CEng**<br>
+**Member of the Institution of Mechanical Engineers - MIMechE**
 
-**National Committee Member — British Society for Strain Measurement**
+**National Committee Member - British Society for Strain Measurement**

@@ -27,7 +27,7 @@ export const commonEnglish = {
   "候选人对比": "Candidate comparison",
   "对比中...": "Comparing...",
   "选择 2-3 名候选人后点击「开始对比」":
-    "Select 2–3 candidates, then click Compare",
+    "Select 2-3 candidates, then click Compare",
   "页面运行异常": "Page error",
   "页面渲染失败，请刷新后重试。":
     "The page could not be rendered. Refresh and try again.",
@@ -54,7 +54,7 @@ export const commonEnglish = {
   "候选人不存在。": "Candidate not found.",
   "候选人状态不合法。": "Invalid candidate status.",
   "请选择 2-3 名候选人进行对比。":
-    "Select 2–3 candidates to compare.",
+    "Select 2-3 candidates to compare.",
   "原始 PDF 文件不存在。": "The original PDF was not found.",
   "请提供候选人 ID 和至少一个岗位 ID。":
     "Provide a candidate ID and at least one job ID.",

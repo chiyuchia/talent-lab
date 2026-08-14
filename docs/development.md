@@ -31,6 +31,15 @@ SSE 事件流 (GET /api/uploads/:id/events)
 评分 (POST /api/scores) --> ScoreResult（关联 Candidate 与 JobDescription）
 ```
 
+职位机会链路：
+
+```text
+粘贴 JD (POST /api/jobs/parse) --> 结构化字段预览 --> 创建 / 更新 JobDescription
+                                                |
+                                                |-- 多版简历匹配 --> ScoreResult + 匹配洞察
+                                                `-- 状态变化 / 手工补录 --> ApplicationEvent 时间线
+```
+
 ## 2. 后端（backend/）
 
 ### 2.1 技术栈
@@ -65,7 +74,7 @@ SSE 事件流 (GET /api/uploads/:id/events)
 - **SSE 事件**：`uploads.py` 中的 `sse_event(event, data)` 统一序列化事件帧（`event:` + `data:` + 空行）。事件覆盖批次状态、单份简历进度、提取结果与错误等，前端 `ResumeStreamViewer` 逐步渲染。
 - **AI 模式**：`AI_MODE=mock` 时不调用外部 API，返回本地生成的结构，便于无 Key 开发与测试；`real` 模式按 `AI_PROVIDER` 路由到对应服务商（`OPENAI_BASE_URL` 支持任意 OpenAI 兼容端点）。
 - **生产校验**：`ENV=production` 时启动会强制校验 `APP_ACCESS_KEY` 与 `FLASK_SECRET_KEY`，缺失或仍为默认值会直接抛错。
-- **上传限制**：`MAX_CONTENT_LENGTH = 50MB`，仅接受 PDF，批量上限为 10 份。
+- **上传限制**：`MAX_CONTENT_LENGTH = 50MB`，仅接受 PDF，批量上限为 5 份。
 
 ### 2.4 本地开发
 
@@ -92,8 +101,9 @@ make backend-test   # 使用 backend/.venv 中的 pytest
 | 文件 | 覆盖范围 |
 |------|----------|
 | `test_auth.py` | 登录/登出/会话校验 |
-| `test_business_api.py` | 候选人、JD、评分等业务接口 |
+| `test_business_api.py` | 候选人、职位机会、申请事件与评分等业务接口 |
 | `test_ai_service.py` | AI 提取与评分逻辑（mock 模式） |
+| `test_schema_migrations.py` | 既有 SQLite 职位数据的幂等增量迁移 |
 
 新增接口或修改服务逻辑时应同步补测试，优先复用现有 fixture 与 mock 模式，避免在测试中发起真实网络请求。
 
@@ -113,19 +123,20 @@ make backend-test   # 使用 backend/.venv 中的 pytest
 
 | 目录 | 职责 |
 |------|------|
-| `src/app/router.tsx` | 路由定义，受保护页面包在 `ProtectedRoute` 内 |
+| `src/app/router.tsx` | 路由定义；页面按路由懒加载，受保护页面包在 `ProtectedRoute` 内 |
 | `src/pages/` | 页面：登录、仪表盘、上传、候选人列表/详情、对比、职位机会 |
 | `src/components/` | 共享组件：`AppShell`、`ResumeStreamViewer`、`CompareResultPanel`、状态徽标、空态、骨架屏等 |
 | `src/lib/api.ts` | 统一 API 客户端（fetch 封装、错误归一化、SSE 解析） |
 | `src/i18n/` | 国际化初始化与中英文翻译资源 |
 | `src/lib/query-client.ts` | TanStack Query 客户端配置 |
 | `src/lib/*-store.ts` | Zustand store（UI 状态、对比选择） |
-| `src/types/api.ts` | 与后端响应对齐的 TypeScript 类型 |
+| `src/types/api.ts`、`src/types/job.ts` | 与后端响应对齐的通用及职位领域 TypeScript 类型 |
 
 ### 3.3 关键约定
 
 - **数据获取走 TanStack Query**：不要在组件里裸用 `fetch`；mutation 后按需 `invalidateQueries`。
-- **UI 状态与服务器状态分离**：本地偏好（主题、视图模式）进 Zustand/localStorage，后端数据一律进 Query 缓存。
+- **UI 状态与服务器状态分离**：主题使用 Zustand/localStorage；语言、简历库视图模式及不同视图的分页大小保存在 localStorage；后端数据一律进 Query 缓存。
+- **路由加载**：页面组件使用 `React.lazy` 按路由拆包，并统一由 `RouteLoadingBoundary` 提供加载反馈。
 - **类型对齐**：接口字段变更时同时更新后端序列化器与 `src/types/api.ts`。
 - **登录态处理**：401 统一由 API 客户端归一化错误，配合 `ProtectedRoute` 跳转登录页；登录成功后立即刷新 session 缓存（见提交 `40ff0a2`）。
 - **SSE**：上传解析进度通过 `GET /api/uploads/:id/events` 订阅，组件需处理流中断与错误事件。
@@ -145,7 +156,7 @@ make frontend-install
 ```text
 Candidate (id, upload_batch_id, status, parse_status, pdf_path, created_at...)
   1:1  ResumeProfile (姓名、电话、邮箱、城市、教育、工作、技能、项目，JSON 字段)
-  1:n  ScoreResult  (overall_score, skill/experience/education 子分, ai_comment)
+  1:n  ScoreResult  (overall_score, skill/experience/education 子分, ai_comment, details)
 
 JobDescription (职位来源、raw_jd、结构化要求、薪酬、申请状态、submitted_resume_id)
   1:n  ScoreResult（同一职位可与多份简历匹配）
@@ -168,6 +179,7 @@ make backend-dev      # 后端开发服务器 :8000
 make frontend-install # 首次安装前端依赖
 make frontend-dev     # 前端开发服务器 :5173
 make backend-test     # 后端测试
+make check-badchars   # 检查禁用字符清单
 make compose-up       # Docker 构建并启动
 make compose-down     # 停止 Docker 服务
 ```
@@ -176,8 +188,8 @@ make compose-down     # 停止 Docker 服务
 
 - **前端**部署在 Cloudflare Pages，生产地址为 <https://talent-lab.440115.xyz/>；Pages 关联 `master` 分支，分支更新后自动构建并发布。
 - Cloudflare Pages 构建时通过 `VITE_API_BASE_URL` 指向生产后端 API；后端的 `FRONTEND_ORIGIN` 应设置为 `https://talent-lab.440115.xyz`，以允许携带 Cookie 的跨域请求。
-- **后端**通过 `deploy/docker-compose.yml` 部署；仓库中的容器内 Nginx 配置仍可用于完整的 Docker 自托管部署。
-- 宿主机反代参考 `deploy/nginx/nginx-host.conf.example` 与 `vps-backend.conf.example`，注意：
+- **后端**通过 `deploy/docker-compose.yml` 部署，默认仅绑定宿主机 `127.0.0.1:8000`；当前生产前端不由该 Compose 文件托管。
+- 宿主机后端反代参考 `deploy/nginx/vps-backend.conf.example`；`app.conf` 与 `nginx-host.conf.example` 属于早期同源自托管方案，当前 Compose 未启用对应前端服务。配置时注意：
   - SSE 必须 `proxy_buffering off`，并配置较长超时；
   - `client_max_body_size 50m` 支持批量上传；
   - 有域名时启用 HTTPS 并设 `SESSION_COOKIE_SECURE=true`。
@@ -187,6 +199,7 @@ make compose-down     # 停止 Docker 服务
 
 - **提交信息**：遵循 Conventional Commits，格式与示例见本文 §7.1。
 - **文件规模**：单个源码文件不超过 200 行，细则见本文 §7.2。
+- **字符兼容**：仓库文本不得包含约定的禁用字符，细则见本文 §7.3。
 - **后端**：遵循 PEP 8；业务逻辑下沉到 `services/`，蓝图保持薄层只做参数解析与响应。
 - **前端**：函数组件 + Hooks；共享逻辑放 `lib/` 或自定义 Hook；样式优先 Tailwind 原子类，避免散落行内样式。
 - **环境变量**：新增配置项需同步更新 README 环境变量表与部署示例文件；`.env` 一律不入库。
@@ -245,6 +258,14 @@ docs(readme): add deployment instructions
 
 - 当前全库达标（2026-08 完成存量重构）。
 - 工具落地为可选增强：前端可在 ESLint 配置 `max-lines: ["warn", { max: 200, skipBlankLines: true, skipComments: true }]`；后端可用 CI 脚本对 `backend/app/` 做 `wc -l` 检查。未配置前以 code review 人工把关。
+
+### 7.3 字符兼容性规范
+
+- 禁用字符集合以 [`vscode-highlight-bad-chars`](https://github.com/WengerK/vscode-highlight-bad-chars/blob/master/src/bad-characters.ts) 的 `bad-characters.ts` 为基线，本仓库在 `scripts/check_bad_chars.py` 中保存对应码点快照。
+- 清单覆盖 C0/C1 控制字符、特殊空白与零宽字符、Unicode 双向控制符、EN/EM DASH 及易混淆标点；普通制表符、换行符和回车符不在禁用范围内。
+- 界面文案和文档应根据语境改用 ASCII 连字符 `-`、普通空格、英文冒号 `:` 或中文冒号 `：`。
+- 输入解析器若需要兼容外部内容中的禁用字符，必须在源码中写成 Unicode 转义，不得写入字面量字符。
+- 提交前运行 `make check-badchars`；脚本会扫描已跟踪及未忽略的未跟踪文本，输出文件、行列、码点和字符名，并在发现问题时以非零状态退出。
 
 ## 8. 新增一个 API 的推荐流程
 

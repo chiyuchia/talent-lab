@@ -12,13 +12,13 @@ I enjoy turning designs and business requirements into **fast, responsive and us
 
 ## 🚀 What I Do
 
-* 🛍️ **Shopify Development** — Customization, Liquid, themes, product pages & eCommerce features
-* 🌐 **WordPress Development** — Custom websites, Elementor, themes, plugins & integrations
-* 💻 **Frontend Development** — HTML, CSS, JavaScript, Bootstrap & jQuery
-* ⚡ **Performance Optimization** — Page speed, Core Web Vitals & frontend optimization
-* 📈 **CRO & UX Improvements** — Improving user journeys and conversion-focused interfaces
-* 🔍 **SEO-Friendly Development** — Semantic HTML, responsive layouts & technical optimization
-* 🔧 **Website Maintenance** — Debugging, integrations, migrations & ongoing improvements
+* 🛍️ **Shopify Development** - Customization, Liquid, themes, product pages & eCommerce features
+* 🌐 **WordPress Development** - Custom websites, Elementor, themes, plugins & integrations
+* 💻 **Frontend Development** - HTML, CSS, JavaScript, Bootstrap & jQuery
+* ⚡ **Performance Optimization** - Page speed, Core Web Vitals & frontend optimization
+* 📈 **CRO & UX Improvements** - Improving user journeys and conversion-focused interfaces
+* 🔍 **SEO-Friendly Development** - Semantic HTML, responsive layouts & technical optimization
+* 🔧 **Website Maintenance** - Debugging, integrations, migrations & ongoing improvements
 
 ---
 
@@ -132,6 +132,6 @@ I'm especially interested in teams where I can contribute to real products, solv
 
 ---
 
-### 💡 *"Good interfaces don't just look better — they work better."*
+### 💡 *"Good interfaces don't just look better - they work better."*
 
 ⭐ If you find something useful in my repositories, feel free to explore, fork or connect with me.

@@ -106,9 +106,9 @@ class MockResumeExperienceMixin:
                 continue
             cleaned = self._remove_period(line, period)
             parts = [
-                part.strip(" -—–,，;；")
+                part.strip(" -\u2014\u2013,，;；")
                 for part in re.split(r"\s{2,}|[|｜]", cleaned)
-                if part.strip(" -—–,，;；")
+                if part.strip(" -\u2014\u2013,，;；")
             ]
             if parts:
                 candidate = parts[0]
@@ -130,7 +130,7 @@ class MockResumeExperienceMixin:
                 cleaned = cleaned.replace(company, "")
             match = title_pattern.search(cleaned)
             if match:
-                return match.group(1).strip(" -—–,，;；")[:80]
+                return match.group(1).strip(" -\u2014\u2013,，;；")[:80]
         return ""
 
     def _extract_summary(self, lines: list[str], ignored_values: list[str]) -> str:
@@ -140,7 +140,7 @@ class MockResumeExperienceMixin:
             for value in ignored_values:
                 if value:
                     cleaned = cleaned.replace(value, "")
-            cleaned = self._remove_period(cleaned, self._extract_period(cleaned)).strip(" -—–,，;；")
+            cleaned = self._remove_period(cleaned, self._extract_period(cleaned)).strip(" -\u2014\u2013,，;；")
             if cleaned:
                 details.append(cleaned)
         return "；".join(details[:4])[:300]
@@ -156,7 +156,7 @@ class MockResumeExperienceMixin:
     def _extract_project_name(self, lines: list[str]) -> str:
         for line in lines:
             cleaned = re.sub(r"^(?:项目名称|项目|project name|project)[:：\s]*", "", line, flags=re.IGNORECASE)
-            cleaned = self._remove_period(cleaned, self._extract_period(cleaned)).strip(" -—–,，;；")
+            cleaned = self._remove_period(cleaned, self._extract_period(cleaned)).strip(" -\u2014\u2013,，;；")
             if cleaned:
                 return cleaned[:80]
         return ""

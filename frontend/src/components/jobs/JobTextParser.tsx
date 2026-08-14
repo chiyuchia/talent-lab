@@ -51,7 +51,7 @@ const valueLabels: Record<string, string> = {
 };
 
 function previewValue(value: unknown, translate: (key: string) => string): string {
-  if (value === null || value === undefined || value === "") return "—";
+  if (value === null || value === undefined || value === "") return "-";
   const translateValue = (item: unknown) => {
     const text = typeof item === "object" && item
       ? (item as { name?: string }).name || JSON.stringify(item)
@@ -61,7 +61,7 @@ function previewValue(value: unknown, translate: (key: string) => string): strin
   const text = Array.isArray(value)
     ? value.map(translateValue).join("、")
     : typeof value === "object" ? JSON.stringify(value) : String(value);
-  if (!text) return "—";
+  if (!text) return "-";
   const display = translateValue(text);
   return display.length > 72 ? `${display.slice(0, 72)}…` : display;
 }

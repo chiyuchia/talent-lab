@@ -3,6 +3,7 @@
 > 调研日期：2026-08-12
 > 范围：`backend/`（Flask）、`frontend/`（React/Vite）、`deploy/` + 工程化配置
 > 说明：所有条目均已在代码中逐条核实，附文件与行号证据。优先级分高 / 中 / 低三档。
+> 后续进展：路由懒加载、Inter Latin 子集加载、候选人列表偏好持久化及上传数量文档对齐已于 2026-08-13 至 2026-08-14 完成；其余条目及行号以再次核查为准。
 
 ## 一、高优先级（正确性 / 数据安全问题）
 
@@ -42,7 +43,7 @@
 ### 7. 关键路径测试盲区
 
 - 后端：SSE 事件流 `upload_events`（`backend/app/blueprints/uploads.py:69-161`）是全后端最复杂、状态最多的接口，零测试；解析成功 / 失败 / 批次不存在 / 已完成重放等分支均无保障。候选人删除、状态更新、compare 正常路径、JD 更新 / 删除、`list_scores`、重复评分 upsert 分支（`scores.py:57-60`）、`_normalize_score` 与 `clamp_score` 边界均未覆盖。
-- 前端：全库无 `*.test.*` / `*.spec.*`，无 vitest/testing-library 依赖，`package.json` 无 test script。建议至少补 `lib/` 纯函数单测——`repairJson`/`parsePartialJson`（流式 JSON 修复逻辑复杂且无回归保护）、`format.ts`、两个 zustand store 均为低成本高价值目标。
+- 前端：全库无 `*.test.*` / `*.spec.*`，无 vitest/testing-library 依赖，`package.json` 无 test script。建议至少补 `lib/` 纯函数单测：`repairJson`/`parsePartialJson`（流式 JSON 修复逻辑复杂且无回归保护）、`format.ts`、两个 zustand store 均为低成本高价值目标。
 
 ## 二、中优先级
 
@@ -64,7 +65,7 @@
 
 - 每条 SSE 连接在整个解析期间独占一个线程（gunicorn 2 workers × 4 threads = 并发上限 8）；期间多次 `db.session.commit()`（`uploads.py:98,110,138,151`）持有 SQLite 写锁，并发上传时易触发 `database is locked`。
 - mock 流式分支里 `time.sleep(0.02)`（`ai_service.py:92-95`）阻塞 worker 线程，建议只在 debug 下启用。
-- 注：gunicorn `timeout = 120`（`gunicorn.conf.py:4`）当前**不会**掐断 SSE——配置了 `threads = 4`（gthread worker，心跳在主线程）。但若未来去掉 `threads`，此处会变成真问题；且与 nginx `proxy_read_timeout 300s` 数值不一致，建议对齐。
+- 注：gunicorn `timeout = 120`（`gunicorn.conf.py:4`）当前**不会**掐断 SSE：配置了 `threads = 4`（gthread worker，心跳在主线程）。但若未来去掉 `threads`，此处会变成真问题；且与 nginx `proxy_read_timeout 300s` 数值不一致，建议对齐。
 
 **4. 流式解析失败的兜底导致 AI 双倍调用**
 

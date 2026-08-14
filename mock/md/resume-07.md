@@ -16,8 +16,8 @@ Updated on Aug 10, 2026
 ### Current Appointment
 |                     |                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------- |
-| 01 Apr 2024–present | Professor, Faculty of Pharmacy, Kindai University                               |
-| 01 Apr 2024–present | Visiting Professor, Faculty of Pharmaceutical Sciences, Hokkaido University     |
+| 01 Apr 2024-present | Professor, Faculty of Pharmacy, Kindai University                               |
+| 01 Apr 2024-present | Visiting Professor, Faculty of Pharmaceutical Sciences, Hokkaido University     |
 
 ## 2. Education/Qualifications
 ### Degrees
@@ -39,42 +39,42 @@ Updated on Aug 10, 2026
 ## 3. Professional Appointments
 |           |                                                                                          |
 | --------- | ---------------------------------------------------------------------------------------- |
-| 2007–2008 | Research Assistant, National Institute of Physiological Sciences, Okazaki, Japan         |
-| 2009–2010 | Research Fellow, Japan Society for the Promotion of Science, Tokyo, Japan                |
-| 2010–2015 | Assistant Professor, School of Medicine, Tokyo Women’s Medical University, Tokyo, Japan  |
+| 2007-2008 | Research Assistant, National Institute of Physiological Sciences, Okazaki, Japan         |
+| 2009-2010 | Research Fellow, Japan Society for the Promotion of Science, Tokyo, Japan                |
+| 2010-2015 | Assistant Professor, School of Medicine, Tokyo Women’s Medical University, Tokyo, Japan  |
 | 2016      | Research Fellow, The Uehara Memorial Foundation, Japan                                   |
-| 2015–2020 | Research Assistant Professor, Faculty of Medicine, University of Szeged, Szeged, Hungary |
-| 2015–2020 | Visiting Lecturer, Hungarian Medical Universities                                        |
-| 2020–2021 | Specially-Appointed Lecturer, Osaka City University Graduate School of Medicine          |
-| 2018–2022 | Research Fellow, Graduate School of Pharmaceutical Sciences, Nagoya City University      |
-| 2021–2024 | Associated Professor, Faculty of Pharmaceutical Sciences, Hokkaido University            |
-| 2022–2024 | Visiting Research Fellow, National Institute for Quantum Science and Technology          |
+| 2015-2020 | Research Assistant Professor, Faculty of Medicine, University of Szeged, Szeged, Hungary |
+| 2015-2020 | Visiting Lecturer, Hungarian Medical Universities                                        |
+| 2020-2021 | Specially-Appointed Lecturer, Osaka City University Graduate School of Medicine          |
+| 2018-2022 | Research Fellow, Graduate School of Pharmaceutical Sciences, Nagoya City University      |
+| 2021-2024 | Associated Professor, Faculty of Pharmaceutical Sciences, Hokkaido University            |
+| 2022-2024 | Visiting Research Fellow, National Institute for Quantum Science and Technology          |
 
 ## 4. Other Appointments and Affiliations
 ### Professional Societies
 |              |                                             |
 | ------------ | ------------------------------------------- |
-| 2006–present | Japanese Pharmacological Society,	Member    |
-| 2008–present | The Japan Neuroscience Society,	Member      |
-| 2010–present | The Physiological Society of Japan,	Member  |
-| 2010–present | Society for Neuroscience,	Member            |
-| 2012–present | Japanese Neural Network Society,	Member     |
-| 2015–present | Asia Pacific Neural Network Society,	Member |
-| 2022–present | The Pharmaceutical Society of Japan, Member |
+| 2006-present | Japanese Pharmacological Society,	Member    |
+| 2008-present | The Japan Neuroscience Society,	Member      |
+| 2010-present | The Physiological Society of Japan,	Member  |
+| 2010-present | Society for Neuroscience,	Member            |
+| 2012-present | Japanese Neural Network Society,	Member     |
+| 2015-present | Asia Pacific Neural Network Society,	Member |
+| 2022-present | The Pharmaceutical Society of Japan, Member |
 
 ### Professional Bodies
 |                           |                                                                      |
 | ------------------------- | -------------------------------------------------------------------- |
-| 18 Mar 2020–present       | Board Member, The Physiological Society of Japan                     |
-| 20 Nov 2020–31 Dec 2021   | Guest Associate Editor, Frontiers in Behavioral Neuroscience         |
-| 20 Nov 2020–present       | Guest Associate Editor, Frontiers in Human Neuroscience              |
-| 15 Mar 2021–present       | Board Member, Japanese Pharmacological Society                       |
-| 01 Apr 2022–31 Mar 2024   | Board Member, The Pharmaceutical Society of Japan Hokkaido Branch    |
-| 05 May 2023–present       | Review Editor, Frontiers in Behavioral Neuroscience                  |
-| 19 Nov 2023–present       | Mentor, IUPS International Mentoring Program                         |
-| 10 May 2024–present       | Committee Member, The Pharmaceutical Society of Japan Kainsai Branch |
-| 07 Oct 2025–present       | Guest Associate Editor, Frontiers in Neurology                       |
-| 19 Jan 2026–present       | Board Member, The Japan Neuroscience Society                         |
+| 18 Mar 2020-present       | Board Member, The Physiological Society of Japan                     |
+| 20 Nov 2020-31 Dec 2021   | Guest Associate Editor, Frontiers in Behavioral Neuroscience         |
+| 20 Nov 2020-present       | Guest Associate Editor, Frontiers in Human Neuroscience              |
+| 15 Mar 2021-present       | Board Member, Japanese Pharmacological Society                       |
+| 01 Apr 2022-31 Mar 2024   | Board Member, The Pharmaceutical Society of Japan Hokkaido Branch    |
+| 05 May 2023-present       | Review Editor, Frontiers in Behavioral Neuroscience                  |
+| 19 Nov 2023-present       | Mentor, IUPS International Mentoring Program                         |
+| 10 May 2024-present       | Committee Member, The Pharmaceutical Society of Japan Kainsai Branch |
+| 07 Oct 2025-present       | Guest Associate Editor, Frontiers in Neurology                       |
+| 19 Jan 2026-present       | Board Member, The Japan Neuroscience Society                         |
 
 ## 5. Prizes, Awards and other Honors
 |      |                                                                                                                                                     |
@@ -116,7 +116,7 @@ Updated on Aug 10, 2026
 17. Narushima M, Yagasaki Y, <ins>Takeuchi Y</ins>, Aiba A, Miyata M, The metabotropic glutamate receptor subtype 1 regulates development and maintenance of lemniscal synaptic connectivity in the somatosensory thalamus. **_PLoS ONE_** 14 (12): e0226820. 27 Dec 2019. DOI: https://doi.org/10.1371/journal.pone.0226820
 18. Nagumo Y, Ueta Y, Nakayama H, Osaki H, <ins>Takeuchi Y</ins>, Uesaka N, Kano M, Miyata M, Tonic GABAergic inhibition is essential for nerve injury-induced afferent remodeling in the somatosensory thalamus and associated ectopic sensations. **_Cell Rep_** 31 (12): 107797. 23 Jun 2020. DOI: https://doi.org/10.1016/j.celrep.2020.107797
 19. Yasunaga H, Takagi T, Shinko D, Nakayama Y, <ins>Takeuchi Y</ins>, Nishikawa A, Loesing A, Ohsawa M, Sekiguchi H, Development of a neural probe integrated with high-efficiency MicroLEDs for in vivo application. **_Jpn J Appl Phys_** 60 (1): 016503. 16 Dec 2020. DOI: https://doi.org/10.35848/1347-4065/abcffa
-20. <ins>Takeuchi Y</ins>, Harangozó M, Pedraza L, Földi T, Kozák G, Li Q, Berényi A, Closed-loop stimulation of the medial septum terminates epileptic seizures. **_Brain_** 144 (3): 885–908. 27 Jan 2021. DOI: https://doi.org/10.1093/brain/awaa450
+20. <ins>Takeuchi Y</ins>, Harangozó M, Pedraza L, Földi T, Kozák G, Li Q, Berényi A, Closed-loop stimulation of the medial septum terminates epileptic seizures. **_Brain_** 144 (3): 885-908. 27 Jan 2021. DOI: https://doi.org/10.1093/brain/awaa450
 21. Robinson KC, Kemeny LV, Fell GL, Hermann AL, Allouche J, Ding W, Yekkirala A, Hsiao JJ, Su MY, Theodosakis N, Kozák G, <ins>Takeuchi Y</ins>, Shen S, Berényi A, Mao J, Woolf CJ, Fisher DE, Reduced MC4R signaling alters nociceptive thresholds associated with red hair. **_Sci Adv_** 7 (14): eabd1310. 02 Apr 2021. DOI: https://doi.org/10.1126/sciadv.abd1310
 22. Li Q†, <ins>Takeuchi Y</ins>†, Wang J, Gellért L, Barcsai L, Pedraza LK, Nagy AJ, Kozák G, Nakai S, Kato S, Kobayashi K, Ohsawa M, Horváth G, Kékesi G, Lőrincz ML, Devinsky O, Buzsáki G, Berényi A, Reinstating olfactory bulb derived limbic gamma oscillations alleviates depression-like behavioral deficits in rodents. **_Neuron_** 111: 2065-2075. 05 Jul 2023. DOI: https://doi.org/10.1016/j.neuron.2023.04.013
 23. Sierra RO†, Pedraza LK†, Barcsai L, Peijin A, Li Q, Kozák G, <ins>Takeuchi Y</ins>, Nagy AJ, Lőrincz ML, Devinsky O, Buzsáki G, Berényi A, Closed-loop brain stimulation augments fear extinction in male rats, **_Nat Commun_** 14: 3972. 05 Jul 2023. DOI: https://doi.org/10.1038/s41467-023-39546-7
@@ -124,7 +124,7 @@ Updated on Aug 10, 2026
 
 ### Review
 1. Tanabe M, Takasu K, <ins>Takeuchi Y</ins>, Ono H, Pain relief by gabapentin and pregabalin via supraspinal mechanisms after peripheral nerve injury. **_J Neurosci Res_** 86 (15): 3258-3264. 15 Nov 2008. DOI: https://doi.org/10.1002/jnr.21786
-1. <ins>Takeuchi Y</ins>\* and Berényi A\*, Oscillotherapeutics – Time-targeted interventions in epilepsy and beyond. **_Neurosci Res_** 152: 87-107. 16 Jan 2020. DOI: https://doi.org/10.1016/j.neures.2020.01.002
+1. <ins>Takeuchi Y</ins>\* and Berényi A\*, Oscillotherapeutics - Time-targeted interventions in epilepsy and beyond. **_Neurosci Res_** 152: 87-107. 16 Jan 2020. DOI: https://doi.org/10.1016/j.neures.2020.01.002
 1. <ins>Takeuchi Y</ins>\*, Nagy AJ, Barcsai L, Li Q, Ohsawa M, Mizuseki K, Berényi A\*, The medial septum as a potential target for treating brain disorders associated with oscillopathies. **_Front Neural Circuits_** 15: 701080. 08 Jul 2021. DOI: https://doi.org/10.3389/fncir.2021.701080
 
 ### Conference paper (International)
@@ -136,7 +136,7 @@ Updated on Aug 10, 2026
 1. Suzuki N, Sawahata H, Akai D, Yamashita K, Numano R, Koida K, <ins>Takeuchi Y</ins>, Kawano T, Design and fabrication of an oscillator circuit for ultrasound neuromodulation. **_Future Technologies from Kumamoto 2023_**. 7P2-PS-25. 07 Nov 2023.
 
 ### Editorial
-1. <ins>Takeuchi Y</ins>\*, Li Q, Kawano T, Nagai J, Mima T, Editorial: Oscillotherapeutics – Toward real-time control of pathological oscillations in the brain. **_Front Behav Neurosci_** 16: 1021616. 08 Sep 2022. DOI: https://doi.org/10.3389/fnbeh.2022.1021616
+1. <ins>Takeuchi Y</ins>\*, Li Q, Kawano T, Nagai J, Mima T, Editorial: Oscillotherapeutics - Toward real-time control of pathological oscillations in the brain. **_Front Behav Neurosci_** 16: 1021616. 08 Sep 2022. DOI: https://doi.org/10.3389/fnbeh.2022.1021616
 
 ### Thesis for Doctoral Degree
 - <ins>Takeuchi Y</ins>, Developmental and peripheral nerve injury-induced changes of afferent synapses in the somatosensory thalamus. The Graduate University for Advanced Studies, Kanagawa, Japan. 24 Mar 2010.
@@ -151,7 +151,7 @@ Updated on Aug 10, 2026
 1. <ins>Takeuchi Y</ins>, Annual report of research project, Hyper-Adaptability Area 2022 Annual report, A05-1, 2023.
 1. <ins>Takeuchi Y</ins>, Closed-loop control of epilepsy with transcranial ultrasound irradiation, Tateisi Foundation Annual report 32: 2221019, 2023.
 1. <ins>Takeuchi Y</ins>, Development of a non-invasive and spatiotemporally-specific in vivo gene transfection technology, Noastec Foundation  Research Report 2023: 7, 2023.
-1. <ins>Takeuchi Y</ins>, An international collaboration research for clinical application of a novel therapeutic technology of epilepsy, The Nagai Foundation Tokyo Annual Report 29: 6–8, 2023.
+1. <ins>Takeuchi Y</ins>, An international collaboration research for clinical application of a novel therapeutic technology of epilepsy, The Nagai Foundation Tokyo Annual Report 29: 6-8, 2023.
 
 ### Recent Preprints
 1. Ishimoto T, Abe T, Nakamura Y, Tsuyama T, Kondoh K, Kajitani N, Yoshida K, <ins>Takeuchi Y</ins>, Kato KX, Xu S, Koduki M, Ichimura M, Itoi T, Shimba K, Yamaguchi Y, Minami M, Koike S, Kasai K, Ye JJ, Takebayashi M, Yamagata K, Toda C, Chronic social defeat causes dysregulation of systemic glucose metabolism via the cerebellar fastigial nucleus. **_bioRxiv_** 2025.02.18.638938. DOI: https://doi.org/10.1101/2025.02.18.638938
@@ -172,7 +172,7 @@ Updated on Aug 10, 2026
 
 ### Scientific Essays
 1.	<ins>Takeuchi Y</ins> (2013) Report of the 36th Annual Meeting of Japanese Neuroscience Society. Neuroscience News of the Japan Neuroscience Society 195: 10. (Japanese)
-1.	<ins>Takeuchi Y</ins> (2015) Exciting scientific experience. J Physiol Soc Japan 77: 6–7. (Invited, Japanese)
+1.	<ins>Takeuchi Y</ins> (2015) Exciting scientific experience. J Physiol Soc Japan 77: 6-7. (Invited, Japanese)
 
 ### Dataset Repositories
 1.	<ins>Takeuchi Y</ins> (2017) Three-dimensional dendritic morphology of somatosensory thalamic neurons in developing mice: Takeuchi Archive. NeuroMorpho.org. URL: http://www.neuromorpho.org/bylab.jsp (Invited)
@@ -207,61 +207,61 @@ https://doi.org/10.6084/m9.figshare.6160181
 
 ## Grants Received
 ### KAKENHI
-1.	Afferent-input-dependent thalamic circuit plasticity. JSPS, KAKENHI: Grant-in-Aid for JSPS Fellows (Grant no. 09J00032), Role: PI, Period: 2009–2010, Total cost: 700,000 JPY
-1.	Electrophysiological and neuroanatomical analyses of peripheral nerve transection-induced multiple-innervation of lemniscal fibers in the somatosensory thalamus of mice. JSPS KAKENHI: Grant-in-Aid for Research Activity Start-up (Grant no. 22800063), Role: PI, Duration: 2010–2012, Total cost: 2,535,000 JPY
-1.	Molecular mechanisms underlying development and maintenance of thalamic remodeling after peripheral nerve injury. JSPS, KAKENHI: Grant-in-Aid for Young Scientists (B) (Grant no. 25870757), Role: PI, Period: 2013–2016, Total cost: 4,290,000 JPY
-1.	Real-time closed-loop interventions of epileptic seizures by non-invasive deep brain stimulation. JSPS, KAKENHI: Fostering Joint International Research (B) (Grant no. 18KK0236), Role: PI, Period: 2018–2022, Total cost: 179,40,000 JPY
-1.	Development of a quantification method of seizure susceptibility using brain-wide electrical spatiotemporal dynamics. JSPS, KAKENHI: Grant-in-Aid for Scientific Research (B) (Grant no. 19H03550), Role: PI, Period: 2019–2024, Total cost: 17,160,000 JPY
-1.	Revealing neuronal network dynamics underlying behavioral phenotypes of psychiatric disorders by solving inverse problems. MEXT, KAKENHI: Grant-in-Aid for Scientific Research on Innovative Areas (Grant no. 19H05224), Role: PI, Period: 2019–2021, Total cost: 5,720,000 JPY
-1. JSPS, KAKENHI: Grant-in-Aid for Challenging Research (Exploratory) (Grant no. 21K19745), Role: Co-Investigator, Period: 2021–2023, Total cost: 195,000 JPY
-1. A closed-loop brain stimulation for reinforcing hyper-adaptability. MEXT, KAKENHI: Grant-in-Aid for Scientific Research on Innovative Areas (Grant no. 22H04762), Role: PI, Period: 2022–2024, Total cost: 5,980,000 JPY
-1. JSPS, KAKENHI: Grant-in-Aid for Challenging Research (Exploratory) (Grant no. 22K18650), Role: Co-Investigator, Period: 2022–2024, Total cost: 520,000 JPY
-1. JSPS, KAKENHI: Grant-in-Aid for Scientific Research (A) (Grant no. 23H00459), Role: Co-Investigator, Period: 2023–2027, Total cost: 1,210,000 JPY
-1. Deletion of seizure susceptibility via transcranial deep brain stimulation. JSPS, KAKENHI: Grant-in-Aid for Scientific Research (B) (Grant no. 23K27481), Role: PI, Period: 2023–2027, Total cost: 18,590,000 JPY
-1. Development of transcranial gene manipulation technologies. JSPS, KAKENHI: Grant-in-Aid for Challenging Research (Exploratory) (Grant no. 23K18250), Role: PI, Period: 2023–2026, Total cost: 6,370,000 JPY
-1. A method for elucidating a subset genes that enable hibernation-like hypometabolic states. MEXT, KAKENHI: Grant-in-Aid for Transformative Research Areas (A) (Grant no. 24H01999), Role: PI, Period: 2024–2026, Total cost: 10,920,000 JPY
-1. Identification of the mechanism of chronic pain focusing on oscillatory brain activity and its application to the development of chronic pain relief therapy. JSPS, KAKENHI: Grant-in-Aid for Scientific Research (B) (Grant no. 24K02786), Role: Co-Investigator, Period: 2024–2028, Total cost: 1,274,000 JPY
+1.	Afferent-input-dependent thalamic circuit plasticity. JSPS, KAKENHI: Grant-in-Aid for JSPS Fellows (Grant no. 09J00032), Role: PI, Period: 2009-2010, Total cost: 700,000 JPY
+1.	Electrophysiological and neuroanatomical analyses of peripheral nerve transection-induced multiple-innervation of lemniscal fibers in the somatosensory thalamus of mice. JSPS KAKENHI: Grant-in-Aid for Research Activity Start-up (Grant no. 22800063), Role: PI, Duration: 2010-2012, Total cost: 2,535,000 JPY
+1.	Molecular mechanisms underlying development and maintenance of thalamic remodeling after peripheral nerve injury. JSPS, KAKENHI: Grant-in-Aid for Young Scientists (B) (Grant no. 25870757), Role: PI, Period: 2013-2016, Total cost: 4,290,000 JPY
+1.	Real-time closed-loop interventions of epileptic seizures by non-invasive deep brain stimulation. JSPS, KAKENHI: Fostering Joint International Research (B) (Grant no. 18KK0236), Role: PI, Period: 2018-2022, Total cost: 179,40,000 JPY
+1.	Development of a quantification method of seizure susceptibility using brain-wide electrical spatiotemporal dynamics. JSPS, KAKENHI: Grant-in-Aid for Scientific Research (B) (Grant no. 19H03550), Role: PI, Period: 2019-2024, Total cost: 17,160,000 JPY
+1.	Revealing neuronal network dynamics underlying behavioral phenotypes of psychiatric disorders by solving inverse problems. MEXT, KAKENHI: Grant-in-Aid for Scientific Research on Innovative Areas (Grant no. 19H05224), Role: PI, Period: 2019-2021, Total cost: 5,720,000 JPY
+1. JSPS, KAKENHI: Grant-in-Aid for Challenging Research (Exploratory) (Grant no. 21K19745), Role: Co-Investigator, Period: 2021-2023, Total cost: 195,000 JPY
+1. A closed-loop brain stimulation for reinforcing hyper-adaptability. MEXT, KAKENHI: Grant-in-Aid for Scientific Research on Innovative Areas (Grant no. 22H04762), Role: PI, Period: 2022-2024, Total cost: 5,980,000 JPY
+1. JSPS, KAKENHI: Grant-in-Aid for Challenging Research (Exploratory) (Grant no. 22K18650), Role: Co-Investigator, Period: 2022-2024, Total cost: 520,000 JPY
+1. JSPS, KAKENHI: Grant-in-Aid for Scientific Research (A) (Grant no. 23H00459), Role: Co-Investigator, Period: 2023-2027, Total cost: 1,210,000 JPY
+1. Deletion of seizure susceptibility via transcranial deep brain stimulation. JSPS, KAKENHI: Grant-in-Aid for Scientific Research (B) (Grant no. 23K27481), Role: PI, Period: 2023-2027, Total cost: 18,590,000 JPY
+1. Development of transcranial gene manipulation technologies. JSPS, KAKENHI: Grant-in-Aid for Challenging Research (Exploratory) (Grant no. 23K18250), Role: PI, Period: 2023-2026, Total cost: 6,370,000 JPY
+1. A method for elucidating a subset genes that enable hibernation-like hypometabolic states. MEXT, KAKENHI: Grant-in-Aid for Transformative Research Areas (A) (Grant no. 24H01999), Role: PI, Period: 2024-2026, Total cost: 10,920,000 JPY
+1. Identification of the mechanism of chronic pain focusing on oscillatory brain activity and its application to the development of chronic pain relief therapy. JSPS, KAKENHI: Grant-in-Aid for Scientific Research (B) (Grant no. 24K02786), Role: Co-Investigator, Period: 2024-2028, Total cost: 1,274,000 JPY
 
 ### Contract Researches
-1. Moonshot Goal 7. Japan Agency for Medical Research and Development, Moonshot Research and Development Program, Role: Co-Investigator, Period: 2021–2026, Total cost: 37,700,000 JPY
-1. Non-invasive, spatiotemporal control of internal organs via sonogenetic stimulation of the autonomic nervous system, AMED Prime, Role: PI, Period: 2022–2026, Total cost: 52,000,000 JPY
+1. Moonshot Goal 7. Japan Agency for Medical Research and Development, Moonshot Research and Development Program, Role: Co-Investigator, Period: 2021-2026, Total cost: 37,700,000 JPY
+1. Non-invasive, spatiotemporal control of internal organs via sonogenetic stimulation of the autonomic nervous system, AMED Prime, Role: PI, Period: 2022-2026, Total cost: 52,000,000 JPY
 
 ### Research Foundation and Other Competitive Research Funds
-1.	Functional and neuroanatomical analyses of afferent fiber remodeling in the thalamus after peri3heral nerve injury. Narishige Neuroscience Research Foundation, Research Award, Role: PI, Period: 2012–2013, Total cost: 300,000 JPY
-1.	Membrane properties underlying abnormal thalamic firing after deafferentation. Casio Science Promotion Foundation: Research Grant, Role: PI, Period: 2012–2013, Total cost: 1,000,000 JPY
-1.	GluA2 glutamate receptor subunit as a target of phantom pain gene therapy. Terumo Life Science Foundation: Medical and Health Enhancement Program Subsidy, Role: PI, Period: 2012–2013, Total cost: 1,000,000 JPY
-1.	Genetic visualization of central circuitry rewiring after peripheral nerve injury. The Promotion and Mutual Aid Corporation for Private School of Japan: The Science Research Promotion Fund, Role: PI, Period: 2013–2014, Total cost: 500,000 JPY
+1.	Functional and neuroanatomical analyses of afferent fiber remodeling in the thalamus after peri3heral nerve injury. Narishige Neuroscience Research Foundation, Research Award, Role: PI, Period: 2012-2013, Total cost: 300,000 JPY
+1.	Membrane properties underlying abnormal thalamic firing after deafferentation. Casio Science Promotion Foundation: Research Grant, Role: PI, Period: 2012-2013, Total cost: 1,000,000 JPY
+1.	GluA2 glutamate receptor subunit as a target of phantom pain gene therapy. Terumo Life Science Foundation: Medical and Health Enhancement Program Subsidy, Role: PI, Period: 2012-2013, Total cost: 1,000,000 JPY
+1.	Genetic visualization of central circuitry rewiring after peripheral nerve injury. The Promotion and Mutual Aid Corporation for Private School of Japan: The Science Research Promotion Fund, Role: PI, Period: 2013-2014, Total cost: 500,000 JPY
 1.	Development of a new therapeutic approach for epileptic seizures by transcranial electrical stimulation. The Uehara Memorial Foundation, Research Fellowship, Role: PI, Period: 2016, Total cost: 3,600,000 JPY
-1.	Real-time closed-loop interventions of epileptic seizures by non-invasive deep brain stimulation. The Kanae Foundation for the Promotion of Medical Science, Foreign Study Grants, Role: PI, Period: 2019–2020, Total cost: 1,000,000 JPY
-1.	On-demand transcranial interventions of epileptic seizures. Life Science Foundation, Research Grant, Role: PI, Period: 2019–2020, Total cost: 1,000,000 JPY
+1.	Real-time closed-loop interventions of epileptic seizures by non-invasive deep brain stimulation. The Kanae Foundation for the Promotion of Medical Science, Foreign Study Grants, Role: PI, Period: 2019-2020, Total cost: 1,000,000 JPY
+1.	On-demand transcranial interventions of epileptic seizures. Life Science Foundation, Research Grant, Role: PI, Period: 2019-2020, Total cost: 1,000,000 JPY
 1. Development of a quantification method of seizure susceptibility using brain-wide electrical spatiotemporal dynamics. Japanese Neural Network Society, Research Grant, Role: PI, Period: 2021, Total cost: 300,000 JPY
 1. Identification and regulation of pathological brain activity patterns that govern impulsive/compulsive decision-making. Osaka City, OCU 'Think globally, act locally', Role: PI, Period: 2021-2022, Total cost: 1,000,000 JPY
 1. On-demand intervention of brain activities for controlling epilepsy. Takeda Science Foundation. Role: PI, Total cost: 2,000,000 JPY
-1. An international collaboration research for clinical application of a novel therapeutic technology of epilepsy. The Nagai Foundation of Tokyo: Research Grant, Role: PI, Period: 2022–2023, Total cost: 500,000 JPY
-1. Closed-loop control of epilepsy via transcranial focused ultrasound stimulation. Tateisi Science and Technology Foundation: Research Grant (A), Role: PI, Period: 2022–2023, Total cost: 1,920,000 JPY
-1. Development of a novel non-invasive brain stimulation technology with ultrasound and genetic engineering. The Asahi Glass Foundation: Research Encouragement Grants, Role: PI, Period: 2022–2024, Total cost: 2,000,000 JPY
-1. An exploratory research of on-demand sonogenetic brain stimulation technology. Takahashi Industrial and Economic Research Foundation: Research Grant, Role: PI, Period: 2022–2023, Total cost: 6,000,000 JPY
-1. A control technology of a brain activity pattern of impulsive and compulsive decision-making. Nishinomiya Basic Research Fund, Japan, Role: PI, Period: 2022–2023, Total cost: 500,000 JPY
-1. Development of a non-invasive and spatiotemporally-specific in vivo gene transfection technology. Noastec Foundation, Noas Talent Grant, Role: PI, Period: 2022–2023, Total cost: 400,000 JPY
-1. Non-invasive and voluntary manipulation of cardiac functions. Hokkaido University Creative Research Institution: Support System for the Collaborative Research of Next-Generation Researchers, Role: PI, Period: 2022–2023, Total cost: 500,000 JPY
-1. Development of transcranial gene manipulation technologies. Hokkaido University Cross-Departmental Symposium: Research Grant, Role: PI, Period: 2022–2023, Total cost: 500,000 JPY
-1. Real-time control of epileptic seizures via a brain–computer–ultrasound closed-loop. Casio Science Promotion Foundation: Research Grant, Role: PI, Period: 2022–2023, Total cost: 1,000,000 JPY
-1. Development of a novel technology for deletion of seizure susceptibility of epilepsy. Shimadzu Science Foundation: Research Grant, Role: PI, Period: 2023–2025, Total cost: 1,000,000 JPY
-1. Deletion of seizure susceptibility via transcranial deep brain stimulation. Brain Science Foundation: Research Grant, Role: PI, Period: 2023–2024, Total cost: 1,000,000 JPY
+1. An international collaboration research for clinical application of a novel therapeutic technology of epilepsy. The Nagai Foundation of Tokyo: Research Grant, Role: PI, Period: 2022-2023, Total cost: 500,000 JPY
+1. Closed-loop control of epilepsy via transcranial focused ultrasound stimulation. Tateisi Science and Technology Foundation: Research Grant (A), Role: PI, Period: 2022-2023, Total cost: 1,920,000 JPY
+1. Development of a novel non-invasive brain stimulation technology with ultrasound and genetic engineering. The Asahi Glass Foundation: Research Encouragement Grants, Role: PI, Period: 2022-2024, Total cost: 2,000,000 JPY
+1. An exploratory research of on-demand sonogenetic brain stimulation technology. Takahashi Industrial and Economic Research Foundation: Research Grant, Role: PI, Period: 2022-2023, Total cost: 6,000,000 JPY
+1. A control technology of a brain activity pattern of impulsive and compulsive decision-making. Nishinomiya Basic Research Fund, Japan, Role: PI, Period: 2022-2023, Total cost: 500,000 JPY
+1. Development of a non-invasive and spatiotemporally-specific in vivo gene transfection technology. Noastec Foundation, Noas Talent Grant, Role: PI, Period: 2022-2023, Total cost: 400,000 JPY
+1. Non-invasive and voluntary manipulation of cardiac functions. Hokkaido University Creative Research Institution: Support System for the Collaborative Research of Next-Generation Researchers, Role: PI, Period: 2022-2023, Total cost: 500,000 JPY
+1. Development of transcranial gene manipulation technologies. Hokkaido University Cross-Departmental Symposium: Research Grant, Role: PI, Period: 2022-2023, Total cost: 500,000 JPY
+1. Real-time control of epileptic seizures via a brain-computer-ultrasound closed-loop. Casio Science Promotion Foundation: Research Grant, Role: PI, Period: 2022-2023, Total cost: 1,000,000 JPY
+1. Development of a novel technology for deletion of seizure susceptibility of epilepsy. Shimadzu Science Foundation: Research Grant, Role: PI, Period: 2023-2025, Total cost: 1,000,000 JPY
+1. Deletion of seizure susceptibility via transcranial deep brain stimulation. Brain Science Foundation: Research Grant, Role: PI, Period: 2023-2024, Total cost: 1,000,000 JPY
 1. Deletion of seizure susceptibility with ultrasound neuromodulation. The Japan Epilepsy Research Foundation: Research Grant, Role: PI, Period: 2023-2026, Total cost: 1,600,000 JPY
-1. On-demand induction of a torpor-like hypometabolic state by transcranial ultrasound irradiation. Hokkaido University Cross-Departmental Symposium: Research Grant, Role: PI, Period: 2023–2024, Total cost: 500,000 JPY
-1. Real-time control of brain disorders via a brain–computer–ultrasound closed-loop. Casio Science Promotion Foundation: Research Grant, Role: PI, Period: 2023–2024, Total cost: 1,000,000 JPY
-1. Control of epilepsy with transcranial deep brain stimulation technologies. Suzuken Memorial Foudation: Research Grant, Role: PI, Period: 2023–2024, Total cost: 2,000,000 JPY
-1. Development of a transcranial deep brain stimulation technology for depression control. SENSHIN Medical Research Foundation: Research Grant, Role: PI, Period: 2023–2024, Total cost: 1,000,000 JPY
-1. Control of depression with transcranial deep brain stimulation technologies. The Suhara Memorial Foundation: Research Grant, Role: PI, Period: 2024–2025, Total cost: 1,500,000 JPY
-1. Control of depression with transcranial deep brain stimulation technologies. Astellas Foundation for Research on Metabolic Disorders: Research Grant, Role: PI, Period: 2024–2026, Total cost: 2,000,000 JPY
-1. Recovery of hedonia associated with food intake via transcranial deep brain stimulation. Lotte Foundation: Research Grant, Role: PI, Period: 2024–2027, Total cost: 3,000,000 JPY
-1. Deletion of seizure susceptibility via transcranial deep brain stimulation. Ono Pharmaceutical Foundation for Oncology, Immunology, and Neurology: Research Grant, Role: PI, Period: 2024–2027, Total cost: 30,000,000 JPY
-1. A radical epilepsy treatment with a novel transcranial deep brain stimulation technology. The Uehara Memorial Foundation, Role: PI, Period: 2024–2026, Total cost: 4,000,000 JPY
+1. On-demand induction of a torpor-like hypometabolic state by transcranial ultrasound irradiation. Hokkaido University Cross-Departmental Symposium: Research Grant, Role: PI, Period: 2023-2024, Total cost: 500,000 JPY
+1. Real-time control of brain disorders via a brain-computer-ultrasound closed-loop. Casio Science Promotion Foundation: Research Grant, Role: PI, Period: 2023-2024, Total cost: 1,000,000 JPY
+1. Control of epilepsy with transcranial deep brain stimulation technologies. Suzuken Memorial Foudation: Research Grant, Role: PI, Period: 2023-2024, Total cost: 2,000,000 JPY
+1. Development of a transcranial deep brain stimulation technology for depression control. SENSHIN Medical Research Foundation: Research Grant, Role: PI, Period: 2023-2024, Total cost: 1,000,000 JPY
+1. Control of depression with transcranial deep brain stimulation technologies. The Suhara Memorial Foundation: Research Grant, Role: PI, Period: 2024-2025, Total cost: 1,500,000 JPY
+1. Control of depression with transcranial deep brain stimulation technologies. Astellas Foundation for Research on Metabolic Disorders: Research Grant, Role: PI, Period: 2024-2026, Total cost: 2,000,000 JPY
+1. Recovery of hedonia associated with food intake via transcranial deep brain stimulation. Lotte Foundation: Research Grant, Role: PI, Period: 2024-2027, Total cost: 3,000,000 JPY
+1. Deletion of seizure susceptibility via transcranial deep brain stimulation. Ono Pharmaceutical Foundation for Oncology, Immunology, and Neurology: Research Grant, Role: PI, Period: 2024-2027, Total cost: 30,000,000 JPY
+1. A radical epilepsy treatment with a novel transcranial deep brain stimulation technology. The Uehara Memorial Foundation, Role: PI, Period: 2024-2026, Total cost: 4,000,000 JPY
 
 ### Other Grants
-1. A study of reorganization of the whisker-sensory thalamic circuit after peripheral nerve injury. Tokyo Women's Medical University: Research Grant for Basic Medical Research, Role: PI, Period: 2010–2011, Total cost: 800,000 JPY
-1. A study of large-scale reorganization of somatosensory map in the brain after peripheral sensory nerve injury. Tokyo Women's Medical University, Research Grant for Basic Medical Research, Role: PI, Period: 2014–2015, Total cost: 700,000 JPY
+1. A study of reorganization of the whisker-sensory thalamic circuit after peripheral nerve injury. Tokyo Women's Medical University: Research Grant for Basic Medical Research, Role: PI, Period: 2010-2011, Total cost: 800,000 JPY
+1. A study of large-scale reorganization of somatosensory map in the brain after peripheral sensory nerve injury. Tokyo Women's Medical University, Research Grant for Basic Medical Research, Role: PI, Period: 2014-2015, Total cost: 700,000 JPY
 
 ## Invited Talks
 |      |                                                                                                                                           |
@@ -326,46 +326,46 @@ https://doi.org/10.6084/m9.figshare.6160181
 | 2013 | Advanced Brain Research by Optical Measurements and Manipulations; The 13th Summer School of Physiological Society of Japan, Tokyo, Japan; 1 day session             |
 | 2014 | Matlab Fundamentals; Mathworks Japan, Tokyo, Japan; 3 day practice                                                                                                   |
 | 2014 | Diffusion Tensor Imaging Analysis (Linux introduction/DTI TBSS/DTI tractgraphy); Comprehensive Brain Science Network, Tokyo, Japan; 1 day practice                   |
-| 2017 | FELASA Accredited Education and Training Course, “Animal experiments theory and practice – level C (Ref No.:035/2014)”, Szeged, Hungary, 80 h lectures and practices |
+| 2017 | FELASA Accredited Education and Training Course, “Animal experiments theory and practice - level C (Ref No.:035/2014)”, Szeged, Hungary, 80 h lectures and practices |
 | 2018 | Publons Academy                                                                                                                                                      |
 
 # TEACHING and TRAINING
 ## Teaching Contributions on Undergraduate Courses
 |                |                                                                                                                                                                                         |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| FY2010–2013    | Practical of Hematology (Osmotic fragility and Coagulation cascade); Tokyo Women’s Medical University; 4th year undergraduate students; 2 × 4 h sessions per wk for 2 wks               |
-| FY2010–2014    | Practical of Physiology (Spirometry); Tokyo Women’s Medical University; 2nd year undergraduate students; 2 × 4 h sessions per wk for 3 wks                                              |
+| FY2010-2013    | Practical of Hematology (Osmotic fragility and Coagulation cascade); Tokyo Women’s Medical University; 4th year undergraduate students; 2 × 4 h sessions per wk for 2 wks               |
+| FY2010-2014    | Practical of Physiology (Spirometry); Tokyo Women’s Medical University; 2nd year undergraduate students; 2 × 4 h sessions per wk for 3 wks                                              |
 | FY2012         | Tutor of Problem Based Learning; Tokyo Women’s Medical University; 1st year undergraduate students; 2 × 2 h sessions per wk for 6 wks                                                  |
-| 2012–2013      | Practical of Physiology (Spirometry); Tokyo Women’s Medical University; graduate students for biomedical course; 2 × 2 h sessions in a day                                              |
-| 2013–2014      | Tutor of Team-Based Learning; Tokyo Women’s Medical University; 1st year undergraduate students; 2 × 2 h sessions per wk for 6 wks                                                     |
+| 2012-2013      | Practical of Physiology (Spirometry); Tokyo Women’s Medical University; graduate students for biomedical course; 2 × 2 h sessions in a day                                              |
+| 2013-2014      | Tutor of Team-Based Learning; Tokyo Women’s Medical University; 1st year undergraduate students; 2 × 2 h sessions per wk for 6 wks                                                     |
 | 2013           | Supervision of Basic Medical Research; Tokyo Women’s Medical University; 3rd year undergraduate student (Sawako Kamo); Daily mentorship for 3 wks                                       |
 | 2014           | Practical of Physiology (In silico Simulation of Cardiac Ion Channels); Tokyo Women’s Medical University; 2nd year undergraduate students; 2 × 4 h sessions per wk for 3 wks            |
 | 2015           | Problem-Based Learning; Tokyo Women’s Medical University; 1st year undergraduate students; 4 × 2 h sessions                                                                            |
-| 2016–2020      | Medical Physiology Seminar I; University of Szeged; 2nd year undergraduate students; 14 × 2 h sessions during the 1st semester                                                          |
-| 2016–2020      | Medical Physiology Seminar II; University of Szeged; 2nd year undergraduate students; 15 × 2 h sessions during the 2nd semester                                                         |
-| 2019–2020      | Internship training, University of Szeged; 4th year undergraduate students; 8 weeks full-time                                                                                           |
-| FY2021–FY2023  | Pharmacology IV；Hokkaido University, school of pharmaceutical sciences and pharmacy, 3rd year undergraduate students, 7 x 2 h sessions during the 2nd semester                         |
-| FY2021–FY2023  | Methods in Life Science II; Hokkaido University, school of pharmaceutical sciences and pharmacy, 3rd year undergraduate students, 2 x 2 h sessions during the 2nd semester              |
-| FY2021–FY2023  | Laboratory Exercise of Analytical Chemistry; Hokkaido University, school of pharmaceutical sciences and pharmacy, 2nd year undergraduate students, 4 x 4 h sessions in the 2nd semester |
-| FY2022–FY2023  | Introduction to Pharmaceutical Science: Hokkaido University, school of pharmaceutical sciences and pharmacy, 2nd year undergraduate students, 2 x 2 h sessions during the 1st semester  |
-| FY2022–FY2023  | Pharmacology II；Hokkaido University, school of pharmaceutical sciences and pharmacy, 3rd year undergraduate students, 3 x 2 h sessions during the 1st semester                         |
-| FY2022–FY2023  | Pharmacology III；Hokkaido University, school of pharmaceutical sciences and pharmacy, 3rd year undergraduate students, 3 x 2 h sessions during the 1st semester                        |
-| FY2022–FY2023  | Freshman Seminar Introduction of Neuropharmacology; Hokkaido University, 1st year undergraduate students, 2 x 2 h sessions during the 1st semester                                      |
-| FY2022–FY2023  | Freshman Seminar A Guide to Neuroscience Research; Hokkaido University, 1st year undergraduate students, 15 x 2 h sessions during the 2nd semester                                      |
-| FY2022–FY2023  | Laboratory Exercise of Physics; Hokkaido University, 2nd year undergraduate students, 4 x 4 h sessions during the 2nd semester                                                          |
-| FY2023–FY2023  | Freshman Seminar Introduction of Brain Researches in Hokkaido University; Hokkaido University, 1st year undergraduate students, 2 x 2 h sessions during the 1st semester                |
-| FY2024–Present  | Pathology; Kindai University, 3rd year undergraduate students, 15 x 2 h sessions during the 1st semester                |
-| FY2024–Present  | Pharmacotherapy 1; Kindai University, 3rd year undergraduate students, 15 x 2 h sessions during the 1st semester                |
-| FY2024–Present  | Pharmacotherapy 2; Kindai University, 3rd year undergraduate students, 15 x 2 h sessions during the 2nd semester                |
-| FY2024–Present  | Pharmacotherapy 3; Kindai University, 4th year undergraduate students, 15 x 2 h sessions during the 1st semester                |
-| FY2024–Present  | Laboratory Exam and Therapy of Diseases 1; Kindai University, 3rd year undergraduate students, 15 x 2 h sessions during the 1st semester                |
-| FY2024–Present  | Laboratory Exam and Therapy of Diseases 2; Kindai University, 3rd year undergraduate students, 15 x 2 h sessions during the 2nd semester                |
-| FY2024–Present  | Laboratory Diagnosis; Kindai University, 2nd year undergraduate students, 9 x 2 h sessions during the 2nd semester                |
-| FY2024–Present  | General Seminar 1; Kindai University, 4th year undergraduate students, 2 x 2 h sessions during the 2nd semester                |
-| FY2024–Present  | General Seminar 2; Kindai University, 6th year undergraduate students, 2 x 2 h sessions during the 2nd semester                |
-| FY2024–Present  | Kindai Seminar; Kindai University, 1st year undergraduate students, 11 x 2 h sessions during the 1st semester                |
-| FY2024–Present  | Introduction to Pharmacy; Kindai University, 1st year undergraduate students, 1 x 2 h sessions during the 1st semester                |
-| FY2024–Present  | Laboratory Course of Pharmacology and Pharmacokinetics; Kindai University, 3rd year undergraduate students, 3 x 2 h sessions during the 1st semester                |
+| 2016-2020      | Medical Physiology Seminar I; University of Szeged; 2nd year undergraduate students; 14 × 2 h sessions during the 1st semester                                                          |
+| 2016-2020      | Medical Physiology Seminar II; University of Szeged; 2nd year undergraduate students; 15 × 2 h sessions during the 2nd semester                                                         |
+| 2019-2020      | Internship training, University of Szeged; 4th year undergraduate students; 8 weeks full-time                                                                                           |
+| FY2021-FY2023  | Pharmacology IV；Hokkaido University, school of pharmaceutical sciences and pharmacy, 3rd year undergraduate students, 7 x 2 h sessions during the 2nd semester                         |
+| FY2021-FY2023  | Methods in Life Science II; Hokkaido University, school of pharmaceutical sciences and pharmacy, 3rd year undergraduate students, 2 x 2 h sessions during the 2nd semester              |
+| FY2021-FY2023  | Laboratory Exercise of Analytical Chemistry; Hokkaido University, school of pharmaceutical sciences and pharmacy, 2nd year undergraduate students, 4 x 4 h sessions in the 2nd semester |
+| FY2022-FY2023  | Introduction to Pharmaceutical Science: Hokkaido University, school of pharmaceutical sciences and pharmacy, 2nd year undergraduate students, 2 x 2 h sessions during the 1st semester  |
+| FY2022-FY2023  | Pharmacology II；Hokkaido University, school of pharmaceutical sciences and pharmacy, 3rd year undergraduate students, 3 x 2 h sessions during the 1st semester                         |
+| FY2022-FY2023  | Pharmacology III；Hokkaido University, school of pharmaceutical sciences and pharmacy, 3rd year undergraduate students, 3 x 2 h sessions during the 1st semester                        |
+| FY2022-FY2023  | Freshman Seminar Introduction of Neuropharmacology; Hokkaido University, 1st year undergraduate students, 2 x 2 h sessions during the 1st semester                                      |
+| FY2022-FY2023  | Freshman Seminar A Guide to Neuroscience Research; Hokkaido University, 1st year undergraduate students, 15 x 2 h sessions during the 2nd semester                                      |
+| FY2022-FY2023  | Laboratory Exercise of Physics; Hokkaido University, 2nd year undergraduate students, 4 x 4 h sessions during the 2nd semester                                                          |
+| FY2023-FY2023  | Freshman Seminar Introduction of Brain Researches in Hokkaido University; Hokkaido University, 1st year undergraduate students, 2 x 2 h sessions during the 1st semester                |
+| FY2024-Present  | Pathology; Kindai University, 3rd year undergraduate students, 15 x 2 h sessions during the 1st semester                |
+| FY2024-Present  | Pharmacotherapy 1; Kindai University, 3rd year undergraduate students, 15 x 2 h sessions during the 1st semester                |
+| FY2024-Present  | Pharmacotherapy 2; Kindai University, 3rd year undergraduate students, 15 x 2 h sessions during the 2nd semester                |
+| FY2024-Present  | Pharmacotherapy 3; Kindai University, 4th year undergraduate students, 15 x 2 h sessions during the 1st semester                |
+| FY2024-Present  | Laboratory Exam and Therapy of Diseases 1; Kindai University, 3rd year undergraduate students, 15 x 2 h sessions during the 1st semester                |
+| FY2024-Present  | Laboratory Exam and Therapy of Diseases 2; Kindai University, 3rd year undergraduate students, 15 x 2 h sessions during the 2nd semester                |
+| FY2024-Present  | Laboratory Diagnosis; Kindai University, 2nd year undergraduate students, 9 x 2 h sessions during the 2nd semester                |
+| FY2024-Present  | General Seminar 1; Kindai University, 4th year undergraduate students, 2 x 2 h sessions during the 2nd semester                |
+| FY2024-Present  | General Seminar 2; Kindai University, 6th year undergraduate students, 2 x 2 h sessions during the 2nd semester                |
+| FY2024-Present  | Kindai Seminar; Kindai University, 1st year undergraduate students, 11 x 2 h sessions during the 1st semester                |
+| FY2024-Present  | Introduction to Pharmacy; Kindai University, 1st year undergraduate students, 1 x 2 h sessions during the 1st semester                |
+| FY2024-Present  | Laboratory Course of Pharmacology and Pharmacokinetics; Kindai University, 3rd year undergraduate students, 3 x 2 h sessions during the 1st semester                |
 
 ## Educational Publications
 1.	<ins>Takeuchi Y</ins> (2017) Physiological Education and Japanese Medical Students in University of Szeged. J Physiol Soc Japan 79: 8-15. (Peer Reviewed, Japanese) http://physiology.jp/wp-content/uploads/2017/01/Education_20170201_8-15.pdf.
@@ -389,13 +389,13 @@ s1. Harangozó M (2021) MTA-SZTE „Lendület“ Oszcillatorikus Neuronhálózat
 |             |                                                                                                                                                                               |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | FY2013      | Pain Research, Practice (Formalin test and Immunohistochemistry of spinal sections); Graduate school of medicine, Tokyo Women’s Medical University; Daily practice for a week |
-| FY2012–2014 | Respiratory Medicine for Bio-Medical Curriculum, Practice; Graduate school of medicine, Tokyo Women’s Medical University; 4 × 2 h sessions                                    |
-| FY2021–2023 | Basic Brain Science IV : Molecular and Cellular basis of Neurotransmission, Lecture; Graduate School of Life Science, Hokkaido University                                                                                    |
-| FY2021–2023 | Pharmaceutical Science, Lecture; Hokkaido University                                                             |
-| FY2022–2023 | Brain Science I, Lecture; Hokkaido University                                                                    |
-| FY2022–2023 | Brain Science I, Practice; Hokkaido University                                                                   |
-| FY2024–present | Advanced Lecture on Pharmaceutical and Biological Science; Kindai University                                  |
-| FY2025–present | Lecture on Pharmacology, Pharmacotherapy and Pharmacokinetics; Kindai University                                  |
+| FY2012-2014 | Respiratory Medicine for Bio-Medical Curriculum, Practice; Graduate school of medicine, Tokyo Women’s Medical University; 4 × 2 h sessions                                    |
+| FY2021-2023 | Basic Brain Science IV : Molecular and Cellular basis of Neurotransmission, Lecture; Graduate School of Life Science, Hokkaido University                                                                                    |
+| FY2021-2023 | Pharmaceutical Science, Lecture; Hokkaido University                                                             |
+| FY2022-2023 | Brain Science I, Lecture; Hokkaido University                                                                    |
+| FY2022-2023 | Brain Science I, Practice; Hokkaido University                                                                   |
+| FY2024-present | Advanced Lecture on Pharmaceutical and Biological Science; Kindai University                                  |
+| FY2025-present | Lecture on Pharmacology, Pharmacotherapy and Pharmacokinetics; Kindai University                                  |
 
 ## Faculty Development
 |        |                                                                                  |
@@ -438,17 +438,17 @@ s1. Harangozó M (2021) MTA-SZTE „Lendület“ Oszcillatorikus Neuronhálózat
 | FY2024      | Lecture Slides for General Seminar 1 @ Kindai University, Faculty of Pharmacy                                       |
 | FY2024      | Lecture Slides for General Seminar 2 @ Kindai University, Faculty of Pharmacy                                       |
 | FY2024      | Lecture Slides for Introduction to Pharmacy @ Kindai University, Faculty of Pharmacy                                |
-| FY2024      | Text for Laboratory Course of Pharmacology and Pharmacokinetics @ Kindai University, Faculty of Pharmacy            |
-| FY2024      | Lecture Slides for Advanced Lecture on Pharmaceutical and Biological Science @ Kindai University                    |
-| FY2025      | Lecture Slides for Lecture on Pharmacology, Pharmacotherapy and Pharmacokinetics @ Kindai University                |
+| FY2024      | Text for Laboratory Course of Pharmacology and Pharmacokinetics @ Kindai University, Faculty of Pharmacy            |
+| FY2024      | Lecture Slides for Advanced Lecture on Pharmaceutical and Biological Science @ Kindai University                    |
+| FY2025      | Lecture Slides for Lecture on Pharmacology, Pharmacotherapy and Pharmacokinetics @ Kindai University                |
 
 ## Other Teaching Contributions
 |           |                                                                                                                                         |
 | --------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| 2015–2020 | Tutorial of Medical Physiology I; Hungary Medical Office; 2nd year undergraduate students; 14 × 2-h sessions during the 1st semester    |
-| 2015–2020 | Tutorial of Medical Physiology II; Hungary Medical Office; 2nd year undergraduate students; 14 × 2-h sessions during the 2nd semester   |
-| 2015–2020 | Tutorial of Medical Pharmacology I; Hungary Medical Office; 4th year undergraduate students; 14 × 2-h sessions during the 1st semester  |
-| 2015–2020 | Tutorial of Medical Pharmacology II; Hungary Medical Office; 4th year undergraduate students; 14 × 2-h sessions during the 2nd semester |
+| 2015-2020 | Tutorial of Medical Physiology I; Hungary Medical Office; 2nd year undergraduate students; 14 × 2-h sessions during the 1st semester    |
+| 2015-2020 | Tutorial of Medical Physiology II; Hungary Medical Office; 2nd year undergraduate students; 14 × 2-h sessions during the 2nd semester   |
+| 2015-2020 | Tutorial of Medical Pharmacology I; Hungary Medical Office; 4th year undergraduate students; 14 × 2-h sessions during the 1st semester  |
+| 2015-2020 | Tutorial of Medical Pharmacology II; Hungary Medical Office; 4th year undergraduate students; 14 × 2-h sessions during the 2nd semester |
 
 
 # GENERAL CONTRIBUTION
@@ -474,27 +474,27 @@ s1. Harangozó M (2021) MTA-SZTE „Lendület“ Oszcillatorikus Neuronhálózat
 ### Pre-publication Peer Reviews
 |              |                                                                                     |
 | ------------ | ----------------------------------------------------------------------------------- |
-| 2017–present | Neuroscience Research                                                               |
-| 2019–present | Neuropsychopharmacology Reports                                                     |
-| 2020–present | Annals of Translational Medicine                                                    |
-| 2021–present | Translational Neuroscience                                                          |
-| 2021–present | Frontiers in Human Neuroscience                                                     |
-| 2022–present | Neurology and Clinical Neuroscience                                                 |
-| 2022–present | Applied Artificial Intelligence                                                     |
-| 2022–present | Frontiers in Neural Circuits                                                        |
-| 2022–present | BMC Neuroscience                                                                    |
-| 2022–present | Current Gene Therapy                                                                |
-| 2023–present | Current Molecular Pharmacology                                                      |
-| 2024–present | Journal of Ethnopharmacology                                                        |
-| 2024–present | Learning and Motivation                                                             |
-| 2024–present | Neuroscience and Behavioral Reviews                                                 |
-| 2025–present | Journal of Neurorestoratology                                                       |
-| 2025–present | iScience                                                                            |
-| 2025–present | CNS Neuroscience & Therapeutics                                                     |
-| 2025–present | Journal of Pharmacological Sciences                                                 |
-| 2026–present | Brain Stimulation                                                                   |
-| 2026–present | Biological and Pharmaceutical Bulletin                                              |
-| 2026–present | Frontiers in Neuroscience                                                           |
+| 2017-present | Neuroscience Research                                                               |
+| 2019-present | Neuropsychopharmacology Reports                                                     |
+| 2020-present | Annals of Translational Medicine                                                    |
+| 2021-present | Translational Neuroscience                                                          |
+| 2021-present | Frontiers in Human Neuroscience                                                     |
+| 2022-present | Neurology and Clinical Neuroscience                                                 |
+| 2022-present | Applied Artificial Intelligence                                                     |
+| 2022-present | Frontiers in Neural Circuits                                                        |
+| 2022-present | BMC Neuroscience                                                                    |
+| 2022-present | Current Gene Therapy                                                                |
+| 2023-present | Current Molecular Pharmacology                                                      |
+| 2024-present | Journal of Ethnopharmacology                                                        |
+| 2024-present | Learning and Motivation                                                             |
+| 2024-present | Neuroscience and Behavioral Reviews                                                 |
+| 2025-present | Journal of Neurorestoratology                                                       |
+| 2025-present | iScience                                                                            |
+| 2025-present | CNS Neuroscience & Therapeutics                                                     |
+| 2025-present | Journal of Pharmacological Sciences                                                 |
+| 2026-present | Brain Stimulation                                                                   |
+| 2026-present | Biological and Pharmaceutical Bulletin                                              |
+| 2026-present | Frontiers in Neuroscience                                                           |
 
 ## Post-publication Peer Reviews
 |             |                                              |
@@ -517,7 +517,7 @@ s1. Harangozó M (2021) MTA-SZTE „Lendület“ Oszcillatorikus Neuronhálózat
 ## Reviews of Research Grants
 |              |                                                                                           |
 | ------------ | ----------------------------------------------------------------------------------------- |
-| 2021–present | UKRI – UK Research and Innovation, Biotechnology and Biological Sciences Research Council |
+| 2021-present | UKRI - UK Research and Innovation, Biotechnology and Biological Sciences Research Council |
 
 ## Research Training Course
 |             |                                                                                                                                                                                    |
@@ -529,9 +529,9 @@ s1. Harangozó M (2021) MTA-SZTE „Lendület“ Oszcillatorikus Neuronhálózat
 ### Technicians
 |           |                                                                                                                               |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| 2010–2015 | Supervision of technicians; Tokyo Women’s Medical University; 1st year undergraduate students; Daily mentorship for 12 months |
-| 2015–2020 | Supervision of technicians; University of Szeged; Daily mentorship for 12 months                                              |
-| 2020–2021 | Supervision of technicians; Osaka City University; Daily mentorship for 12 months                                             |
+| 2010-2015 | Supervision of technicians; Tokyo Women’s Medical University; 1st year undergraduate students; Daily mentorship for 12 months |
+| 2015-2020 | Supervision of technicians; University of Szeged; Daily mentorship for 12 months                                              |
+| 2020-2021 | Supervision of technicians; Osaka City University; Daily mentorship for 12 months                                             |
 
 ## Outreach activities
 |              |                                                                             |
