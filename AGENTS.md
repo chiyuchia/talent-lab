@@ -4,7 +4,7 @@
 
 ## 项目概述
 
-talent-lab：AI 简历分析平台。Flask REST API（`backend/`）+ React/Vite SPA（`frontend/`），SQLite 存储，Docker Compose 部署（`deploy/`）。
+talent-lab：AI 简历分析平台。Flask REST API（`backend/`）+ React/Vite SPA（`frontend/`），SQLite 存储；前端部署到 Cloudflare Pages，后端通过 GitHub Actions、GHCR 和 Docker Compose 部署（`deploy/`）。
 
 ## 常用命令
 
@@ -37,4 +37,4 @@ cd frontend && npm run lint          # 前端 lint
 
 - 不要提交真实密钥；生产环境必填 `APP_ACCESS_KEY` 与 `FLASK_SECRET_KEY`。
 - AI 调用默认 `AI_MODE=mock`；测试中不得发起真实 AI 网络请求。
-- SSE 相关改动注意部署要求：Nginx 必须 `proxy_buffering off` 并配置长超时。
+- SSE 相关改动注意部署要求：OpenResty 必须 `proxy_buffering off` 并配置长超时。

@@ -3,7 +3,7 @@
 > 调研日期：2026-08-12
 > 范围：`backend/`（Flask）、`frontend/`（React/Vite）、`deploy/` + 工程化配置
 > 说明：所有条目均已在代码中逐条核实，附文件与行号证据。优先级分高 / 中 / 低三档。
-> 后续进展：路由懒加载、Inter Latin 子集加载、简历列表偏好持久化及上传数量文档对齐已于 2026-08-13 至 2026-08-14 完成。2026-08-14 上传与候选人入口整合为简历工作区，并修复前端 SSE 生命周期和事件风暴问题；其余条目及行号以再次核查为准。
+> 后续进展：路由懒加载、Inter Latin 子集加载、简历列表偏好持久化及上传数量文档对齐已于 2026-08-13 至 2026-08-14 完成。2026-08-14 上传与候选人入口整合为简历工作区，修复前端 SSE 生命周期和事件风暴问题，并完成 Cloudflare Pages + GHCR + VPS 自动部署改造；其余条目及行号以再次核查为准。
 
 ## 一、高优先级（正确性 / 数据安全问题）
 
@@ -64,7 +64,7 @@
 
 - 每条 SSE 连接在整个解析期间独占一个线程（gunicorn 2 workers × 4 threads = 并发上限 8）；期间多次 `db.session.commit()`（`uploads.py:98,110,138,151`）持有 SQLite 写锁，并发上传时易触发 `database is locked`。
 - mock 流式分支里 `time.sleep(0.02)`（`ai_service.py:92-95`）阻塞 worker 线程，建议只在 debug 下启用。
-- 注：gunicorn `timeout = 120`（`gunicorn.conf.py:4`）当前**不会**掐断 SSE：配置了 `threads = 4`（gthread worker，心跳在主线程）。但若未来去掉 `threads`，此处会变成真问题；且与 nginx `proxy_read_timeout 300s` 数值不一致，建议对齐。
+- 注：gunicorn `timeout = 120`（`gunicorn.conf.py:4`）当前**不会**掐断 SSE：配置了 `threads = 4`（gthread worker，心跳在主线程）。但若未来去掉 `threads`，此处会变成真问题；且应与 OpenResty 的代理读取超时保持一致。
 
 **4. 流式解析失败的兜底导致 AI 双倍调用**
 
@@ -82,11 +82,9 @@
 - `uploads.py:39-47`：批量上传循环中逐文件 `file.save()` 后才继续校验后续文件，任一文件失败直接 return，已保存的 PDF 成为磁盘孤儿（DB 未提交）。
 - `candidates.py:70-82`：`delete_candidate` 删除 DB 记录但不删除磁盘 PDF 文件，长期堆积孤儿文件。
 
-**7. 生产配置强制校验依赖 `FLASK_ENV=production`，compose 未显式设置**
+**7. [已完成] 生产配置强制校验依赖 `FLASK_ENV=production`**
 
-- 证据：`backend/app/config.py:7`（`ENV` 默认 `development`）、`config.py:33-40`（仅 `ENV == "production"` 时才校验 `APP_ACCESS_KEY`/`FLASK_SECRET_KEY` 非默认值）；`deploy/docker-compose.yml:6-10` 的 env_file/environment 中均未出现 `FLASK_ENV`。
-- 影响：若 `.env.production` 漏配，生产防护静默失效，默认弱密钥也能启动。
-- 建议：`docker-compose.yml` 的 `environment` 显式加 `FLASK_ENV: production` 兜底。
+- 进展：`deploy/.env.production.example` 明确设置 `FLASK_ENV=production`，Compose 强制加载 `.env.production`，缺少该文件时拒绝启动；部署文档要求从示例创建生产配置。
 
 **8. 代码重复与日志缺失**
 
@@ -162,7 +160,7 @@
 
 **5. [已完成] 旧 VPS Nginx 示例不完整**
 
-- 进展：不完整的通用示例已移除；生产文档要求在现有反向代理或 1Panel 中将 API 请求转发到 `127.0.0.1:8000`。
+- 进展：不完整的通用示例已移除；生产文档要求在 OpenResty 中将 API 请求转发到 `127.0.0.1:8000`。
 
 **6. [已完成] README 引用的 `deploy/.env.production.example` 不存在**
 
@@ -176,7 +174,7 @@
 
 **后端**
 
-- 文档不一致：`docs/development.md:65` 写"批量上限为 10 份"，实际 `backend/app/constants.py:5` 是 `MAX_UPLOAD_FILES = 5`（测试也按 5 断言），需对齐一方。
+- [已完成] 上传批量上限已在 README、开发文档、常量和测试中统一为 5 份。
 - `datetime.utcnow` 在 `models/__init__.py` 出现 7 处，Python 3.12 起 DeprecationWarning，建议 `datetime.now(timezone.utc)`。
 - `Query.get()` 是 SQLAlchemy 2.x legacy 用法（`candidates.py:64,73,88,111,147`、`scores.py:43`、`jobs.py:42,66`），建议 `db.session.get(Model, id)`。
 - `config.py:50-55`：相对 sqlite 路径已按 instance 目录建过一次目录，第 55 行又对 cwd 相对路径重复 `mkdir`，可能在当前工作目录产生游离目录。
@@ -204,8 +202,7 @@
 **部署**
 
 - 无日志轮转与资源限制：`deploy/docker-compose.yml` 无 `logging`（json-file `max-size`/`max-file`）配置，容器日志会无限增长。
-- 容器内 nginx 缺 gzip、静态资源缓存头（Vite 产物 `/assets/*` 带 hash，适合 `immutable` 长缓存）、安全响应头（当前生产前端在 Cloudflare Pages，仅影响 Docker 自托管路径）。
-- SSE 响应未设 `Cache-Control: no-cache` 与 `X-Accel-Buffering: no`（`uploads.py:161`），当前 nginx `proxy_buffering off` 下可用，但对链路上其他中间层（如 Cloudflare）无防御。
+- SSE 响应未设 `Cache-Control: no-cache` 与 `X-Accel-Buffering: no`（`uploads.py:161`）；即使 OpenResty 已关闭代理缓冲，对链路上其他中间层仍缺少显式防御。
 - 无 pre-commit 钩子；`.ruff_cache/` 在 `.gitignore` 中但 `backend/` 下未见 ruff 配置文件，属有工具意图未落地。
 - Makefile 缺 `frontend-typecheck`/`frontend-lint`/`check` 聚合目标，与 AGENTS.md 验证要求不对齐。
 
@@ -224,7 +221,7 @@
 ## 建议处理顺序
 
 1. 前端 SSE 闭包 bug（一.1）→ JSON 编辑静默丢数据（一.2）：小改动、直接影响正确性与数据安全。
-2. 登录限流（一.3）、`.dockerignore` + `npm ci`（一.4）、端口文档统一（一.5）：低成本的安全与部署修复。
+2. 登录限流（一.3）、后端镜像多阶段 / 非 root、容器日志轮转：优先降低生产风险和磁盘压力。
 3. 测试基座（一.7）：后端 SSE 接口测试 + 前端 vitest + `npm audit fix`。
 4. 性能项：列表 SQL 下沉（一.6）、路由懒加载 / 字体子集 / 防抖（二.前端.2）。
 5. 其余中低优先级项随相关改动顺带清理。

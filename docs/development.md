@@ -13,7 +13,10 @@ talent-lab 采用前后端分离架构；开发环境由 Vite 代理 API，生�
   |
   `-- 生产环境：Cloudflare Pages（前端静态资源）
           |
-          `-- HTTPS /api --> 宿主机 Nginx --> Gunicorn + Flask（REST API + SSE）
+          `-- HTTPS --> talentlensapi.440115.xyz:8443/api
+                         --> OpenResty
+                         --> 127.0.0.1:8000
+                         --> Gunicorn + Flask（REST API + SSE）
 ```
 
 核心数据流（简历处理链路）：
@@ -74,7 +77,7 @@ SSE 事件流 (GET /api/uploads/:id/events)
 - **认证**：除 `auth/login` 与 `health` 外，所有 API 需经 `@require_auth`；会话基于签名 Cookie（`PERMANENT_SESSION_LIFETIME = 12h`）。
 - **SSE 事件**：`uploads.py` 中的 `sse_event(event, data)` 统一序列化事件帧（`event:` + `data:` + 空行）。事件覆盖批次状态、单份简历进度、提取结果与错误等，前端 `ResumeStreamViewer` 逐步渲染。
 - **AI 模式**：`AI_MODE=mock` 时不调用外部 API，返回本地生成的结构，便于无 Key 开发与测试；`real` 模式按 `AI_PROVIDER` 路由到对应服务商（`OPENAI_BASE_URL` 支持任意 OpenAI 兼容端点）。
-- **生产校验**：`ENV=production` 时启动会强制校验 `APP_ACCESS_KEY` 与 `FLASK_SECRET_KEY`，缺失或仍为默认值会直接抛错。
+- **生产校验**：`FLASK_ENV=production` 时启动会强制校验 `APP_ACCESS_KEY` 与 `FLASK_SECRET_KEY`，缺失或仍为默认值会直接抛错。
 - **上传限制**：`MAX_CONTENT_LENGTH = 50MB`，仅接受 PDF，批量上限为 5 份。
 
 ### 2.4 本地开发
@@ -104,6 +107,7 @@ make backend-test   # 使用 backend/.venv 中的 pytest
 | `test_auth.py` | 登录/登出/会话校验 |
 | `test_business_api.py` | 候选人、职位机会、申请事件与评分等业务接口 |
 | `test_ai_service.py` | AI 提取与评分逻辑（mock 模式） |
+| `test_resume_storage.py` | 本地与私有 R2 简历存储行为 |
 | `test_schema_migrations.py` | 既有 SQLite 职位数据的幂等增量迁移 |
 
 新增接口或修改服务逻辑时应同步补测试，优先复用现有 fixture 与 mock 模式，避免在测试中发起真实网络请求。
@@ -189,14 +193,14 @@ make compose-down     # 停止 Docker 服务
 
 ## 6. 部署要点
 
-- **前端**部署在 Cloudflare Pages，生产地址为 <https://talent-lab.440115.xyz/>；Pages 关联 `master` 分支，分支更新后自动构建并发布。
-- Cloudflare Pages 构建时通过 `VITE_API_BASE_URL` 指向生产后端 API；后端的 `FRONTEND_ORIGIN` 应设置为 `https://talent-lab.440115.xyz`，以允许携带 Cookie 的跨域请求。
+- **前端**部署在 Cloudflare Pages，生产地址为 <https://talent-lab.440115.xyz/>；Pages 关联 `master` 分支，执行 `cd frontend && npm ci && npm run build`，并发布 `frontend/dist`。
+- Cloudflare Pages 的 `VITE_API_BASE_URL` 当前指向 `https://talentlensapi.440115.xyz:8443/api`；后端的 `FRONTEND_ORIGIN` 应设置为 `https://talent-lab.440115.xyz`，以允许携带 Cookie 的跨域请求。
 - **后端**通过 `deploy/docker-compose.yml` 运行 GHCR 不可变镜像，`deploy/deploy.sh` 负责备份、迁移和健康检查；`master` 构建成功后由 GitHub Actions 通过 SSH 自动部署，`main` 只发布镜像。部署目录必须由 root 控制，完整初始化步骤见 `deploy/README.md`。服务默认仅绑定宿主机 `127.0.0.1:8000`，当前生产前端不由该 Compose 文件托管。
-- 宿主机现有反向代理或 1Panel 应将生产 API 域名的 `/api/` 请求转发到 `http://127.0.0.1:8000`。配置时注意：
+- 宿主机 OpenResty 应将生产 API 域名的 `/api/` 请求转发到 `http://127.0.0.1:8000`。配置时注意：
   - SSE 必须 `proxy_buffering off`，并配置较长超时；
   - `client_max_body_size 50m` 支持批量上传；
   - 有域名时启用 HTTPS 并设 `SESSION_COOKIE_SECURE=true`。
-- SQLite 与上传文件通过 volume 持久化，容器重启不丢数据。
+- SQLite 始终通过 volume 持久化；本地存储模式的上传文件使用 uploads volume，R2 模式的文件保存在私有 Cloudflare R2 bucket。
 
 ## 7. 编码规范
 

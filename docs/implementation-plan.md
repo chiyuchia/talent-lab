@@ -15,13 +15,13 @@ talent-lab 是一个 AI 赋能的智能简历分析平台，用于招聘场景�
 - PDF 解析：PyMuPDF。
 - AI：OpenAI 兼容 API + 本地 Mock 双模式。
 - 通信：RESTful API + SSE 流式事件。
-- 部署：Docker Compose、容器内 Nginx、宿主机 Nginx 反向代理。
+- 部署：Cloudflare Pages、GitHub Actions、GHCR、Docker Compose、OpenResty 反向代理。
 
 前端实现阶段使用 UI/UX Pro Max skill 辅助进行页面结构、视觉系统、可访问性、响应式和交互质量检查。
 
 ## 2. 最终架构与目录规划
 
-项目采用前后端分离开发、生产环境同源访问的架构。前端构建为静态资源，由容器内 Nginx 托管；后端通过 Gunicorn 运行 Flask 服务；宿主机 Nginx 对外暴露域名或 VPS IP，并反向代理到 Docker Compose 暴露的本机端口。
+项目采用前后端分离开发和跨域生产访问。前端由 Cloudflare Pages 构建并托管静态资源；后端由 GitHub Actions 构建为 GHCR 不可变镜像，通过 Docker Compose 在 VPS 运行；OpenResty 将生产 API 域名反向代理到后端绑定的本机端口。
 
 推荐目录结构：
 
@@ -55,9 +55,11 @@ talent-lab/
     deploy.sh
     README.md
     .env.production.example
+  .github/
+    workflows/
+      backend-image.yml
   docs/
     implementation-plan.md
-  Description.md
   README.md
 ```
 
@@ -83,7 +85,7 @@ talent-lab/
 
 - 放行登录接口、健康检查接口、前端静态资源。
 - 保护所有业务 API。
-- 保护 SSE 接口，SSE 请求依赖同源 Cookie 登录态。
+- 保护 SSE 接口；生产环境的跨域 EventSource 使用 `withCredentials` 携带 Cookie，并由后端 CORS 仅放行 `FRONTEND_ORIGIN`。
 
 前端认证行为：
 
@@ -180,59 +182,62 @@ SSE 事件：
 - 状态变更提供明确的视觉反馈。
 - 动画遵循 `prefers-reduced-motion`。
 
-## 6. Docker、VPS 与 Nginx 部署方案
+## 6. Cloudflare Pages、GHCR 与 VPS 部署方案
 
-最终部署方案：
+当前部署方案：
 
-- 使用 Docker Compose 部署项目。
+- 前端由 Cloudflare Pages 从 `master` 构建，命令为 `cd frontend && npm ci && npm run build`，发布目录为 `frontend/dist`。
+- 推送到 `main` 或 `master` 时，GitHub Actions 运行后端测试与字符检查，并将后端镜像发布到 GHCR。
+- `master` 构建成功后，GitHub Actions 通过专用 SSH 用户调用 VPS 上的 root-owned `deploy.sh`，按镜像 digest 部署。
+- Docker Compose 只运行后端，不在 VPS 托管前端静态资源。
 - 不使用 PM2。
 - 容器进程守护由 Docker `restart: unless-stopped` 完成。
-- VPS 上已有宿主机 Nginx，负责公网入口和 HTTPS。
-- Compose 内部包含一个 `web` Nginx 容器，负责前端静态资源和 `/api/*` 到后端的内部代理。
+- VPS 上已有 OpenResty，负责 API 公网入口和 HTTPS。
 
 Docker Compose 服务：
 
 - `backend`：运行 Flask + Gunicorn。
-- `web`：运行 Nginx，托管前端构建产物，并代理 API 到 `backend`。
 
 端口策略：
 
-- Compose 只绑定本机端口，例如 `127.0.0.1:8080:80`。
-- 宿主机 Nginx 将公网流量反代到 `http://127.0.0.1:8080`。
+- Compose 只绑定 `127.0.0.1:8000:8000`。
+- OpenResty 将生产 API 域名的 `/api/` 请求反向代理到 `http://127.0.0.1:8000`。
 
-宿主机 Nginx 要求：
+宿主机反向代理要求：
 
-- 支持域名或 VPS IP 访问。
 - 为 SSE 配置 `proxy_buffering off`。
 - 配置较长代理超时，避免 AI 提取期间连接被关闭。
-- 配置上传大小限制，例如 `client_max_body_size 50m`。
-- 有域名时启用 HTTPS，推荐 Certbot 签发证书。
+- 配置 `client_max_body_size 50m`。
+- 启用 HTTPS，并保持 API 域名证书有效。
 
 生产环境变量：
 
+- `FLASK_ENV`：固定为 `production`。
 - `APP_ACCESS_KEY`：访问密钥。
 - `FLASK_SECRET_KEY`：Cookie 签名密钥。
+- `FRONTEND_ORIGIN`：Cloudflare Pages 前端 Origin。
+- `SESSION_COOKIE_SECURE`：生产环境设为 `true`。
 - `AI_MODE`：`mock` 或 `real`。
 - `OPENAI_API_KEY`：真实 AI 模式使用。
 - `OPENAI_BASE_URL`：OpenAI 兼容接口地址。
 - `OPENAI_MODEL`：模型名称。
-- `DATABASE_URL`：SQLite 数据库地址。
-- `UPLOAD_DIR`：PDF 上传目录。
-- `SESSION_COOKIE_SECURE`：HTTPS 部署时设置为 `true`。
+- `RESUME_STORAGE_BACKEND`：`local` 或 `r2`；R2 模式还需配置对应凭据和 bucket。
 
 持久化：
 
-- SQLite 数据库存放在 Docker volume。
-- 上传 PDF 存放在 Docker volume。
+- SQLite 数据库存放在 `talent-lab-data` volume。
+- 本地存储模式的 PDF 存放在 `talent-lab-uploads` volume；R2 模式存放在私有 bucket。
+- `deploy.sh` 在更新前使用 SQLite online backup API 将数据库备份到 data volume 的 `backups/`。
 - 日志默认输出到 stdout，便于 `docker compose logs` 查看。
 
 部署文档必须覆盖：
 
 - VPS 安装 Docker 和 Docker Compose。
-- 配置 `.env.production`。
-- 配置宿主机 Nginx。
-- 执行 `docker compose up -d --build`。
-- 查看日志、重启服务、更新版本。
+- 将 root-owned 部署包安装到 `/opt/talent-lab/deploy`。
+- 配置 `.env.production`、root 的 GHCR 登录和专用 SSH deploy 用户。
+- 配置 GitHub `production` Environment Secrets 与严格的 SSH host key 校验。
+- 使用不可变镜像 digest 调用 `deploy.sh`，并等待容器健康检查。
+- 查看日志、验证 `/api/health`、重启服务和更新版本。
 - 备份和恢复 SQLite 数据与上传文件。
 
 ## 7. 执行里程碑
@@ -276,12 +281,12 @@ Docker Compose 服务：
    - 候选人 2-3 人并排对比。
    - 主题切换、骨架屏、Toast、快捷键、动画。
 
-8. Docker 化与部署
-   - 编写前后端 Dockerfile。
-   - 编写 Docker Compose。
-   - 编写容器内 Nginx 配置。
-   - 编写宿主机 Nginx 示例配置。
-   - 完成 VPS 部署说明。
+8. 前后端生产部署
+   - 配置 Cloudflare Pages 的前端构建命令、输出目录和生产 API 地址。
+   - 编写后端 Dockerfile、Docker Compose 和 root-owned 部署脚本。
+   - 配置 GitHub Actions 测试、GHCR 镜像发布和 `master` 自动部署。
+   - 配置专用 SSH deploy 用户、严格 host key 校验和最小 sudo 权限。
+   - 在 OpenResty 中配置后端 API 反向代理。
 
 9. 最终验收
    - 本地开发环境验收。
@@ -320,22 +325,24 @@ Docker Compose 服务：
 
 部署验收：
 
-- `docker compose up -d --build` 后服务正常启动。
-- 宿主机 Nginx 可访问系统入口。
+- Cloudflare Pages 能从 `master` 构建并发布 `frontend/dist`。
+- GitHub Actions 能完成测试、GHCR 镜像发布和 `master` 自动部署。
+- `docker compose ps` 显示后端容器为 healthy，公网 `/api/health` 返回 `ok`。
+- `.env.release` 记录当前运行的 GHCR 镜像 digest。
 - `APP_ACCESS_KEY` 是进入系统的唯一访问凭证。
 - 容器重启后 SQLite 数据和上传 PDF 不丢失。
 - `AI_MODE=mock` 时无需真实 API Key 也可完整演示。
 - `AI_MODE=real` 且配置完整时可调用真实模型。
-- SSE 在宿主机 Nginx 反代后仍能正常持续返回事件。
+- SSE 在 OpenResty 反向代理后仍能正常持续返回事件。
 
 ## 9. 默认假设与不做范围
 
 默认假设：
 
-- 需求源以 `Description.md` 为准。
-- 首版是单机 VPS 部署。
-- 宿主机已有 Nginx。
-- 项目本身使用 Docker Compose。
+- 产品需求以 `docs/prd.md` 为准。
+- 前端部署在 Cloudflare Pages，后端部署在单机 VPS。
+- 宿主机已有 OpenResty。
+- Docker Compose 只运行后端。
 - 不使用 PM2。
 - 访问密钥通过 Docker 环境变量 `APP_ACCESS_KEY` 注入。
 - 登录态使用 HttpOnly Cookie。
@@ -344,8 +351,7 @@ Docker Compose 服务：
 首版不做：
 
 - 用户注册、用户表、角色权限、多租户。
-- Kubernetes、复杂 CI/CD、蓝绿发布。
-- 云对象存储。
+- Kubernetes、多节点编排、蓝绿发布和金丝雀发布。
 - PostgreSQL 迁移。
 - OCR 扫描版 PDF 识别。
 - 简历去重和高级人才库分析。

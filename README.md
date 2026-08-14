@@ -45,7 +45,7 @@ talent-lab 是一个带单密钥访问控制的个人求职工作台：集中管
 | 数据库 | SQLite |
 | PDF 解析 | PyMuPDF |
 | AI 接口 | OpenAI 兼容 API（OpenAI / Moonshot / DeepSeek）+ 本地 Mock |
-| 部署 | Cloudflare Pages（前端）+ Docker Compose / Nginx（后端） |
+| 部署 | Cloudflare Pages（前端）+ GitHub Actions / GHCR / Docker Compose / OpenResty（后端） |
 
 ## 项目结构
 
@@ -71,11 +71,14 @@ talent-lab/
 │   │   ├── i18n/         # 中英文翻译资源
 │   │   ├── lib/          # API 客户端、工具函数、状态管理
 │   │   └── types/        # TypeScript 类型定义
-│   ├── Dockerfile
 │   └── package.json
-├── deploy/               # Docker Compose 与 Nginx 配置
+├── deploy/               # VPS 后端部署包
 │   ├── docker-compose.yml
-│   └── nginx/
+│   ├── deploy.sh
+│   ├── .env.production.example
+│   └── README.md
+├── .github/workflows/
+│   └── backend-image.yml # 后端测试、镜像发布与生产部署
 └── README.md
 ```
 
@@ -214,6 +217,15 @@ R2 凭据只能放在后端环境变量中，不能写入前端代码、提交�
 
 Cloudflare Pages 关联本仓库的 `master` 分支；`master` 更新后会自动执行前端构建并发布。构建时需配置 `VITE_API_BASE_URL`，使前端请求指向生产环境后端 API。
 
+当前 Pages 构建配置：
+
+```text
+Build command: cd frontend && npm ci && npm run build
+Build output directory: frontend/dist
+Production branch: master
+VITE_API_BASE_URL: https://talentlensapi.440115.xyz:8443/api
+```
+
 ### 后端（Docker Compose）
 
 推送到 `master` 或 `main` 后，GitHub Actions 会先运行后端测试与字符检查，再构建并发布带提交 SHA 标签的后端镜像到 GitHub Container Registry：`ghcr.io/chiyuchia/talent-lab-backend`。`master` 构建成功后会通过 SSH 自动部署镜像摘要；`main` 只构建镜像。VPS 仅拉取并运行通过测试的不可变镜像，不再从源码构建。
@@ -233,9 +245,9 @@ sudo /opt/talent-lab/deploy/deploy.sh \
 
 脚本会验证镜像来源、拉取镜像、备份 SQLite、执行幂等迁移、等待健康检查，并将当前镜像写入 `.env.release`。Compose 默认将后端服务绑定到宿主机 `127.0.0.1:8000`。
 
-#### 3. 配置宿主机 Nginx
+#### 3. 配置宿主机反向代理
 
-在宿主机现有反向代理或 1Panel 中，将生产 API 域名的 `/api/` 请求转发到 `http://127.0.0.1:8000`。注意：
+在宿主机 OpenResty 中，将生产 API 域名的 `/api/` 请求转发到 `http://127.0.0.1:8000`。注意：
 
 - 为 SSE 配置 `proxy_buffering off`
 - 配置较长代理超时，避免 AI 提取期间连接被关闭
@@ -245,7 +257,7 @@ sudo /opt/talent-lab/deploy/deploy.sh \
 
 #### 4. 数据持久化
 
-SQLite 数据库和上传的 PDF 文件通过 Docker volume 持久化，容器重启后数据不丢失。
+SQLite 数据库始终通过 Docker volume 持久化。使用 `RESUME_STORAGE_BACKEND=local` 时，上传的 PDF 也保存在 Docker volume；使用 `r2` 时，PDF 保存在私有 Cloudflare R2 bucket。容器重启不会删除这些数据。
 
 ## 常用命令
 
