@@ -184,4 +184,10 @@ deploy/.env.production
 .LSOverride
 ._*
 
+# Local product-design review images
+artifacts/**/*.png
+artifacts/**/*.jpg
+artifacts/**/*.jpeg
+artifacts/**/*.webp
+
 .omo
