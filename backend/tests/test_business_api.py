@@ -131,7 +131,7 @@ def test_job_status_changes_create_timeline_and_manual_events():
         f"/api/jobs/{job_id}/events",
         json={
             "type": "interview",
-            "occurred_at": "2026-08-20T10:00:00",
+            "occurred_at": "2099-08-20T10:00:00",
             "status": "interview",
             "title": "技术一面",
             "notes": "准备系统设计",

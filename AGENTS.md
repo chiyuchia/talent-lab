@@ -9,6 +9,7 @@ talent-lab：AI 简历分析平台。Flask REST API（`backend/`）+ React/Vite 
 ## 常用命令
 
 ```bash
+make dev                             # 同时启动前端与后端开发服务器
 make backend-dev                     # 后端开发服务器 :8000
 make frontend-dev                    # 前端开发服务器 :5173
 make backend-test                    # 后端测试 (pytest)

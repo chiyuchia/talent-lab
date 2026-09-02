@@ -104,7 +104,14 @@ make frontend-install
 
 ### 日常启动
 
-分别打开两个终端，在项目根目录执行：
+在项目根目录执行：
+
+```bash
+# 同时启动前端与后端开发服务器
+make dev
+```
+
+或分别打开两个终端执行：
 
 ```bash
 # 终端一：后端开发服务器 :8000
@@ -263,6 +270,7 @@ SQLite 数据库始终通过 Docker volume 持久化。使用 `RESUME_STORAGE_BA
 
 ```bash
 # 本地开发
+make dev                # 同时启动前端与后端开发服务器
 make backend-install    # 首次安装后端依赖
 make backend-init       # 首次初始化数据库
 make backend-dev        # 执行幂等数据库迁移并启动后端开发服务器

@@ -180,6 +180,7 @@ JobDescription (职位来源、raw_jd、结构化要求、薪酬、申请状态�
 ## 5. 常用命令
 
 ```bash
+make dev              # 同时启动前端与后端开发服务器
 make backend-install  # 首次安装后端依赖
 make backend-init     # 首次初始化数据库
 make backend-dev      # 后端开发服务器 :8000

@@ -1,4 +1,7 @@
-.PHONY: backend-install backend-init backend-dev frontend-install frontend-dev backend-test check-badchars compose-up compose-down
+.PHONY: dev backend-install backend-init backend-dev frontend-install frontend-dev backend-test check-badchars compose-up compose-down
+
+dev:
+	$(MAKE) -j 2 backend-dev frontend-dev
 
 backend-install:
 	python3 -m venv backend/.venv
