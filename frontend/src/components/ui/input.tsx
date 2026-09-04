@@ -3,7 +3,7 @@ import { forwardRef, type InputHTMLAttributes, type TextareaHTMLAttributes } fro
 import { cn } from "../../lib/utils";
 
 const fieldClass =
-  "w-full rounded-md border border-border bg-background px-3 text-sm outline-none transition placeholder:text-muted-foreground focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50";
+  "w-full rounded-[10px] border border-control bg-background px-3 text-sm outline-none transition placeholder:text-muted-foreground focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50";
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement>;
 

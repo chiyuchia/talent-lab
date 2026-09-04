@@ -25,6 +25,8 @@ export const resumeEnglish = {
   "上传后会在这里展示每份简历的解析状态":
     "Each resume’s parsing status will appear here after upload",
   "暂无简历": "No resumes",
+  "上传第一份简历后，这里会展示解析、评分和求职进度概况。":
+    "Upload your first resume to see parsing, scoring, and application progress here.",
   "暂无简历，前往上传": "No resumes. Upload one",
   "暂无简历，前往添加": "No resumes. Add one",
   "简历加载失败，请稍后重试。": "Resumes could not be loaded. Try again later.",

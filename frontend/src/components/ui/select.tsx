@@ -26,7 +26,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       <select
         ref={ref}
         className={cn(
-          "w-full cursor-pointer appearance-none rounded-md border border-border bg-background py-0 pl-3 pr-9 text-sm text-foreground outline-none transition-colors hover:border-muted-foreground/60 focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+          "w-full cursor-pointer appearance-none rounded-[10px] border border-control bg-background py-0 pl-3 pr-9 text-sm text-foreground outline-none transition-colors hover:border-muted-foreground/60 focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
           controlSize === "sm" ? "h-9" : "h-10",
           className,
         )}

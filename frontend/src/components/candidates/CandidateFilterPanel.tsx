@@ -97,7 +97,7 @@ export function CandidateFilterPanel({
           <p className="mb-1.5 text-xs font-semibold text-muted-foreground">
             {t("排序字段")}
           </p>
-          <div className="inline-flex overflow-hidden rounded-md border border-border bg-background">
+          <div className="inline-flex overflow-hidden rounded-md border border-control bg-background">
             {sortFieldOptions.map((option) => (
               <button
                 key={option.value}
@@ -123,7 +123,7 @@ export function CandidateFilterPanel({
           <p className="mb-1.5 text-xs font-semibold text-muted-foreground">
             {t("排序方式")}
           </p>
-          <div className="inline-flex overflow-hidden rounded-md border border-border bg-background">
+          <div className="inline-flex overflow-hidden rounded-md border border-control bg-background">
             {sortDirectionOptions.map((option) => {
               const Icon = option.icon;
               return (
@@ -153,7 +153,7 @@ export function CandidateFilterPanel({
           <p className="mb-1.5 text-xs font-semibold text-muted-foreground">
             {t("视图")}
           </p>
-          <div className="inline-flex overflow-hidden rounded-md border border-border bg-background">
+          <div className="inline-flex overflow-hidden rounded-md border border-control bg-background">
             <button
               type="button"
               onClick={() => handleViewChange("table")}

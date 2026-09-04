@@ -67,7 +67,7 @@ export function JobWorkspace({
               <Badge variant={statusVariant(job.application_status)}>{t(applicationStatusLabel(job.application_status))}</Badge>
               {job.priority === "high" ? <Badge variant="warning">{t("高优先级")}</Badge> : null}
             </div>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight">{job.title}</h2>
+            <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight">{job.title}</h2>
             <p className="mt-1 text-base text-muted-foreground">{job.company_name}</p>
             <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted-foreground">
               {job.locations.length ? <span className="flex items-center gap-1.5"><MapPin className="h-4 w-4" />{job.locations.join(" / ")}</span> : null}

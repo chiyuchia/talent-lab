@@ -3,67 +3,69 @@
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222 47% 11%;
-  --card: 210 40% 98%;
-  --card-foreground: 222 47% 11%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215 16% 47%;
-  --border: 214 32% 91%;
-  --primary: 221 72% 38%;
-  --primary-foreground: 0 0% 100%;
-  --accent: 210 40% 96%;
-  --accent-foreground: 222 47% 11%;
-  --destructive: 0 72% 45%;
-  --destructive-foreground: 0 0% 100%;
-  --success: 160 84% 30%;
-  --warning: 32 95% 36%;
-  --ring: 221 72% 38%;
+  --background: 43 33% 96%;
+  --foreground: 15 6% 14%;
+  --card: 45 40% 98%;
+  --card-foreground: 15 6% 14%;
+  --muted: 40 32% 91%;
+  --muted-foreground: 21 7% 39%;
+  --border: 40 24% 88%;
+  --control-border: 23 9% 55%;
+  --primary: 12 21% 27%;
+  --primary-foreground: 43 33% 96%;
+  --accent: 40 32% 91%;
+  --accent-foreground: 15 6% 14%;
+  --destructive: 4 50% 43%;
+  --destructive-foreground: 43 33% 96%;
+  --success: 153 39% 30%;
+  --warning: 31 65% 35%;
+  --ring: 13 23% 35%;
   --terminal-bg: 222 47% 11%;
   --terminal-fg: 221 45% 72%;
   --terminal-dim: 215 18% 52%;
   --terminal-line: 217 25% 24%;
-  --terminal-accent: 221 85% 68%;
+  --terminal-accent: 24 48% 64%;
   --scrim: 222 47% 11%;
-  --primary-deep: 221 70% 26%;
-  --primary-deep-foreground: 0 0% 100%;
-  --chart-pending: 215 20% 55%;
-  --chart-passed: 221 65% 48%;
-  --chart-interviewing: 36 85% 44%;
-  --chart-hired: 158 64% 36%;
-  --chart-rejected: 0 62% 50%;
+  --primary-deep: 11 22% 19%;
+  --primary-deep-foreground: 43 33% 96%;
+  --chart-pending: 24 6% 46%;
+  --chart-passed: 13 23% 35%;
+  --chart-interviewing: 31 65% 35%;
+  --chart-hired: 153 39% 30%;
+  --chart-rejected: 4 50% 43%;
 }
 
 .dark {
-  --background: 222 47% 11%;
-  --foreground: 210 40% 98%;
-  --card: 222 44% 13%;
-  --card-foreground: 210 40% 98%;
-  --muted: 217 33% 17%;
-  --muted-foreground: 215 20% 65%;
-  --border: 217 33% 24%;
-  --primary: 221 75% 62%;
-  --primary-foreground: 222 47% 11%;
-  --accent: 217 33% 18%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 72% 55%;
-  --destructive-foreground: 0 0% 100%;
-  --success: 160 84% 45%;
-  --warning: 38 92% 55%;
-  --ring: 221 75% 62%;
+  --background: 17 13% 11%;
+  --foreground: 37 32% 92%;
+  --card: 20 13% 14%;
+  --card-foreground: 37 32% 92%;
+  --muted: 20 13% 18%;
+  --muted-foreground: 27 14% 68%;
+  --border: 22 12% 26%;
+  --control-border: 23 11% 43%;
+  --primary: 23 41% 69%;
+  --primary-foreground: 11 20% 11%;
+  --accent: 20 14% 20%;
+  --accent-foreground: 37 32% 92%;
+  --destructive: 5 68% 70%;
+  --destructive-foreground: 11 20% 11%;
+  --success: 145 26% 59%;
+  --warning: 36 59% 61%;
+  --ring: 23 51% 75%;
   --terminal-bg: 222 47% 8%;
   --terminal-fg: 221 45% 72%;
   --terminal-dim: 215 18% 45%;
   --terminal-line: 217 25% 18%;
-  --terminal-accent: 221 85% 68%;
+  --terminal-accent: 25 55% 70%;
   --scrim: 222 47% 4%;
-  --primary-deep: 221 55% 20%;
-  --primary-deep-foreground: 221 30% 92%;
-  --chart-pending: 215 18% 60%;
-  --chart-passed: 221 75% 62%;
-  --chart-interviewing: 38 88% 56%;
-  --chart-hired: 160 60% 46%;
-  --chart-rejected: 0 68% 58%;
+  --primary-deep: 11 22% 19%;
+  --primary-deep-foreground: 43 33% 96%;
+  --chart-pending: 27 10% 62%;
+  --chart-passed: 23 41% 69%;
+  --chart-interviewing: 36 59% 61%;
+  --chart-hired: 145 26% 59%;
+  --chart-rejected: 5 68% 70%;
 }
 
 /* Deep brand surface (login panel). White text clears WCAG AA at body size. */
@@ -84,6 +86,18 @@ body {
     "Inter Variable", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   background: hsl(var(--background));
+}
+
+.app-shell {
+  box-shadow:
+    0 22px 70px -36px hsl(var(--scrim) / 0.45),
+    0 8px 24px -16px hsl(var(--scrim) / 0.22);
+}
+
+.dark .app-shell {
+  box-shadow:
+    0 24px 76px -34px hsl(var(--scrim) / 0.78),
+    0 10px 28px -16px hsl(var(--scrim) / 0.58);
 }
 
 button,

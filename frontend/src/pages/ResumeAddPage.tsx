@@ -12,14 +12,14 @@ export function ResumeAddPage() {
 
   return (
     <AnimatedPage>
-      <section className="space-y-6">
+      <section className="space-y-8">
         <Button variant="ghost" className="-ml-3" onClick={() => navigate("/resumes")}>
           <ArrowLeft className="h-4 w-4" />
           {t("返回简历列表")}
         </Button>
         <div>
-          <h2 className="text-2xl font-semibold">{t("添加简历")}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">{t("添加 PDF 简历并查看实时解析进度")}</p>
+          <h1 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">{t("添加简历")}</h1>
+          <p className="mt-2 text-sm text-muted-foreground">{t("添加 PDF 简历并查看实时解析进度")}</p>
         </div>
         <ResumeUploadPanel />
       </section>

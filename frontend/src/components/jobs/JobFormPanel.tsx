@@ -59,7 +59,7 @@ export function JobFormPanel({
         <ArrowLeft className="h-4 w-4" /> {t("返回职位机会")}
       </Button>
       <div>
-        <h2 className="text-2xl font-semibold">{t(jobId ? "编辑职位机会" : "添加职位机会")}</h2>
+        <h2 className="font-display text-2xl font-semibold tracking-tight">{t(jobId ? "编辑职位机会" : "添加职位机会")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t("结构化职位描述、比较匹配度并跟踪完整申请进度")}</p>
       </div>
       <JobTextParser

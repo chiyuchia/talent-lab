@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Outlet, useMatches, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useMatches, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { authApi } from "../lib/api";
 import { useCompareStore } from "../lib/compare-store";
 import { useUiStore } from "../lib/ui-store";
 import { cn } from "../lib/utils";
-import { AppHeader } from "./app-shell/AppHeader";
 import { DesktopSidebar } from "./app-shell/DesktopSidebar";
 import { MobileSidebar } from "./app-shell/MobileSidebar";
-import { resolvePageTitleKey } from "./app-shell/nav";
 import { CompareResultPanel } from "./CompareResultPanel";
 import { ResizableDrawer } from "./ResizableDrawer";
 
@@ -22,15 +20,15 @@ export function AppShell() {
   const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const mobileTriggerRef = useRef<HTMLButtonElement>(null);
+  const mainScrollRef = useRef<HTMLElement | null>(null);
   const { theme, toggleTheme } = useUiStore();
   const navigate = useNavigate();
+  const location = useLocation();
   const matches = useMatches();
   const isFullWidth = matches.some((match) =>
     Boolean((match.handle as AppRouteHandle | undefined)?.fullWidth),
   );
-  const pageTitle = t(resolvePageTitleKey(
-    matches[matches.length - 1]?.pathname ?? "/",
-  ));
   const queryClient = useQueryClient();
   const {
     selectedIds,
@@ -49,9 +47,11 @@ export function AppShell() {
     },
   });
 
-  function closeSidebar() {
-    setSidebarOpen(false);
-  }
+  // Reset scroll position on route change
+  useEffect(() => {
+    mainScrollRef.current?.scrollTo({ top: 0 });
+    window.scrollTo({ top: 0 });
+  }, [location.pathname]);
 
   useEffect(() => {
     function handleShortcut(event: KeyboardEvent) {
@@ -87,27 +87,37 @@ export function AppShell() {
   }, [clearSelected, drawerOpen]);
 
   return (
-    <div className="min-h-dvh bg-background text-foreground">
-      <DesktopSidebar
-        sidebarCollapsed={sidebarCollapsed}
-        setSidebarCollapsed={setSidebarCollapsed}
-      />
-
-      <MobileSidebar open={sidebarOpen} closeSidebar={closeSidebar} />
-
-      <div className={sidebarCollapsed ? "lg:pl-16" : "lg:pl-56"}>
-        <AppHeader
-          pageTitle={pageTitle}
+    <div className="h-dvh w-full overflow-hidden bg-muted text-foreground lg:p-4">
+      <div className="app-shell relative flex h-full w-full overflow-hidden bg-background lg:rounded-shell lg:border lg:border-border">
+        <DesktopSidebar
+          sidebarCollapsed={sidebarCollapsed}
+          setSidebarCollapsed={setSidebarCollapsed}
           theme={theme}
           toggleTheme={toggleTheme}
-          onOpenSidebar={() => setSidebarOpen(true)}
           onLogout={() => logoutMutation.mutate()}
         />
-        <main
-          className={cn("w-full px-4 py-6 lg:px-8", !isFullWidth && "mx-auto max-w-7xl")}
-        >
-          <Outlet />
-        </main>
+
+        <MobileSidebar
+          open={sidebarOpen}
+          onOpenChange={setSidebarOpen}
+          triggerRef={mobileTriggerRef}
+          theme={theme}
+          toggleTheme={toggleTheme}
+          onLogout={() => logoutMutation.mutate()}
+        />
+
+        <div className="flex h-full min-w-0 flex-1 flex-col overflow-hidden">
+          <main
+            ref={mainScrollRef}
+            id="main-scroll-container"
+            data-app-scroll-container
+            className="flex-1 overflow-y-auto overflow-x-hidden px-4 pb-8 pt-20 sm:px-6 lg:px-10 lg:py-10 xl:px-12"
+          >
+            <div className={cn("w-full", !isFullWidth && "mx-auto max-w-7xl")}>
+              <Outlet />
+            </div>
+          </main>
+        </div>
       </div>
 
       <ResizableDrawer
@@ -130,7 +140,7 @@ export function AppShell() {
         <CompareResultPanel
           candidates={compareResult?.candidates ?? []}
           empty={
-            <p className="mt-2 text-xs text-muted-foreground text-center">
+            <p className="mt-2 text-center text-xs text-muted-foreground">
               {isComparing
                 ? t("对比中...")
                 : compareError

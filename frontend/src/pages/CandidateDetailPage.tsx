@@ -107,15 +107,15 @@ export function CandidateDetailPage() {
   return (
     <>
     <AnimatedPage>
-    <section className="space-y-6">
+    <section className="space-y-8">
       <Button variant="ghost" className="-ml-3" onClick={() => navigate("/resumes")}>
         <ArrowLeft className="h-4 w-4" />
         {t("返回简历列表")}
       </Button>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h2 className="text-2xl font-semibold">{profile.name || candidate.original_filename}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">{t("结构化简历、评分详情与原始 PDF")}</p>
+          <h1 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">{profile.name || candidate.original_filename}</h1>
+          <p className="mt-2 text-sm text-muted-foreground">{t("结构化简历、评分详情与原始 PDF")}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Button variant="outline" aria-expanded={resumeSourceOpen} aria-haspopup="dialog" onClick={() => setResumeSourceOpen(true)}>

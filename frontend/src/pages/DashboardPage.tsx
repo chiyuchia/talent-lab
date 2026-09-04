@@ -1,18 +1,20 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { BarChart3, Files, FileText, TrendingUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { BarChart3, FilePlus2, Files, FileText, TrendingUp } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { AnimatedPage } from "../components/AnimatedPage";
 import { ScoreBarChart } from "../components/dashboard/ScoreBarChart";
 import { StatusDistributionChart } from "../components/dashboard/StatusDistributionChart";
+import { Button } from "../components/ui/button";
 import { candidateApi, jobsApi } from "../lib/api";
 import { statusLabels } from "../lib/format";
 import type { CandidateStatus } from "../types/api";
 
 export function DashboardPage() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const candidatesQuery = useQuery({
     queryKey: ["candidates", "dashboard"],
     queryFn: () =>
@@ -82,10 +84,12 @@ export function DashboardPage() {
 
   return (
     <AnimatedPage>
-      <section className="space-y-8">
+      <section className="space-y-8 lg:space-y-10">
         <div>
-          <h2 className="text-2xl font-semibold">{t("总览")}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <h1 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+            {t("总览")}
+          </h1>
+          <p className="mt-2 text-sm text-muted-foreground">
             {t("简历解析和评分概况")}
           </p>
         </div>
@@ -103,39 +107,57 @@ export function DashboardPage() {
             </div>
           ))}
         </div>
-        <div>
-          <h3 className="border-b border-border pb-3 text-lg font-medium">{t("数据分布")}</h3>
-          <div className="mt-6 grid gap-8 xl:grid-cols-2">
-            <StatusDistributionChart statusData={statusData} />
-            <ScoreBarChart scoreData={scoreData} />
+        {!candidatesQuery.isLoading && !candidates.length ? (
+          <div className="grid min-h-72 place-items-center rounded-lg border border-dashed border-border bg-card p-8 text-center">
+            <div className="max-w-sm">
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                <FilePlus2 className="h-5 w-5" />
+              </span>
+              <h2 className="mt-5 font-display text-xl font-medium">{t("暂无简历")}</h2>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                {t("上传第一份简历后，这里会展示解析、评分和求职进度概况。")}
+              </p>
+              <Button className="mt-5" onClick={() => navigate("/resumes/new")}>
+                {t("添加简历")}
+              </Button>
+            </div>
           </div>
-        </div>
-        <div>
-          <h3 className="border-b border-border pb-3 text-lg font-medium">{t("最近上传")}</h3>
-          <div className="divide-y divide-border">
-            {candidates.slice(0, 6).map((candidate) => (
-              <div
-                key={candidate.id}
-                className="flex items-center justify-between px-4 py-3 text-sm table-row-hover hover:bg-muted/30"
-              >
-                <Link
-                  className="hover:text-primary transition-colors"
-                  to={`/resumes/${candidate.id}`}
-                >
-                  {candidate.name || candidate.original_filename}
-                </Link>
-                <span className="tabular-nums text-muted-foreground">
-                  {candidate.total_score ?? "--"}
-                </span>
+        ) : (
+          <>
+            <div className="rounded-lg border border-border bg-card p-5 sm:p-6">
+              <h2 className="border-b border-border pb-4 font-display text-lg font-medium">
+                {t("数据分布")}
+              </h2>
+              <div className="mt-6 grid gap-8 xl:grid-cols-2">
+                <StatusDistributionChart statusData={statusData} />
+                <ScoreBarChart scoreData={scoreData} />
               </div>
-            ))}
-            {!candidates.length ? (
-              <div className="p-6 text-sm text-muted-foreground">
-                {t("暂无简历")}
+            </div>
+            <div className="overflow-hidden rounded-lg border border-border bg-card">
+              <h2 className="border-b border-border px-5 py-4 font-display text-lg font-medium sm:px-6">
+                {t("最近上传")}
+              </h2>
+              <div className="divide-y divide-border">
+                {candidates.slice(0, 6).map((candidate) => (
+                  <div
+                    key={candidate.id}
+                    className="flex items-center justify-between px-5 py-3.5 text-sm table-row-hover hover:bg-muted/30 sm:px-6"
+                  >
+                    <Link
+                      className="transition-colors hover:text-primary"
+                      to={`/resumes/${candidate.id}`}
+                    >
+                      {candidate.name || candidate.original_filename}
+                    </Link>
+                    <span className="tabular-nums text-muted-foreground">
+                      {candidate.total_score ?? "--"}
+                    </span>
+                  </div>
+                ))}
               </div>
-            ) : null}
-          </div>
-        </div>
+            </div>
+          </>
+        )}
       </section>
     </AnimatedPage>
   );

@@ -22,7 +22,7 @@ export const Checkbox = forwardRef<
       className="peer sr-only"
       {...props}
     />
-    <span className="absolute inset-0 rounded border border-muted-foreground/60 bg-background transition-colors peer-checked:border-primary peer-checked:bg-primary peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background peer-disabled:opacity-40" />
+    <span className="absolute inset-0 rounded border border-control bg-background transition-colors peer-checked:border-primary peer-checked:bg-primary peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background peer-disabled:opacity-40" />
     <Check
       aria-hidden="true"
       className="pointer-events-none relative h-3 w-3 text-primary-foreground opacity-0 transition-opacity peer-checked:opacity-100"

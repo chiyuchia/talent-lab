@@ -48,9 +48,7 @@ export function JobsPage() {
   }
 
   const saveMutation = useMutation({
-    mutationFn: () => editingId
-      ? jobsApi.update(editingId, cloneJobForm(form))
-      : jobsApi.create(cloneJobForm(form)),
+    mutationFn: () => editingId ? jobsApi.update(editingId, cloneJobForm(form)) : jobsApi.create(cloneJobForm(form)),
     onSuccess: async (savedJob) => {
       setSelectedJob(savedJob);
       setRecentlySavedId(savedJob.id);
@@ -71,6 +69,11 @@ export function JobsPage() {
     },
   });
 
+  function scrollToTop() {
+    window.scrollTo({ top: 0 });
+    document.getElementById("main-scroll-container")?.scrollTo({ top: 0 });
+  }
+
   function createJob() {
     saveMutation.reset();
     setSelectedJob(null);
@@ -79,13 +82,14 @@ export function JobsPage() {
     setForm(nextForm);
     setInitialForm(cloneJobForm(nextForm));
     setShowForm(true);
-    window.scrollTo({ top: 0 });
+    scrollToTop();
   }
 
   function openJob(job: JobOpportunity) {
-    listScrollRef.current = window.scrollY;
+    const sc = document.getElementById("main-scroll-container");
+    listScrollRef.current = sc && sc.scrollTop > 0 ? sc.scrollTop : window.scrollY;
     setSelectedJob(job);
-    window.scrollTo({ top: 0 });
+    scrollToTop();
   }
 
   function editJob(job: JobOpportunity) {
@@ -96,18 +100,21 @@ export function JobsPage() {
     setForm(nextForm);
     setInitialForm(cloneJobForm(nextForm));
     setShowForm(true);
-    window.scrollTo({ top: 0 });
+    scrollToTop();
   }
 
   function returnFromEditor() {
     if (isDirty && !window.confirm(t("当前填写的内容尚未保存，确定放弃并返回职位机会列表吗？"))) return;
     resetEditor();
-    window.scrollTo({ top: 0 });
+    scrollToTop();
   }
 
   function returnToList() {
     setSelectedJob(null);
-    window.requestAnimationFrame(() => window.scrollTo({ top: listScrollRef.current }));
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: listScrollRef.current });
+      document.getElementById("main-scroll-container")?.scrollTo({ top: listScrollRef.current });
+    });
   }
 
   function deleteJob(job: JobOpportunity) {

@@ -1,4 +1,4 @@
-import { GitCompare, Search, X } from "lucide-react";
+import { FilePlus2, GitCompare, Search, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { useCompareStore } from "../../lib/compare-store";
@@ -62,28 +62,28 @@ export function ResumeLibrary({ onUpload }: ResumeLibraryProps) {
 
   return (
     <section className="space-y-6" aria-label={t("简历库")}>
-      <div className="flex justify-end">
-        <div className="relative w-full sm:w-80">
-          <Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input
-            value={q}
-            onChange={(event) => {
-              setQ(event.target.value);
-              resetToFirstPage();
-            }}
-            className={cn("pl-9", q ? "pr-9" : "pr-3")}
-            placeholder={t("搜索姓名、技能、学校等")}
-            aria-label={t("关键字搜索")}
-            data-candidate-search
-          />
-          {q ? (
-            <Button variant="ghost" size="icon" onClick={clearKeyword} className="absolute right-2 top-2 h-6 w-6 rounded text-muted-foreground" aria-label={t("清空关键字搜索")}>
-              <X className="h-3.5 w-3.5" />
-            </Button>
-          ) : null}
+      <div className="rounded-lg border border-border bg-card p-4 sm:p-5">
+        <div className="mb-5 flex justify-end">
+          <div className="relative w-full sm:w-80">
+            <Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Input
+              value={q}
+              onChange={(event) => {
+                setQ(event.target.value);
+                resetToFirstPage();
+              }}
+              className={cn("pl-9", q ? "pr-9" : "pr-3")}
+              placeholder={t("搜索姓名、技能、学校等")}
+              aria-label={t("关键字搜索")}
+              data-candidate-search
+            />
+            {q ? (
+              <Button variant="ghost" size="icon" onClick={clearKeyword} className="absolute right-2 top-2 h-6 w-6 rounded text-muted-foreground" aria-label={t("清空关键字搜索")}>
+                <X className="h-3.5 w-3.5" />
+              </Button>
+            ) : null}
+          </div>
         </div>
-      </div>
-      <div className="rounded-lg border border-border bg-card p-4">
         <CandidateFilterPanel
           status={status}
           setStatus={setStatus}
@@ -118,10 +118,16 @@ export function ResumeLibrary({ onUpload }: ResumeLibraryProps) {
         </div>
       ) : null}
       {!candidatesQuery.isLoading && !candidatesQuery.isError && candidates.length === 0 ? (
-        <div className="rounded-lg border border-border p-6 text-sm text-muted-foreground animate-fade-in">
-          <button type="button" className="cursor-pointer transition-colors hover:text-foreground" onClick={onUpload}>
-            {t("暂无简历，前往添加")}
-          </button>
+        <div className="grid min-h-52 place-items-center rounded-lg border border-dashed border-border bg-card p-6 text-center animate-fade-in">
+          <div>
+            <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
+              <FilePlus2 className="h-4 w-4" />
+            </span>
+            <p className="mt-4 font-medium">{t("暂无简历")}</p>
+            <Button className="mt-4" size="sm" onClick={onUpload}>
+              {t("添加简历")}
+            </Button>
+          </div>
         </div>
       ) : null}
       {!candidatesQuery.isError && view === "table" && candidates.length > 0 ? (

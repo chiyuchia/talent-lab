@@ -147,7 +147,7 @@ export function ResizableDrawer({
       <aside
         ref={drawerRef}
         className={cn(
-          "fixed inset-y-0 right-0 z-50 flex transition-[transform,opacity] duration-[240ms] ease-[cubic-bezier(0.2,0.8,0.2,1)]",
+          "fixed inset-y-0 right-0 z-50 flex p-0 transition-[transform,opacity] duration-[240ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] lg:p-4",
           visible ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0",
         )}
         style={{ width, maxWidth: "100vw" }}
@@ -167,8 +167,8 @@ export function ResizableDrawer({
         </div>
 
         {/* Content */}
-        <div className="flex-1 flex flex-col bg-background border-l border-border shadow-xl">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+        <div className="flex flex-1 flex-col overflow-hidden rounded-none border-l border-border bg-card shadow-xl lg:rounded-2xl lg:border">
+          <div className="flex items-center justify-between border-b border-border px-4 py-3">
             <h3 id={titleId} className="text-lg font-semibold">{title}</h3>
             <Button
               ref={closeButtonRef}

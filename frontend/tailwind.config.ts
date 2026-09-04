@@ -7,6 +7,7 @@ const config: Config = {
     extend: {
       colors: {
         border: "hsl(var(--border))",
+        control: "hsl(var(--control-border))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -34,9 +35,23 @@ const config: Config = {
         ring: "hsl(var(--ring))",
       },
       borderRadius: {
-        lg: "0.5rem",
-        md: "0.375rem",
-        sm: "0.25rem",
+        shell: "1.75rem",
+        lg: "1rem",
+        md: "0.625rem",
+        sm: "0.375rem",
+      },
+      fontFamily: {
+        display: [
+          "Iowan Old Style",
+          "Songti SC",
+          "STSong",
+          "Noto Serif CJK SC",
+          "Source Han Serif SC",
+          "SimSun",
+          "Georgia",
+          "Times New Roman",
+          "serif",
+        ],
       },
       keyframes: {
         "fade-in": {
